@@ -16,7 +16,7 @@ class WorksScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(icon: Icon(FeatherIcons.camera), onPressed: (){}),
+                IconButton(icon: Icon(FeatherIcons.camera), onPressed:() => visionX.pickImageFromCamera()),
                 IconButton(icon: Icon(FeatherIcons.image), onPressed: () => visionX.pickImageFromGallery()),
               ],
             ),

@@ -23,6 +23,13 @@ class MLController extends GetxController{
     update(['picker']);
   }
 
+  Future<void> pickImageFromCamera() async {
+    PickedFile pickedFile = await this.imagePicker.getImage(source: ImageSource.camera);
+    image = File(pickedFile.path);
+    performImageLabeling();
+    update(['picker']);
+  }
+
 
   void performImageLabeling() async {
     final InputImage visionImage = InputImage.fromFile(image);
