@@ -62,13 +62,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_icons:
+  flutter_feather_icons:
     dependency: "direct main"
     description:
-      name: flutter_icons
+      name: flutter_feather_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -102,13 +102,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  side_menu_animation:
-    dependency: "direct main"
-    description:
-      name: side_menu_animation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   sky_engine:
     dependency: transitive
     description: flutter

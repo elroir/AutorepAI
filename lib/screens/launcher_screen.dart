@@ -12,6 +12,7 @@ class LauncherScreen extends StatelessWidget {
       body: Row(
         children: [
           Container(
+            width: 140,
             color: Theme.of(context).primaryColorDark,
             child: SafeArea(child: Menu())
           ),
