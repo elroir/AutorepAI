@@ -6,12 +6,17 @@ class Themes {
 
   static ThemeData themeData() {
     return ThemeData(
-      primaryColor: Color(0xFFDC4D4E),
-      primaryColorDark: Color(0xFF071223),
-      backgroundColor: Color(0xFF122034),
-      cardColor: Color(0xFF192C47),
+      primaryColor: Colors.white,
+      // primaryColor: Color(0xFFDC4D4E),
+      // primaryColorDark: Color(0xFF071223),
+      primaryColorDark: Colors.white,
+      backgroundColor: Colors.white,
+      // backgroundColor: Color(0xFF122034),
+      // cardColor: Color(0xFF192C47),
+      cardColor: Colors.white,
       iconTheme: IconThemeData(size: 30, color: Color(0xFFDC4D4E)),
-      scaffoldBackgroundColor: Color(0xFF122034),
+      scaffoldBackgroundColor: Colors.white,
+      // scaffoldBackgroundColor: Color(0xFF122034),
       canvasColor: Color(0xFF071223),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
