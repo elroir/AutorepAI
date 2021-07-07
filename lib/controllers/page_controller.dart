@@ -15,9 +15,10 @@ class PageGetXController extends GetxController{
     super.onInit();
   }
 
+
   void changePage(RouteSPA page) {
 
-    if(Get.size.width<=500)
+    if(Get.width<=500)
       Get.back();
 
     this.currentPageIndex = page.index;
@@ -26,7 +27,6 @@ class PageGetXController extends GetxController{
   }
 
   Widget get currentPage => this._currentPage;
-
 
 
 }

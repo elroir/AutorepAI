@@ -25,7 +25,6 @@ MenuItem({this.routeSPA});
 
 final PageGetXController pageX = Get.put(PageGetXController());
 
-
 @override
 Widget build(BuildContext context) {
   return GestureDetector(

@@ -11,7 +11,8 @@ class LauncherScreenPhone extends StatelessWidget {
       drawer:Container(
         width: 140,
         child: Drawer(
-          child: Menu()
+          child: Menu(),
+          elevation: 0,
         ),
       ),
       body: GetBuilder<PageGetXController>(

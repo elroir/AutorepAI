@@ -48,7 +48,8 @@ class MLController extends GetxController{
       }
       result += "\n\n";
     }
-    update(['vision']);
+    recognizer.close();
 
+    update(['vision']);
   }
 }
