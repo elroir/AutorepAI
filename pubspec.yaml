@@ -42,6 +42,9 @@ dependencies:
   firebase_storage: ^3.1.5
   firebase_auth: ^0.14.0+5
 
+  animate_do:
+  font_awesome_flutter: ^8.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

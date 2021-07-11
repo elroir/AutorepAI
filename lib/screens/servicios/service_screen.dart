@@ -1,12 +1,19 @@
 
-import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:ingemec/providers/orden_trabajo_provider.dart';
-import 'package:ingemec/widgets/bottom_submit.dart';
-import 'package:ingemec/widgets/header_background.dart';
-import 'package:ingemec/widgets/modal_progress_indicator.dart';
+
+import 'package:get/get.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:ingemec/controllers/page_controller.dart';
+
+import 'package:ingemec/controllers/service_controller.dart';
+import 'package:ingemec/models/service_model.dart';
+import 'package:ingemec/routes.dart';
+import 'package:ingemec/screens/servicios/create_service_screen.dart';
+import 'package:ingemec/screens/servicios/edit_service_screen.dart';
+import 'package:ingemec/screens/servicios/registrar_screen.dart';
+import 'package:ingemec/services/servicio_service.dart';
+import 'package:ingemec/widgets/bottom_item.dart';
+
 
 class ServiceScreen extends StatefulWidget {
   @override
@@ -15,185 +22,101 @@ class ServiceScreen extends StatefulWidget {
 
 class _ServiceScreenState extends State<ServiceScreen> {
  
-  File foto;
-  String fotoUrl;
-  bool _isloading;
-
-  final _keyForm = new GlobalKey<FormState>();
-
-  String descripcion = '';
-
-  @override
-  void initState() {
-    _isloading = false;
-    super.initState();
-  }
+  final instance = ServicioService.instance;
+  
+  final pageX = Get.put(PageGetXController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ModalProgressIndicator(
-        body: anadirImagenWidget(_keyForm),
-        texto: 'Analizando el nivel de prioridad...',
-        color: Colors.blue[200],
-        isloading: _isloading,
-      ),
-      //backgroundColor: Colors.blue[50]
-    );
-  }
-
-  Widget _mostrarFoto() {
-
-    if (fotoUrl != null) {
-      //TOdo tengo que hacer esto
-      return Container();
-    } else {
-      return Container(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: (foto != null) 
-            ? Image.file(
-              foto,
-              fit: BoxFit.cover,
-              height: 300.0,
-            )
-            : Image.asset('assets/no-image.png'),
-          ),
-        ),
-      ); 
-    }
-  }
-
-  _seleccionarFoto() async => await _procesarImagen(ImageSource.gallery);
-  _tomarFoto() async => await _procesarImagen(ImageSource.camera);
-
-  _procesarImagen(ImageSource origen) async {
-  
-    final _picker = ImagePicker();
-    final pickedFile = await _picker.getImage(source: origen);
-
-    foto = File(pickedFile.path);
-
-    if ( foto != null ) {
-      print('si es distinto de null la foto omg') ;
-    }
-
-    setState(() {});
-  }
-
-  Widget anadirImagenWidget(_keyForm) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          
-        Row(
+    
+      // backgroundColor: Colors.blue[50],
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: Colors.black,
-              ),
-              onPressed: () => _tomarFoto()
+            BotonItem(
+              texto: "CLICK ME",
+              color1: Colors.blue,
+              color2: Colors.blue,
+              onPress: () {
+                pageX.changePage(RouteSPA(index:7,page: RegisterScreen()));
+              },
             ),
-            IconButton(
-              icon: Icon(
-                Icons.photo_library,
-                color: Colors.black,
-              ),
-              onPressed: () => _seleccionarFoto()
+            Container(
+              height: 500,
+              child:  GetBuilder<ServiceController>(
+              init: ServiceController(),
+              id: 'listaservicios',
+              builder: (lcontroller) =>
+              ListView.builder(
+                itemCount: lcontroller.servicios.length ,
+                itemBuilder:(_, index) {
+                  Service item = lcontroller.servicios[index];
+                  // return Text('${lcontroller.servicios[index].nombre}', style: TextStyle(color: Colors.black),);
+                return FadeInLeft(
+                    duration: Duration( milliseconds: 250 ),
+                    child: Dismissible(
+                      key : UniqueKey(),
+                      onDismissed: (direction) async {
+                        print('bye');
+                      },
+                      background: Container(color: Colors.red),
+                      child: BotonItem(
+                        // imageSource: 'assets/mec-icon.png',
+                        texto: item.nombre,
+                        color1: Colors.blue,
+                        color2: Colors.blue,
+                        onPress: () {
+                          //  pageX.changePage(RouteSPA(index:8,page: EditServiceScreen( item )));
+                          Get.to(EditServiceScreen( service : item ));
+                        },
+                      ),
+                    ),
+                  );
+                },
+              )
+             ),
             ),
           ],
         ),
-
-          SizedBox(height: 20),
-          HeaderWidgetBackground(
-            bottomLeft: 15, topLeft: 15,
-            bottomright: 15,topright: 15,
-            color1: Colors.blueAccent,
-            color2: Colors.lightBlueAccent,
-            width: 300, height: 50,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('Queremos detalles sobre tu situación',
-                 style: TextStyle(color: Colors.white,),
-                ),
-              )
-            ),
-          ),
-          SizedBox(height: 15,),
-
-          _mostrarFoto(),
-          SizedBox(height: 20),
-          datosImagen(_keyForm),
-        ],
       ),
+      floatingActionButton: _floatingButton(),
     );
   }
 
-  Widget datosImagen(_keyForm) {
-    return Form(
-      key: _keyForm,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: TextFormField(
-              validator: (value) => value.isEmpty ? 'Agrega una descripcion' : null,
-              onChanged: (value) => setState(() => descripcion = value),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                labelText: 'Cuéntanos tu situación' ,
-                prefixIcon: Icon( Icons.description),
-                hintText: 'Ej.: Sin comida',
-              ),
+  FloatingActionButton _floatingButton() => 
+    FloatingActionButton(
+      child: Icon(Icons.settings),
+      onPressed: _showMyDialog
+  );
+  
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Registrar Servicio'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                CreateServiceScreen()
+              ],
             ),
           ),
-
-
-          SizedBox(height: 15),
-          BotonSubmit(
-            texto: 'Añadir solicitud',
-            color: Colors.greenAccent,
-            onPress: () => _enviarButton(),
-          )
-        ],
-      ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Registar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
-  }
+  }  
 
-  _enviarButton() async {
-    
-    if ( _keyForm.currentState.validate() ) {
-
-      setState(() => _isloading = !_isloading);
-
-      OrdenTrabajoProvider ordenProvider = new OrdenTrabajoProvider();
-
-      String imagenUrl = await ordenProvider.subirImagen(foto);
-
-      print('esta es la url de la fotito');
-      print(imagenUrl);
-
-      String image64 = base64Encode(foto.readAsBytesSync());
-      print(image64);
-
-      Map<String, String> dato = {
-        "codigo" : "123",
-        "foto"   : imagenUrl
-      };
-
-       ordenProvider.storeOrden( dato );
-
-      setState(() => _isloading = !_isloading);
-
-    }else{
-      print('falta lad descripcion');
-    }
-  }
 }
+

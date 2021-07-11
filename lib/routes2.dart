@@ -1,5 +1,6 @@
 
-import 'package:flutter/material.dart';
+import 'package:ingemec/routes.dart';
+
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:ingemec/screens/client_screen.dart';
 import 'package:ingemec/screens/home_screen.dart';
@@ -8,7 +9,12 @@ import 'package:ingemec/screens/servicios/registrar_screen.dart';
 import 'package:ingemec/screens/servicios/service_screen.dart';
 import 'package:ingemec/screens/works_screen.dart';
 
-final pageRoutesSPA = <RouteSPA>[
+class Routes2{
+
+  static Routes2 _instance = Routes2();
+  static Routes2 get instance => _instance;
+
+  List<RouteSPA> _routes = <RouteSPA>[
 
   RouteSPA(index:0,icon: FeatherIcons.home,text: 'Inicio',page: HomeScreen()),
   RouteSPA(index:1,icon: FeatherIcons.user,text: 'Clientes',page: ClientsScreen()),
@@ -17,19 +23,19 @@ final pageRoutesSPA = <RouteSPA>[
   RouteSPA(index:4,icon: FeatherIcons.users,text: 'Personal',page: HomeScreen()),
   RouteSPA(index:5,icon: FeatherIcons.settings,text: 'Configuracion',page: HomeScreen()),
 
-  // RouteSPA(index:6,icon: FeatherIcons.settings,text: 'CreateServicio',page: CreateServiceScreen()),
-  // RouteSPA(index:7,icon: FeatherIcons.settings,text: 'RegisterServicio',page: RegisterScreen())
+  RouteSPA(index:6,icon: FeatherIcons.settings,text: 'CreateServicio',page: CreateServiceScreen()),
+  RouteSPA(index:7,icon: FeatherIcons.settings,text: 'RegisterServicio',page: RegisterScreen())
 ];
 
+  List<RouteSPA> get routes => _routes;
 
-
-class RouteSPA {
-
-  final int index;
-  final IconData icon;
-  final String text;
-  final Widget page;
-
-  RouteSPA({this.index,this.icon, this.text, this.page});
+  RouteSPA getRoute(String text){
+    for (var item in _routes) {
+      if (item.text.compareTo(text) == 0) {
+        return item;
+      }
+    }
+    return null;
+  }
 
 }
