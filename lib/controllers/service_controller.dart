@@ -31,6 +31,22 @@ class ServiceController extends GetxController{
     // _servicio = await instance.getServicio(idservicio);
   }
 
+  Future<bool> storeService(String nombre, String precio, String tipoId) async {
+
+    Map<String, dynamic> map ={
+      "id_servicio" : "${servicios.length + 1}",
+      "nombre" : nombre,
+      "precio" : precio,
+      "estado" : "true",
+      "id_tipo" : tipoId
+    };
+
+    var sw = await instance.storeService(map);
+    this.getServicios();
+    return sw;
+
+  }
+
 
 
 

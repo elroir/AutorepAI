@@ -15,7 +15,7 @@ class ServicioService{
   Future<List<Service>> getServicios( ) async {
     final urifinal = Uri.http( _dbUrl, '/api/getServicios' );
     final resp = await http.get(urifinal);
-    final decodedData = json.decode(resp.body); //trasforma en un mapa
+    final decodedData = json.decode(resp.body); 
    
     print('$decodedData dataS');
     List<dynamic> items = decodedData["data"];
@@ -26,6 +26,17 @@ class ServicioService{
     }
 
     return services;
+  }
+
+  Future<bool> storeService(Map<String, dynamic> data) async {
+
+    final urifinal = Uri.http( _dbUrl, '/api/storeServicio', data );
+    final resp = await http.post(urifinal);
+    final decodedData = json.decode(resp.body); 
+    
+    print(decodedData["ok"]);
+    print(decodedData["mensaje"]);
+    return (decodedData["ok"]);
   }
 
 }
