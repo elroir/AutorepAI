@@ -30,9 +30,9 @@ class Service {
 
     Map<String, dynamic> toJson() => {
       "id_servicio": idservicio.toString(),
-      "nombre": nombre,
-      "precio": precio.toString(),
-      "estado": estado.toString(),
-      "id_tipo": idTipo.toString(),
+      "nombre"     : nombre,
+      "precio"     : precio.toString(),
+      "estado"     : estado.toString(),
+      "id_tipo"    : idTipo.toString(),
     };
 }

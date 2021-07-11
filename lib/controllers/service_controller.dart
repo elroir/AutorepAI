@@ -18,17 +18,12 @@ class ServiceController extends GetxController{
 
   @override
   void onInit() {
-    
     getServicios();
   }
 
   void getServicios() async {
     _servicios = await  instance.getServicios();
     update(["listaservicios"]);
-  }
-
-  void getServicio(String idservicio) async {
-    // _servicio = await instance.getServicio(idservicio);
   }
 
   Future<bool> storeService(String nombre, String precio, String tipoId) async {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ingemec/controllers/service_controller.dart';
+// import 'package:get/get.dart';
+
 import 'package:ingemec/models/service_model.dart';
+// import 'package:ingemec/controllers/service_controller.dart';
 import 'package:ingemec/screens/services/create_service_screen.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 
@@ -139,7 +140,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
 
     if (nombre != null && precio != null && tipoid != null  ) {
         
-        var sService = Get.put(ServiceController());
+        // var sService = Get.put(ServiceController());
         // final sw = await sService.updateService(nombre, precio, tipoid);
         // if (sw) {
         //   Get.back();

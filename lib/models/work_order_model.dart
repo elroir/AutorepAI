@@ -1,11 +1,11 @@
 
 import 'dart:convert';
 
-OrdenTrabajoModel ordenTrabajoModelFromJson(String str) => OrdenTrabajoModel.fromJson(json.decode(str));
+WorkOrder workOrderModelFromJson(String str) => WorkOrder.fromJson(json.decode(str));
 
-String ordenTrabajoModelToJson(OrdenTrabajoModel data) => json.encode(data.toJson());
+String workOrderModelToJson(WorkOrder data) => json.encode(data.toJson());
 
-class OrdenTrabajoModel {
+class WorkOrder {
     
   int codigo;
   String fechaIngreso;
@@ -13,7 +13,7 @@ class OrdenTrabajoModel {
   bool estado;
   String foto;
   
-  OrdenTrabajoModel({
+  WorkOrder({
     this.codigo,
     this.fechaIngreso,
     this.fechaEntrega,
@@ -22,7 +22,7 @@ class OrdenTrabajoModel {
   });
 
 
-  factory OrdenTrabajoModel.fromJson(Map<String, dynamic> json) => OrdenTrabajoModel(
+  factory WorkOrder.fromJson(Map<String, dynamic> json) => WorkOrder(
     codigo       : json["codigo"],
     fechaIngreso : json["fecha_ingreso"],
     fechaEntrega : json["fecha_entrega"],

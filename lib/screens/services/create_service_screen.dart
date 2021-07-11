@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/service_controller.dart';
-import 'package:ingemec/screens/services/service_screen.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 
 // ignore: must_be_immutable
@@ -134,7 +133,6 @@ class CreateServiceScreen extends StatelessWidget {
         }else{
           print('rayos no se pudo');
         }
-
 
     }else{
       print('Falta infor');

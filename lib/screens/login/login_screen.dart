@@ -65,8 +65,6 @@ class LoginScreen extends GetWidget<AuthController> {
 
   Widget formWidget(){
     
-    final LoginController loginController = Get.put(LoginController());
-
     return Form(
       key: _keyForm,
       child: Column(

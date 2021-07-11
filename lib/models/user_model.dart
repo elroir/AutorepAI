@@ -35,7 +35,6 @@ class User {
         telefono    : int.parse(json["telefono"] ?? "0"),
         tipoUsuario : json["tipo_usuario"],
         estado      : json["estado"]
-        // estado      : (json["estado"] != null) ? ((json["estado"] == "true") ? true : false) : true
     );
 
     Map<String, dynamic> toJson() => {
