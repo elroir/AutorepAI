@@ -39,15 +39,22 @@ class MLController extends GetxController{
     RecognisedText visionText = await recognizer.processImage(visionImage);
 
     result = "";
+    Pattern pattern_3 = r'^(\d{3}[a-zA-Z]{3})$';
+    Pattern pattern_4 = r'^(\d{4}[a-zA-Z]{3})$';
+    RegExp plate_3 = RegExp(pattern_3);
+    RegExp plate_4 = RegExp(pattern_4);
+
 
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
-          result += element.text + ' ';
+          if( plate_3.hasMatch(element.text)||plate_4.hasMatch(element.text))
+            result += element.text + ' ';
         }
       }
-      result += "\n\n";
+//      result += "\n\n";
     }
+
     recognizer.close();
 
     update(['vision']);
