@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import 'package:ingemec/screens/launcher_screen.dart';
-import 'package:ingemec/screens/launcher_screen_phone.dart';
-import 'package:ingemec/screens/servicios/create_service_screen.dart';
-import 'package:ingemec/screens/servicios/edit_service_screen.dart';
+import 'package:ingemec/controllers/bindings/authBinding.dart';
+import 'package:ingemec/root.dart';
 import 'package:ingemec/styles.dart';
 
 void main() {
@@ -26,11 +23,12 @@ class MyApp extends StatelessWidget {
       title: 'Franco Motors',
       debugShowCheckedModeBanner: false,
       theme: Themes.themeData(),
-      home:  Get.size.width > 500 ? LauncherScreen() : LauncherScreenPhone() ,
+      home: Root(),
+      initialBinding: AuthBinding(),
       getPages: [
-        GetPage(name: 'launcher', page:() => LauncherScreen()),
-        // GetPage(name: 'edit_service', page:() => EditServiceScreen())
-      ]
+        GetPage( name: 'root', page: () => Root())
+      ],
+     
     );
   }
 }

@@ -8,9 +8,9 @@ import 'package:ingemec/controllers/page_controller.dart';
 import 'package:ingemec/controllers/service_controller.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/routes.dart';
-import 'package:ingemec/screens/servicios/create_service_screen.dart';
-import 'package:ingemec/screens/servicios/edit_service_screen.dart';
-import 'package:ingemec/screens/servicios/registrar_screen.dart';
+import 'package:ingemec/screens/services/create_service_screen.dart';
+import 'package:ingemec/screens/services/edit_service_screen.dart';
+import 'package:ingemec/screens/services/registrar_screen.dart';
 import 'package:ingemec/services/servicio_service.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 

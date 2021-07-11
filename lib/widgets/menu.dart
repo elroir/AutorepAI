@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/page_controller.dart';
 import 'package:ingemec/routes.dart';
-import 'package:ingemec/routes2.dart';
 
 
 class Menu extends StatelessWidget {
