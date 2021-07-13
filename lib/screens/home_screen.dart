@@ -4,7 +4,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:ingemec/screens/images_analysis/images_analysis_screen.dart';
+import 'package:ingemec/services/image_analysis_service.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 // import 'package:ingemec/widgets/header_background.dart';
@@ -40,10 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: appbarOptions(),
       body: ModalProgressIndicator(
         body: anadirImagenWidget(),
-        texto: 'Procesando información del Acta...',
+        texto: 'Analizando daños del vehículo...',
         color: Colors.blue[200],
         isloading: _isloading,
       ),
@@ -123,7 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BotonSubmit(
             texto: 'Añadir Imágenes',
             color: Color(0xFFCF4646),
-            // textColor: Colors.white,
             onPress: () => _enviarButton(),
           ),
           _multiImageList()
@@ -140,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            'Análisis de Imágenes ${images.length}',
+            'Análisis de Imágenes',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
           ),
           IconButton(
@@ -191,25 +192,9 @@ class _HomeScreenState extends State<HomeScreen> {
         _mostrarFoto();
       } ,
       texto: "Imagen ${index + 1}",
-
+      color1: Color(0xFF468FCF),
+      color2: Color(0xFF468FCF),
     );
-    // return Container(
-    //   height: 50,
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.circular(50),
-    //     color: Colors.red
-    //   ),
-    //   child:  ClipRRect(
-    //     borderRadius: BorderRadius.circular(50),
-    //     child: (foto != null) 
-    //     ? Image.file(
-    //       images[index],
-    //       //fit: BoxFit.cover,
-    //       height: 100.0,
-    //     )
-    //     : Image.asset('assets/no-image.png'),
-    //   ),
-    // );
   }
 
  
@@ -218,17 +203,26 @@ class _HomeScreenState extends State<HomeScreen> {
     
     if ( foto.path != null ) {
 
+      final imageAnalysis = ImageAnalysisService.instance;
 
       setState(() => _isloading = !_isloading);
       
       String image64 = base64Encode(foto.readAsBytesSync());
 
-      // final resp2 = await fmlVision.recImage(foto);
+      final resp = await imageAnalysis.subirImagen(images[0]);
+
+      print('URL DE IMAGEN = $resp');
+
+      final resp2 = await imageAnalysis.analizarDanio({
+        "url_imagen" : resp
+      });
       
+      print('SCORE IMAGEN = $resp2');
+
       //navegar a la otra pantalla
       setState(() => _isloading = !_isloading);
 
-      // Navigator.pushReplacementNamed(context, 'actaform', arguments: resp2);
+      Get.snackbar("OK", resp2);
 
     }else{
       print('falta lad descripcion');
@@ -270,7 +264,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         foto = croppedFile;
         images[currentFoto] = foto; //creo x2
-        // images[images.length-1] = foto; //creo
       } );
     }
   }
