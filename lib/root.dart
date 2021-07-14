@@ -11,7 +11,7 @@ class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx((){
-        return (Get.find<AuthController>().user != null)
+        return (Get.find<AuthController>().user == null)
         ? Get.size.width > 500 ? LauncherScreen() : LauncherScreenPhone() 
         : LoginScreen();
 

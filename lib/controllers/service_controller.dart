@@ -18,6 +18,7 @@ class ServiceController extends GetxController{
 
   @override
   void onInit() {
+    super.onInit();
     getServicios();
   }
 
