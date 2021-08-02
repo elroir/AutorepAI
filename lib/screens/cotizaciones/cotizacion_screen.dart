@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
-import 'package:ingemec/screens/cotizaciones/otro.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/subcajita.dart';
 
@@ -41,26 +40,6 @@ class CotizacionScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyCotizacion() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        height: Get.height * 0.7,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-            
-            _cotizacionItem(),
-            _cotizacionItem(),
-            _cotizacionItem(),
-            _cotizacionItem(),
-              
-            ],
-          ),
-        ),
-      ),
-    );
-  }
   Widget _bodyCotizacionC() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -102,49 +81,6 @@ class CotizacionScreen extends StatelessWidget {
       ),
     );
   }
-   FadeInLeft _cotizacionItem() {
-    return FadeInLeft(
-      duration: Duration( milliseconds: 250 ),
-      child: Dismissible(
-        key : UniqueKey(),
-        onDismissed: (direction) async {
-          print('bye');
-        },
-        background: Container(color: Colors.red),
-        child: BotonItem(
-          texto: "item.observacion",
-          color1: Color(0xFF535f9b),
-          color2: Color(0xFF535f9b),
-          onPress: () {
-            // Get.to(() => EditServiceScreen( item ));
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _bodyCotizacion2() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color(0xff728AC1),
-          borderRadius: BorderRadius.circular(25)
-        ),
-        height: Get.height * 0.7,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-            
-            _cotizacionItem(),
-            _cotizacionItem(),
-            _cotizacionItem(),
-            _cotizacionItem(),
-              
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  
+  
 }
