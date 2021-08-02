@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/service_controller.dart';
 import 'package:ingemec/models/service_model.dart';
-import 'package:ingemec/screens/images_analysis/images_analysis_screen.dart';
 import 'package:ingemec/screens/services/create_service_screen.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
@@ -108,29 +107,13 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       currentIndex: currentI,
       backgroundColor: Color(0xff445CBD),
       onTap: (value) => setState(() => currentI = value),
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.car_repair),
-          title: Text('Vehiculo'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.dangerous),
-          title: Text('Daño'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.addchart),
-          title: Text('Cotizacion'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          // icon: Icon(Icons.settings,color: Colors.white),
-          title: Text('Servicios'),
-          // title: Text('Servicios', style: TextStyle(color: Colors.white)),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.check_circle_outline),
-          title: Text('Confirmar')
-        ),
+      items: <BottomNavigationBarItem> [
+       
+        BottomNavigationBarItem( icon: Icon(Icons.car_rental_outlined), label: 'Vehiculo' ),
+        BottomNavigationBarItem( icon: Icon(Icons.dangerous), label: 'Daño' ),
+        BottomNavigationBarItem( icon: Icon(Icons.addchart), label: 'Cotizacion' ),
+        BottomNavigationBarItem( icon: Icon(Icons.settings), label: 'Servicios' ),
+        BottomNavigationBarItem( icon: Icon(Icons.check_circle_outline), label: 'Confirmar' )
       ],
     );
   }
