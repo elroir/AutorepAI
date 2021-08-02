@@ -26,17 +26,18 @@ class VehicleService {
     }
   }
 
-  Future<List<Vehicle>> getVehicles(Vehicle vehicle) async {
+  Future<List<Vehicle>> getVehicles() async {
     try{
-      final uri = Uri.http( Env.url, '/api/storeVehiculo', {
-        "id_vehiculo" : vehicle.idVehiculo.toString()
-      } );
-      final resp = await http.post(uri,body: vehicle.toJson());
+      final uri = Uri.http( Env.url, '/api/getVehiculos' );
+      final resp = await http.get(uri);
       final decodedData = json.decode(resp.body);
-      if(decodedData['ok'])
-        Get.snackbar('Registro existoso', 'Se ha registrado el vehiculo con exito');
-      else
-        Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      final List<Vehicle> vehicles = [];
+
+        (decodedData['data'] as List).forEach((vehicle) {
+          vehicles.add(Vehicle.fromJson(vehicle));
+        });
+        return vehicles;
+
     }catch(e){
       Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
     }
