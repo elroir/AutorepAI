@@ -25,7 +25,7 @@ class _FormWidgetState extends State<FormWidget> {
   Widget build(BuildContext context) {
     
     final authController = Get.put(AuthController());
-    print(authController.usuario.toJson());
+    print(authController.user.toJson());
 
       return Form(
       key: _keyForm,
@@ -35,7 +35,7 @@ class _FormWidgetState extends State<FormWidget> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: TextFormField(
-              initialValue: authController.usuario.email ?? 'Ale rayos',
+              initialValue: authController.user.email ?? 'Ale rayos',
               validator: (value) => value.isEmpty ? 'Escribe tu email' : null,
               onChanged: (value) => setState(() => email = value),
               cursorColor: Colors.white,
@@ -57,7 +57,7 @@ class _FormWidgetState extends State<FormWidget> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: TextFormField(
-              initialValue: authController.usuario.password ?? '123',
+              initialValue: authController.user.password ?? '123',
               validator: (value) => (value.length < 6)
                   ? 'La contraseña de 6 o más caracteres'
                   : null,

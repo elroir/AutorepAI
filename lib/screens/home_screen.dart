@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:ingemec/screens/images_analysis/images_analysis_screen.dart';
 import 'package:ingemec/services/image_analysis_service.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';

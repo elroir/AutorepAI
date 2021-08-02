@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 70),
           child: CircleImage(),
         ),
-        Text((authc.usuario.nombre != null)? authc.usuario.nombre : 'Sin nombre', 
+        Text((authc.user.nombre != null)? authc.user.nombre : 'Sin nombre',
           style: TextStyle(
             fontWeight: FontWeight.bold, 
             fontSize: 15

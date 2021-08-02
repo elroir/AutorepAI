@@ -12,21 +12,26 @@ class UserService{
 
   final _dbUrl = '34.132.85.203';
 
-  Future<String> getUsuarios( ) async {
-    final urifinal = Uri.http( _dbUrl, '/api/getUsuarios' );
-    final resp = await http.get(urifinal);
-    final decodedData = json.decode(resp.body); //trasforma en un mapa
-   
-    print('$decodedData dataS');
+  Future<List<User>> getUsers( ) async {
+    final uriFinal = Uri.http( _dbUrl, '/api/getUsuarios' );
+    final resp = await http.get(uriFinal);
+    final List<User> users = [];
+    final decodedData = json.decode(resp.body);
 
-    return decodedData['ok'];
+
+    (decodedData['data'] as List).forEach((user) {
+      users.add(User.fromJson(user));
+    });
+
+
+    return users;
         
   }
 
-  Future<User> getUsuario( String usuarioid ) async {
+  Future<User> getUser( String usuarioid ) async {
     final data = {"id_usuario" : usuarioid};
-    final urifinal = Uri.http( _dbUrl, '/api/getUsuarioId', data );
-    final resp = await http.get(urifinal);
+    final uriFinal = Uri.http( _dbUrl, '/api/getUsuarioId', data );
+    final resp = await http.get(uriFinal);
     final decodedData = json.decode(resp.body); //trasforma en un mapa
    
     print('$decodedData dataS');
