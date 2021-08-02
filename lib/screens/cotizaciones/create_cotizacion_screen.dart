@@ -109,44 +109,11 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       onTap: (value) => setState(() => currentI = value),
       items: <BottomNavigationBarItem> [
        
-        BottomNavigationBarItem(
-          icon: Icon(Icons.car_rental_outlined),
-          label: 'Vehiculo',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.dangerous),
-          label: 'Daño',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.addchart),
-          label: 'Cotizacion',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Servicios',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.check_circle_outline),
-          label: 'Confirmar',
-        ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.dangerous),
-        //   title: Text('Daño'),
-        // ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.addchart),
-        //   title: Text('Cotizacion'),
-        // ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.settings),
-        //   // icon: Icon(Icons.settings,color: Colors.white),
-        //   title: Text('Servicios'),
-        //   // title: Text('Servicios', style: TextStyle(color: Colors.white)),
-        // ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.check_circle_outline),
-        //   title: Text('Confirmar')
-        // ),
+        BottomNavigationBarItem( icon: Icon(Icons.car_rental_outlined), label: 'Vehiculo' ),
+        BottomNavigationBarItem( icon: Icon(Icons.dangerous), label: 'Daño' ),
+        BottomNavigationBarItem( icon: Icon(Icons.addchart), label: 'Cotizacion' ),
+        BottomNavigationBarItem( icon: Icon(Icons.settings), label: 'Servicios' ),
+        BottomNavigationBarItem( icon: Icon(Icons.check_circle_outline), label: 'Confirmar' )
       ],
     );
   }
