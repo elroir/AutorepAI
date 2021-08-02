@@ -42,6 +42,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
               init: ServiceController(),
               id: 'listaservicios',
               builder: (lcontroller) => ListView.builder(
+                     physics: BouncingScrollPhysics(),
                 itemCount: lcontroller.servicios.length ,
                 itemBuilder:(_, index) {
                   Service item = lcontroller.servicios[index];

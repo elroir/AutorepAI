@@ -11,14 +11,18 @@ class SubcajitaWidget extends StatelessWidget {
   final Widget body;
   final double heightBody;
 
+  final Color colorCajitaP;
+
   const SubcajitaWidget({
     Key key, 
     @required this.title, 
     @required this.subtitle, 
-    this.color = Colors.white54, 
+    this.color = Colors.white54,
+    
     this.fontSize = 15, 
     this.body, 
-    this.heightBody = 0
+    this.heightBody = 0,
+    this.colorCajitaP = Colors.blue
   }) : super(key: key);
 
   @override
@@ -38,7 +42,7 @@ class SubcajitaWidget extends StatelessWidget {
               height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.blue
+                color: this.colorCajitaP
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric( horizontal: 25, vertical: 15),
