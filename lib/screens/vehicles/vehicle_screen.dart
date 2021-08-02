@@ -3,6 +3,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/ml_controller.dart';
 import 'package:ingemec/models/user_model.dart';
+import 'package:ingemec/models/vehicle_model.dart';
+import 'package:ingemec/services/vehicle_service.dart';
 import 'package:ingemec/widgets/custom_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 
@@ -14,18 +16,16 @@ class VehicleScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
+  final Vehicle _vehicle = new Vehicle();
+
   @override
   Widget build(BuildContext context) {
-    final visionX = Get.put(MLController());
+
 
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        actions: [
-          IconButton(icon: Icon(FeatherIcons.camera), onPressed:() => visionX.pickImageFromCamera()),
-          IconButton(icon: Icon(FeatherIcons.image), onPressed: () => visionX.pickImageFromGallery()),
-        ],
       ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
@@ -45,12 +45,18 @@ class VehicleScreen extends StatelessWidget {
                 id: 'picker',
                 builder: (controller){
                   if (controller.image!=null){
-                    return Image.file(controller.image,width: 200,height: 250,fit: BoxFit.contain,);
+                    return Image.file(controller.image,width: 250,height: 200,fit: BoxFit.contain,);
                   }
                   return SizedBox(
-                    width: 200,
-                    height: 250,
-                    child: Icon(FeatherIcons.image,size: 80,color: Colors.grey,),
+                    width: 250,
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(FeatherIcons.image,size: 80,color: Colors.grey,),
+                        Text('Elegir desde',style: TextStyle(fontSize: 20),)
+                      ],
+                    ),
                   );
                 },
 
@@ -64,10 +70,46 @@ class VehicleScreen extends StatelessWidget {
 //                }
                   return Column(
                     children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomButton(
+                              onPressed: controller.pickImageFromGallery,
+                              width: Get.width*0.42,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Galeria'),
+                                  SizedBox(width: 10,),
+                                  Icon(FeatherIcons.image)
+                                ],
+                              ),
+                            ),
+                            CustomButton(
+                              onPressed: controller.pickImageFromCamera,
+                              width: Get.width*0.42,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Camara'),
+                                  SizedBox(width: 10,),
+                                  Icon(FeatherIcons.camera)
+                                ],
+                              ),
+                            ),
 
+                          ],
+                        ),
+                      ),
                       CustomTextField(
-                        labelText: 'Placa',
                         controller: TextEditingController(text: controller.result),
+                        labelText: 'Placa',
+                        onSaved: (value) {
+                          this._vehicle.idVehiculo = int.parse(value.substring(0,3));
+                          this._vehicle.nroPlaca = value;
+                        },
                       ),
                     ],
                   );
@@ -75,16 +117,22 @@ class VehicleScreen extends StatelessWidget {
               ),
               CustomTextField(
                 labelText: 'Marca',
+                onSaved: (value) {
+                  this._vehicle.marca = value;
+                },
               ),
-              CustomTextField(
-                labelText: 'Modelo',
-              ),
+//              CustomTextField(
+//                labelText: 'Modelo',
+//              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomTextField(
                     width: Get.width*0.45,
                     labelText: 'Color',
+                    onSaved: (value) {
+                      this._vehicle.color = value;
+                    },
                   ),
                   CustomTextField(
                     width: Get.width*0.4,
@@ -93,6 +141,9 @@ class VehicleScreen extends StatelessWidget {
                         decimal: false,
                         signed: false
                     ),
+                    onSaved: (value) {
+                      this._vehicle.modelo = value;
+                    },
                   ),
                 ],
               ),
@@ -118,6 +169,8 @@ class VehicleScreen extends StatelessWidget {
     final FormState form = _formKey.currentState;
     if (!form.validate()) return;
     form.save();
+    this._vehicle.idUsuario = this.user.idusuario;
+    await VehicleService.instance.newVehicle(this._vehicle);
 
 
   }
