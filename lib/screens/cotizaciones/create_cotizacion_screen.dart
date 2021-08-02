@@ -6,6 +6,7 @@ import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/screens/services/create_service_screen.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
+import 'package:ingemec/widgets/generalAppBar.dart';
 
 // ignore: must_be_immutable
 class CreateCotizacionScreen extends StatefulWidget {
@@ -15,14 +16,11 @@ class CreateCotizacionScreen extends StatefulWidget {
 }
 
 class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
+  
   TextEditingController observacionController = new TextEditingController();
-
   TextEditingController tiempoTrabajoController = new TextEditingController();
-
   TextEditingController fechaController = new TextEditingController();
-
   TextEditingController personalIdController = new TextEditingController();
-
   TextEditingController vehiculoIdController = new TextEditingController();
 
   List<int> serviciosId = [];
@@ -32,10 +30,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: appBarG(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -49,27 +44,12 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
               child: ColorBoxDecoration(
                 color: Color(0xff535f9b),
                 height: Get.height * 0.73,
-                // height: Get.height * 0.8,
-                //height: 325,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(height: 8),
                       _escogerWidget(),
                       SizedBox(height: 8),
-                      // SizedBox(height: 8),
-
-                      // SizedBox(height: 8),
-                      // _createCotizacionForm(),
-                      
-                      // SizedBox(height: 15),
-                      // _serviciosListC(),
-                      // SizedBox(height: 15),
-                      // BotonSubmit(                        
-                      //   color: Color(0xFFdb6060), 
-                      //   texto: "Crear", 
-                      //   onPress: (){}
-                      // )
                     ],
                   ),
                 ),
@@ -167,8 +147,6 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
     return Form(
         child: Column(
           children: [
-            // SizedBox( height: 30.0 ),
-            // Checkbox(value: false, onChanged: (val){}),
             TextFormField(
               controller: observacionController,
               validator: (value) => value.isEmpty ? 'Observacion' : null,
