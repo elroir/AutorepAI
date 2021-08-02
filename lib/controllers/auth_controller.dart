@@ -11,24 +11,24 @@ class AuthController extends GetxController {
 
   Rx<FirebaseUser> _firebaseUser = Rxn<FirebaseUser>();
   
-  User _usuario = new User();
+  User _user = new User();
 
-  String get user => _firebaseUser.value?.email;
-  User get usuario => _usuario;
+  String get firebaseUser => _firebaseUser.value?.email;
+  User get user => _user;
 
 
   @override
   void onInit() {
-    
+    super.onInit();
     _firebaseUser.bindStream(_auth.onAuthStateChanged);
   }
 
   void createUser(String email, String password) async {
     try {
-      final usuario = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      print('USUARIO ID = ${usuario.user.uid}');
-      _usuario = await UserService.instance.storeUsuario({
-        "id_usuario" : usuario.user.uid,
+      final user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      print('USUARIO ID = ${user.user.uid}');
+      _user = await UserService.instance.storeUsuario({
+        "id_usuario" : user.user.uid,
         "email"      : email,
         "password"   : password,
         "tipo_usuario" : "C"
@@ -43,7 +43,7 @@ class AuthController extends GetxController {
     try {
       final usuario = await _auth.signInWithEmailAndPassword(email: email, password: password);
       print('USUARIO ID = ${usuario.user.uid}');
-      _usuario = await UserService.instance.getUsuario(usuario.user.uid);
+      _user = await UserService.instance.getUser(usuario.user.uid);
       // _uid = usuario.user.uid;
     } catch (e) {
       Get.snackbar("Error al iniciar sesion", e.message, snackPosition: SnackPosition.BOTTOM);

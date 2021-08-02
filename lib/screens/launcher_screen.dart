@@ -16,10 +16,12 @@ class LauncherScreen extends StatelessWidget {
             child: SafeArea(child: Menu())
           ),
           Expanded(
-            child: GetBuilder<PageGetXController>(
-              init: PageGetXController(),
-              id: 'page',
-              builder: (controller) => controller.currentPage
+            child: SafeArea(
+              child: GetBuilder<PageGetXController>(
+                init: PageGetXController(),
+                id: 'page',
+                builder: (controller) => controller.currentPage
+              ),
             ),
           )
 

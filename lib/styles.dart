@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 
 class Themes {
-
-
   static ThemeData themeData() {
     return ThemeData(
       primaryColor: Color(0xFFDC4D4E),
@@ -25,5 +23,20 @@ class Themes {
 
     );
   }
+}
+
+class Styles {
+
+  static final TextStyle clientCard = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 16
+  );
+
+  static final TextStyle titleCard = TextStyle(
+    color:  Color(0xFFDC4D4E),
+    fontSize: 22,
+    fontWeight: FontWeight.w900,
+  );
 
 }
+

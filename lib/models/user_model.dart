@@ -29,10 +29,10 @@ class User {
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         idusuario   : json["id_usuario"],
-        nombre      : json["nombre"] ?? " ",
+        nombre      : json["nombre"] ?? "Sin Nombre",
         email       : json["email"],
         password    : json["password"],
-        telefono    : int.parse(json["telefono"] ?? "0"),
+        telefono    : (json["telefono"]) ?? 0,
         tipoUsuario : json["tipo_usuario"],
         estado      : json["estado"]
     );
