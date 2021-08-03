@@ -12,11 +12,11 @@ class VehicleController extends GetxController{
 
   @override
   void onReady()  {
-    this.loaVehicles();
+    this.loadVehicles();
     super.onReady();
   }
 
-  Future<void> loaVehicles() async {
+  Future<void> loadVehicles() async {
     this._vehicles = await VehicleService.instance.getVehicles();
     this._loading = false;
     update(['vehicle']);
@@ -26,7 +26,7 @@ class VehicleController extends GetxController{
     this._loading = true;
     await Future.delayed(Duration(milliseconds: 200));
     this._vehicles.clear();
-    await this.loaVehicles();
+    await this.loadVehicles();
   }
 
 

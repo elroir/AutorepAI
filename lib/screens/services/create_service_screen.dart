@@ -165,7 +165,8 @@ class ColorBoxDecoration extends StatelessWidget {
         borderRadius: BorderRadius.circular(35)
       ),  
       child: Padding(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.symmetric( horizontal: 5, vertical: 25),
+        // padding: EdgeInsets.all(25),
         child: this.child
       ),
 

@@ -7,10 +7,13 @@ import 'package:get/get.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ingemec/controllers/auth_controller.dart';
 
 import 'package:ingemec/controllers/service_controller.dart';
+import 'package:ingemec/controllers/vehicle_controller.dart';
 import 'package:ingemec/models/grado_danio_model.dart';
 import 'package:ingemec/models/service_model.dart';
+import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/screens/services/create_service_screen.dart';
 import 'package:ingemec/services/image_analysis_service.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
@@ -33,6 +36,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
   TextEditingController fechaController = new TextEditingController();
 
   List<int> serviciosId = [];
+  List<Service> serviciosI = [];
 
   int currentI = 0;
 
@@ -48,7 +52,15 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
   //Grado
   GradoDanio gradoDanio;
 
-  TextStyle _titleStyle =  TextStyle(fontSize: 18 );
+  //Precio total
+  double precioTotal = 0;
+
+  //Id vehiculo
+  int vehiculoId;
+
+  String _chosenValue;
+
+  TextStyle _titleStyle =  TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -124,9 +136,17 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
         BottomNavigationBarItem( icon: Icon(Icons.dangerous), label: 'Daño' ),
         BottomNavigationBarItem( icon: Icon(Icons.addchart), label: 'Cotizacion' ),
         BottomNavigationBarItem( icon: Icon(Icons.settings), label: 'Servicios' ),
-        BottomNavigationBarItem( icon: Icon(Icons.check_circle_outline), label: 'Confirmar' )
+        BottomNavigationBarItem( icon: IconButton(icon: Icon(Icons.check_circle_outline), onPressed: _calcularPrecio,), label: 'Confirmar' )
       ],
     );
+  }
+
+  void _calcularPrecio(){
+    this.precioTotal = 0;
+    for (var item in serviciosI) {
+      this.precioTotal += item.precio;
+    }
+    setState(() {});
   }
 
 
@@ -135,18 +155,20 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: 15),
-          child: Text('Seleccionar un vehículo', style: _titleStyle),
+          child: Text('Seleccionar un vehículo:', style: _titleStyle),
         ),
         Container(
           height: Get.height * 0.6,
-          child: SingleChildScrollView(
-            child:Column(
-              children: [
-                _serviceItem2(),
-                _serviceItem2(),
-                _serviceItem2(),
-                _serviceItem2(),
-              ],
+           child:  GetBuilder<VehicleController>(
+            init: VehicleController(),
+            id: 'vehicle',
+            builder: (vcontroller) => ListView.builder(
+                    physics: BouncingScrollPhysics(),
+              itemCount: vcontroller.vehicles.length ,
+              itemBuilder:(_, index) {
+                Vehicle item = vcontroller.vehicles[index];
+                return _vehicleItem(item);
+              },
             )
           ),
         ),
@@ -155,7 +177,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
   }
 
   
-  FadeInLeft _serviceItem2() {
+  FadeInLeft _vehicleItem(Vehicle vehicle) {
     return FadeInLeft(
       duration: Duration( milliseconds: 250 ),
       child: Dismissible(
@@ -165,13 +187,11 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
         },
         background: Container(color: Colors.red),
         child: BotonItem(
-          texto: 'item.nombre',
-          color1: Color(0xFFDF576C),
-          color2: Color(0xFFDF576C),
-          onPress: () {
-            
-            // Get.to(() => EditServiceScreen( item ));
-          },
+          fontSize: 16,
+          texto: 'Nro Placa: ${vehicle.nroPlaca}',
+          color1: Color(0xFF5898FA),
+          color2: Color(0xFF5898FA),
+          onPress: () => setState(() => vehiculoId = vehicle.idVehiculo ),
         ),
       ),
     );
@@ -250,7 +270,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
         SizedBox(height: 1, width: double.infinity,),
          Text(
           'Análisis de Imágenes',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         SizedBox(height: 20 ),
         _botones(),
@@ -417,82 +437,85 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
     }
   }
   
-  Form _cotizacionFormPage() {
-    return Form(
-        child: Column(
-          children: [
-            Text('Datos de la proforma', style: _titleStyle),
-            SizedBox(height: 15),
+  Widget _cotizacionFormPage() {
+    return Padding(
+      padding: EdgeInsets.symmetric( horizontal: 17 ),
+      child: Form(
+          child: Column(
+            children: [
+              Text('Datos de la proforma', style: _titleStyle),
+              SizedBox(height: 15),
 
-            TextFormField(
-              controller: observacionController,
-              validator: (value) => value.isEmpty ? 'Observacion' : null,
-              cursorColor: Colors.white,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+              TextFormField(
+                controller: observacionController,
+                validator: (value) => value.isEmpty ? 'Observacion' : null,
+                cursorColor: Colors.white,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  labelText: 'Observacion',
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Arreglar ... ',
                 ),
-                labelText: 'Observacion',
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                hintText: 'Arreglar ... ',
               ),
-            ),
-            SizedBox(height: 8),
+              SizedBox(height: 8),
 
-            TextFormField(
-              controller: tiempoTrabajoController,
-              validator: (value) => value.isEmpty ? 'Tiempo de trabajo (dias)' : null,
-              cursorColor: Colors.white,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+              TextFormField(
+                controller: tiempoTrabajoController,
+                validator: (value) => value.isEmpty ? 'Tiempo de trabajo (dias)' : null,
+                cursorColor: Colors.white,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  labelText: 'Tiempo de trabajo (dias)',
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  hintText: '10 dias ',
                 ),
-                labelText: 'Tiempo de trabajo (dias)',
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                ),
-                hintText: '10 dias ',
               ),
-            ),
-            SizedBox(height: 8),
+              SizedBox(height: 8),
 
-            TextFormField(
-              initialValue: DateTime.now().toString(),
-              // controller: vehiculoIdController,
-              validator: (value) => value.isEmpty ? 'Fecha' : null,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+              TextFormField(
+                initialValue: DateTime.now().toString(),
+                // controller: vehiculoIdController,
+                validator: (value) => value.isEmpty ? 'Fecha' : null,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  labelText: 'Fecha',
+                  prefixIcon: Icon(Icons.person, color: Colors.white),
+                  hintText: '2021-08-12 ',
                 ),
-                labelText: 'Fecha',
-                prefixIcon: Icon(Icons.person, color: Colors.white),
-                hintText: '2021-08-12 ',
               ),
-            ),
-            SizedBox(height: 8),
+              SizedBox(height: 8),
 
-            TextFormField(
-              initialValue: (gradoDanio != null) ? gradoDanio.nombre : 'lol',
-              validator: (value) => value.isEmpty ? 'Grado!' : null,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
+              TextFormField(
+                initialValue: (gradoDanio != null) ? gradoDanio.nombre : 'lol',
+                validator: (value) => value.isEmpty ? 'Grado!' : null,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  labelText: 'Grado de Daño',
+                  prefixIcon: Icon(Icons.person, color: Colors.white),
                 ),
-                labelText: 'Grado de Daño',
-                prefixIcon: Icon(Icons.person, color: Colors.white),
               ),
-            ),
-          ],
-        )
-      );
+            ],
+          )
+        ),
+    );
   }
 
 
@@ -503,7 +526,6 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
         SizedBox( height: 20),
         Container(
           height: Get.height * 0.7,
-          // height: Get.height * 0.33,
           child:  GetBuilder<ServiceController>(
           init: ServiceController(),
           id: 'listaservicios',
@@ -531,13 +553,22 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
         },
         background: Container(color: Colors.red),
         child: BotonItem(
-          texto: item.nombre,
+          imgW:Padding(
+            padding: EdgeInsets.only(left: 6),
+            child: _gradoDropdown(),
+          ),
+         
+          iconW: _servicioPrecio(item),
+          fontSize: 12,
+          texto: '${item.nombre}',
           color1: Color(0xFF535f9b),
           color2: Color(0xFF535f9b),
           onPress: () {
             setState((){
               serviciosId.add(item.idservicio);
+              serviciosI.add(item);
               print("lista length =  ${serviciosId.length}");
+              print("lista2 length =  ${serviciosI.length}");
             });
             // Get.to(() => EditServiceScreen( item ));
           },
@@ -545,6 +576,21 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       ),
     );
   }
+
+   Widget _servicioPrecio(Service item) {
+    return Container(
+      height: 45, width: 45,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(50)
+      ),
+      child: Center(
+        child: Text('Bs. ${item.precio.toString()}', 
+          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold)
+        )
+      ),
+    );
+   }
 
   Widget _confirmPage() {
     return Container(
@@ -556,14 +602,66 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
             Text( '¿Confirma todos los datos registrados?', 
               style: _titleStyle
             )
-          ),          
+          ), 
+          SizedBox(height: 15),
+          CustomButton(
+            onPressed: () {},
+            width: Get.width*0.5,
+            child: Text( 'Total:   Bs. $precioTotal',)
+          ),        
           SizedBox(height: 20),
            BotonSubmit(                        
             color: Color(0xFFdb6060), 
             texto: "Registrar Cotizacion", 
-            onPress: (){}
+            onPress: (){
+              //TODO: llamar al método storeCotizacion
+              print('registrando cotizacion y detalles...');
+              print('observacion: ${observacionController.value}');
+              print('fecha: ${DateTime.now()}'); //dara error
+              print('tiempo_trabajo : ${tiempoTrabajoController.value}');
+              print('id_vehiculo : $vehiculoId');
+              print('id_personal: ${Get.find<AuthController>().user.idusuario}'); //creo
+              print('');
+              
+
+            }
           )
         ],
+      ),
+    );
+  }
+
+  Widget _gradoDropdown() {
+    return Container(
+      width: Get.width * 0.18,
+      decoration: BoxDecoration(
+        color: Color(0xff4583DF),
+        borderRadius: BorderRadius.circular(20)
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric( horizontal: 8.0),
+        child: DropdownButton<String>(
+          value: _chosenValue,
+          //elevation: 5,
+          style: TextStyle(color: Colors.black),
+
+          items: <String>[
+            'FUERTE',
+            'MEDIO',
+            'LEVE',
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: TextStyle(color: Colors.white, fontSize: 9)),
+            );
+          }).toList(),
+          hint: Text("Daño"),
+          onChanged: (String value) {
+            setState(() {
+              _chosenValue = value;
+            });
+          },
+        ),
       ),
     );
   }

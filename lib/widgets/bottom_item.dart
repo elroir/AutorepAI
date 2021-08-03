@@ -13,13 +13,18 @@ class BotonItem extends StatelessWidget {
   final Color color2;
   @required final Function onPress;
   final String imageSource;
+  final double fontSize;
+  final Widget iconW;
+  final Widget imgW;
 
   const BotonItem({
     this.texto,
     this.color1 = Colors.grey,
     this.color2 = Colors.blueGrey,
     this.onPress,
-    this.imageSource
+    this.imageSource, 
+    this.fontSize = 18,
+    this.iconW, this.imgW
   });
 
   
@@ -34,11 +39,14 @@ class BotonItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox( height: 140, width: 40 ),
-              ImageCircle( imageSource : this.imageSource, height: 55,),
+              ImageCircle( imageSource : this.imageSource, height: 55,),//55
 
               SizedBox( width: 20 ),
-              Expanded(child: Text( this.texto, style: TextStyle( color: Colors.white, fontSize: 18 ) )),
-              FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ),
+              Expanded(child: Text( this.texto, style: TextStyle( color: Colors.white, fontSize: this.fontSize ) )),
+              // FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ),
+              this.iconW ?? FaIcon( FontAwesomeIcons.chevronRight, color: Colors.white ),
+              // SizedBox( width: 20 ),
+              (this.imgW) ?? Container(),
               SizedBox( width: 40 ),
             ],
           )
