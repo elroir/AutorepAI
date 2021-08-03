@@ -16,7 +16,7 @@ class ClientCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Get.to(() => VehicleScreen(user: this.user,));
+        Get.to(() => VehicleScreen(user: user,));
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
