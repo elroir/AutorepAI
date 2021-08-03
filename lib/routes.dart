@@ -5,7 +5,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:ingemec/screens/clients/client_screen.dart';
 import 'package:ingemec/screens/cotizaciones/cotizacion_screen.dart';
-import 'package:ingemec/screens/cotizaciones/nuevo_screen.dart';
 import 'package:ingemec/screens/home_screen.dart';
 import 'package:ingemec/screens/login/profile_screen.dart';
 import 'package:ingemec/screens/services/service_screen.dart';
@@ -18,7 +17,7 @@ final pageRoutesSPA = <RouteSPA>[
   RouteSPA(index:2,icon: FeatherIcons.dollarSign,text: 'Cotizaciones',page: CotizacionScreen()),
   RouteSPA(index:3,icon: FeatherIcons.clipboard,text: 'Trabajos',page: WorksScreen()),
   RouteSPA(index:4,icon: FeatherIcons.briefcase,text: 'Servicios',page: ServiceScreen()),
-  RouteSPA(index:5,icon: FeatherIcons.users,text: 'Personal',page: NuevoScreen()),
+  RouteSPA(index:5,icon: FeatherIcons.users,text: 'Personal',page: HomeScreen()),
   RouteSPA(index:6,icon: FeatherIcons.settings,text: 'Configuracion',page: ProfileScreen()),
 
 ];

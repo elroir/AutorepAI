@@ -6,23 +6,25 @@ class BotonSubmit extends StatelessWidget {
   final String texto;
   final double size;
   final Function onPress;
+  final double width;
+  final double borde;
 
   BotonSubmit({
     @required this.color,
     @required this.texto,
     this.size = 15.0,
-    @required this.onPress
+    @required this.onPress, this.width = 180, this.borde = 100
   });
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(100),
+      borderRadius: BorderRadius.circular(this.borde),
       child: FlatButton(
         color: this.color ,
         onPressed: this.onPress,
         child: Container(
-          width: 180,
+          width: this.width,
           height: 50,
           child: Center(
             child: Text( this.texto, 

@@ -108,14 +108,14 @@ class BotonImageItem extends StatelessWidget {
       onTap: this.onPress,
       child: Stack(
         children: <Widget>[
-          _BotonItemBackground( color1: this.color1, color2: this.color2, height: 150, ),
+          _BotonItemBackground( color1: this.color1, color2: this.color2, height: 80, ),
           Padding(
             padding: EdgeInsets.only( top: 25),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox( height: 140, width: 40 ),
-                imageFromFile(height: 120, foto: this.foto),
+                SizedBox( height: 70, width: 40 ),
+                imageFromFile(height: 60, foto: this.foto),
 
                 SizedBox( width: 50 ),
                 Expanded(child: Text( this.texto, style: TextStyle( color: Colors.white, fontSize: 18 ) )),
