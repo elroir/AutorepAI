@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/models/user_model.dart';
-import 'package:ingemec/screens/vehicles/vehicle_form.dart';
 import 'package:ingemec/screens/vehicles/vehicle_screen.dart';
 import 'package:ingemec/styles.dart';
 
@@ -17,7 +16,7 @@ class ClientCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Get.to(() => VehicleScreen());
+        Get.to(() => VehicleScreen(user: user,));
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

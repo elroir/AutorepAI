@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/user_controller.dart';
@@ -23,7 +24,7 @@ class ClientsScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: double.infinity,),
                   ...controller.users.map((user) =>
-                  ClientCard(user: user)).toList()
+                  FadeInLeft(child: ClientCard(user: user))).toList()
                 ]
               )
             );
