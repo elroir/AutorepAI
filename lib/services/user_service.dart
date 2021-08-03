@@ -17,8 +17,6 @@ class UserService{
     final resp = await http.get(uriFinal);
     final List<User> users = [];
     final decodedData = json.decode(resp.body);
-
-
     (decodedData['data'] as List).forEach((user) {
       users.add(User.fromJson(user));
     });

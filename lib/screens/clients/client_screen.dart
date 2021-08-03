@@ -15,6 +15,7 @@ class ClientsScreen extends StatelessWidget {
         id: 'user',
         builder: (controller) {
           if (!controller.loading){
+            final List users = controller.users.where((user) => user.tipoUsuario=='C').toList();
             return (Get.width>600)
                 ? this._largeScreens(controller)
                 : SingleChildScrollView(
@@ -23,7 +24,7 @@ class ClientsScreen extends StatelessWidget {
                 alignment: WrapAlignment.center,
                 children: [
                   SizedBox(width: double.infinity,),
-                  ...controller.users.map((user) =>
+                  ...users.map((user) =>
                   FadeInLeft(child: ClientCard(user: user))).toList()
                 ]
               )

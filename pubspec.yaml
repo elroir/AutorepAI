@@ -35,9 +35,9 @@ dependencies:
   
   image_picker: ^0.6.0+2
   image_picker_web: ^2.0.3
-  path_provider: ^1.6.5
-  provider: ^4.0.4
-  
+  path_provider: ^2.0.2
+  shared_preferences: ^2.0.6
+
   http: ^0.12.2
   firebase_storage: ^3.1.5
   firebase_auth: ^0.14.0+5
