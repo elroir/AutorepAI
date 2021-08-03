@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:get/get.dart';
@@ -8,9 +8,11 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ingemec/controllers/auth_controller.dart';
+import 'package:ingemec/controllers/cotizacion_controller.dart';
 
 import 'package:ingemec/controllers/service_controller.dart';
 import 'package:ingemec/controllers/vehicle_controller.dart';
+import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/grado_danio_model.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/models/vehicle_model.dart';
@@ -50,7 +52,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
   int currentIndex = 0;
 
   //Grado
-  GradoDanio gradoDanio;
+  GradoDanio gradoDanio = new GradoDanio();
 
   //Precio total
   double precioTotal = 0;
@@ -392,6 +394,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       setState(() => _isloading = !_isloading);
 
       Get.snackbar("OK", resp2);
+      gradoDanio.nombre = resp2;
 
     }else{
       print('falta lad descripcion');
@@ -485,7 +488,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
               SizedBox(height: 8),
 
               TextFormField(
-                initialValue: DateTime.now().toString(),
+                initialValue: new DateFormat("yyyy-MM-dd").format(DateTime.now()), //idk
                 // controller: vehiculoIdController,
                 validator: (value) => value.isEmpty ? 'Fecha' : null,
                 cursorColor: Colors.white,
@@ -501,14 +504,14 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
               SizedBox(height: 8),
 
               TextFormField(
-                initialValue: (gradoDanio != null) ? gradoDanio.nombre : 'lol',
+                initialValue: (gradoDanio != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
                 validator: (value) => value.isEmpty ? 'Grado!' : null,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  labelText: 'Grado de Daño',
+                  labelText: 'Grado de Daño - Porcentaje',
                   prefixIcon: Icon(Icons.person, color: Colors.white),
                 ),
               ),
@@ -613,17 +616,54 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
            BotonSubmit(                        
             color: Color(0xFFdb6060), 
             texto: "Registrar Cotizacion", 
-            onPress: (){
+            onPress: () async {
               //TODO: llamar al método storeCotizacion
-              print('registrando cotizacion y detalles...');
-              print('observacion: ${observacionController.value}');
-              print('fecha: ${DateTime.now()}'); //dara error
-              print('tiempo_trabajo : ${tiempoTrabajoController.value}');
-              print('id_vehiculo : $vehiculoId');
-              print('id_personal: ${Get.find<AuthController>().user.idusuario}'); //creo
-              print('');
+              // print('registrando cotizacion y detalles...');
+              // print('observacion: ${observacionController.value.text}');
+              // print('fecha: ${DateTime.now()}'); //dara error
+              // print('tiempo_trabajo : ${tiempoTrabajoController.value.text}');
+              // print('id_vehiculo : $vehiculoId');
+              // print('id_personal: ${Get.find<AuthController>().user.idusuario}'); //creo
+              // print('');
+
+              // for (var item in serviciosI) {
+              //   print('servicio_id = ${item.idservicio}');
+              //   print('servicio_precio_venta = ${item.precio}'); 
+              //   print('descripcion = Ninguna o v2'); 
+              //   print('umbral = holi }'); //este es el umbral de las fotos, que seran para todos lol
+              //   // print('umbral = ${gradoDanio.nombre ?? 'ale' }'); //este es el umbral de las fotos, que seran para todos lol
+              //   print('==========');
+              // }
               
 
+              List<Map<String, dynamic>> servicioss = [];
+
+                for (var item in serviciosI) {
+
+                  Map<String, dynamic> servicio = {
+                    "id"           : item.idservicio,
+                    "precio_venta" : item.precio, // * el umbral puede ser lol, aunque creo que eso lo hago en el back
+                    "descripcion"  : 'Ninguna',
+                    "umbral"       : 0.1
+                  };
+                  print(servicio);
+                  print('======');
+                  servicioss.add(servicio);
+              } 
+
+              var sCoti = Get.put(CotizacionController());
+
+
+              await sCoti.storeCotizacion(
+                obs: observacionController.value.text,
+                fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                tiempodias: tiempoTrabajoController.value.text,
+                idvehiculo: vehiculoId,
+                umbral: 0.1,
+                servicioss: servicioss
+              );
+                // servicios: serviciosI
+              
             }
           )
         ],

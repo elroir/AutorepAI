@@ -10,29 +10,25 @@ class Service {
       this.idservicio,
       this.nombre,
       this.precio,
-      this.estado,
-      this.idTipo,
+      this.ntipo,
     });
 
     int idservicio;
     String nombre;
     double precio;
-    bool estado;
-    int idTipo;
+    String ntipo;
 
     factory Service.fromJson(Map<String, dynamic> json) => Service(
       idservicio : json["id_servicio"],
       nombre     : json["nombre"],
       precio     : double.parse( json["precio"] ?? 0.5),
-      estado     : json["estado"],
-      idTipo     : json["id_tipo"]
+      ntipo     : json["id_tipo"]
     );
 
     Map<String, dynamic> toJson() => {
       "id_servicio": idservicio.toString(),
       "nombre"     : nombre,
       "precio"     : precio.toString(),
-      "estado"     : estado.toString(),
-      "id_tipo"    : idTipo.toString(),
+      "ntipo"     : ntipo.toString(),
     };
 }

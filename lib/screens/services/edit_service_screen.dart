@@ -19,7 +19,7 @@ class EditServiceScreen extends StatefulWidget {
 
 class _EditServiceScreenState extends State<EditServiceScreen> {
 
-  String nombre, precio, tipoid;
+  String nombre, precio, ntipo;
 
   @override
   Widget build(BuildContext context) {
@@ -114,9 +114,9 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
           SizedBox(height: 5),
 
           TextFormField(
-            initialValue: widget.service.idTipo.toString(),
-            validator: (value) => value.isEmpty ? 'Tipo' : null,
-            onChanged: (value) => setState(() => tipoid = value ),
+            initialValue: widget.service.ntipo.toString(),
+            validator: (value) => value.isEmpty ? 'nTipo' : null,
+            onChanged: (value) => setState(() => ntipo = value ),
             cursorColor: Colors.white,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
@@ -138,7 +138,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
 
   void _updateService() async {
 
-    if (nombre != null && precio != null && tipoid != null  ) {
+    if (nombre != null && precio != null && ntipo != null  ) {
         
         // var sService = Get.put(ServiceController());
         // final sw = await sService.updateService(nombre, precio, tipoid);

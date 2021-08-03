@@ -27,14 +27,13 @@ class ServiceController extends GetxController{
     update(["listaservicios"]);
   }
 
-  Future<bool> storeService(String nombre, String precio, String tipoId) async {
+  Future<bool> storeService(String nombre, String precio, String ntipo) async {
 
     Map<String, dynamic> map ={
       "id_servicio" : "${servicios.length + 1}",
       "nombre" : nombre,
       "precio" : precio,
-      "estado" : "true",
-      "id_tipo" : tipoId
+      "ntipo" : ntipo
     };
 
     var sw = await instance.storeService(map);
