@@ -35,8 +35,8 @@ class CotizacionScreen extends StatelessWidget {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: (){
-        // Get.to(() => CreateCotizacionScreen( ));
-        Get.to(() => Crear2( ));
+        Get.to(() => CreateCotizacionScreen( ));
+        // Get.to(() => Crear2( ));
         // Get.to(() => DatePickerDemo());
       }
     );

@@ -1,10 +1,10 @@
 
 
 
+import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:ingemec/controllers/auth_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/services/cotizacion_service.dart';
 
     // ignore: unnecessary_statements
@@ -49,18 +49,19 @@ class CotizacionController extends GetxController{
 
 
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "${cotizaciones.length + 1}",
+      "id_cotizacion"  : "${cotizaciones.length + 10}",
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,
-      "id_personal"    : Get.find<AuthController>().user.idusuario,
-      "id_vehiculo"    : idvehiculo,
-      "servicioss"     : servicioss
+      "id_personal"    : '1',
+      "id_vehiculo"    : idvehiculo.toString(),
+      "servicioss"     : json.encode(servicioss)
+      // "servicioss"     : servicioss
     };
 
-    await instance.storeCotizacion(map);
+    var res = await instance.storeCotizacion(map);
     this.getCotizaciones();
-    return true;
+    return res;
   }
 
 

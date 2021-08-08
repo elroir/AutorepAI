@@ -30,8 +30,8 @@ class CotizacionService{
 
   Future<bool> storeCotizacion(Map<String, dynamic> data) async {
 
-    final urifinal = Uri.http( _dbUrl, '/api/storeCotizacion' );
-    final resp = await http.post(urifinal, body: data);
+    final urifinal = Uri.http( _dbUrl, '/api/storeCotizacion', data );
+    final resp = await http.post(urifinal, );
     final decodedData = json.decode(resp.body); 
     
     print(decodedData["ok"]);
