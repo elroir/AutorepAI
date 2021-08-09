@@ -1,10 +1,10 @@
 
 
 
+import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:ingemec/controllers/auth_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/services/cotizacion_service.dart';
 
     // ignore: unnecessary_statements
@@ -47,21 +47,21 @@ class CotizacionController extends GetxController{
     //     servicioss.add(servicio);
     // } 
 
-    final List servicios = [];
 
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "2",
+      "id_cotizacion"  : "${cotizaciones.length + 10}",
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,
-      "id_personal"    : '23',
+      "id_personal"    : '1',
       "id_vehiculo"    : idvehiculo.toString(),
-      "servicioss"     : []
+      "servicioss"     : json.encode(servicioss)
+      // "servicioss"     : servicioss
     };
 
-    await instance.storeCotizacion(map);
-    //this.getCotizaciones();
-    return true;
+    var res = await instance.storeCotizacion(map);
+    this.getCotizaciones();
+    return res;
   }
 
 

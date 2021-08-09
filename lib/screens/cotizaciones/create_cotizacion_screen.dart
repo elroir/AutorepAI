@@ -504,7 +504,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
               SizedBox(height: 8),
 
               TextFormField(
-                initialValue: (gradoDanio != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
+                initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
                 validator: (value) => value.isEmpty ? 'Grado!' : null,
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
@@ -654,7 +654,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
               var sCoti = Get.put(CotizacionController());
 
 
-              await sCoti.storeCotizacion(
+              final sw = await sCoti.storeCotizacion(
                 obs: observacionController.value.text,
                 fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
                 tiempodias: tiempoTrabajoController.value.text,
@@ -663,7 +663,11 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
                 servicioss: servicioss
               );
                 // servicios: serviciosI
-              
+              if (sw) {
+                Get.back();
+              }else{
+                print('rayos no se pudo');
+              }
             }
           )
         ],
