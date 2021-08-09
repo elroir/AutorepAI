@@ -65,9 +65,6 @@ class VehicleForm extends StatelessWidget {
                 init: MLController(),
                 id: 'vision',
                 builder: (controller){
-//                if(controller.result==''){
-//                  Get.snackbar('Sin datos validos','No se encontro una matricula valida');
-//                }
                   return Column(
                     children: [
                       Padding(

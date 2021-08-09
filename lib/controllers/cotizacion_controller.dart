@@ -47,19 +47,20 @@ class CotizacionController extends GetxController{
     //     servicioss.add(servicio);
     // } 
 
+    final List servicios = [];
 
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "${cotizaciones.length + 1}",
+      "id_cotizacion"  : "2",
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,
-      "id_personal"    : Get.find<AuthController>().user.idusuario,
-      "id_vehiculo"    : idvehiculo,
-      "servicioss"     : servicioss
+      "id_personal"    : '23',
+      "id_vehiculo"    : idvehiculo.toString(),
+      "servicioss"     : []
     };
 
     await instance.storeCotizacion(map);
-    this.getCotizaciones();
+    //this.getCotizaciones();
     return true;
   }
 
