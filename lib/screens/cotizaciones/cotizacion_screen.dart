@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/screens/cotizaciones/crear2.dart';
 import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
+import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/subcajita.dart';
 
@@ -69,7 +69,7 @@ class CotizacionScreen extends StatelessWidget {
       child: Dismissible(
         key : UniqueKey(),
         onDismissed: (direction) async {
-          print('bye');
+          print('Eliminando cotizacion...');
         },
         background: Container(color: Colors.red),
         child: BotonItem(
@@ -77,7 +77,7 @@ class CotizacionScreen extends StatelessWidget {
           color1: Color(0xFF535f9b),
           color2: Color(0xFF535f9b),
           onPress: () {
-            // Get.to(() => EditServiceScreen( item ));
+             Get.to(() => EditCotizacionScreen( item ));
           },
         ),
       ),

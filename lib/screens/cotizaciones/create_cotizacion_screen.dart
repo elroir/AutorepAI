@@ -7,12 +7,10 @@ import 'package:get/get.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ingemec/controllers/auth_controller.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 
 import 'package:ingemec/controllers/service_controller.dart';
 import 'package:ingemec/controllers/vehicle_controller.dart';
-import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/grado_danio_model.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/models/vehicle_model.dart';
@@ -617,25 +615,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
             color: Color(0xFFdb6060), 
             texto: "Registrar Cotizacion", 
             onPress: () async {
-              //TODO: llamar al método storeCotizacion
-              // print('registrando cotizacion y detalles...');
-              // print('observacion: ${observacionController.value.text}');
-              // print('fecha: ${DateTime.now()}'); //dara error
-              // print('tiempo_trabajo : ${tiempoTrabajoController.value.text}');
-              // print('id_vehiculo : $vehiculoId');
-              // print('id_personal: ${Get.find<AuthController>().user.idusuario}'); //creo
-              // print('');
-
-              // for (var item in serviciosI) {
-              //   print('servicio_id = ${item.idservicio}');
-              //   print('servicio_precio_venta = ${item.precio}'); 
-              //   print('descripcion = Ninguna o v2'); 
-              //   print('umbral = holi }'); //este es el umbral de las fotos, que seran para todos lol
-              //   // print('umbral = ${gradoDanio.nombre ?? 'ale' }'); //este es el umbral de las fotos, que seran para todos lol
-              //   print('==========');
-              // }
-              
-
+             
               List<Map<String, dynamic>> servicioss = [];
 
                 for (var item in serviciosI) {
