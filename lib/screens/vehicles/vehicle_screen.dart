@@ -76,7 +76,7 @@ class VehicleScreen extends StatelessWidget {
               controller: TextEditingController(text: user.telefono.toString()),
               icon: Icon(FeatherIcons.smartphone,color: Colors.white,),
               enabled: false,
-              labelText: 'Nombre',
+              labelText: 'Telefono',
             ),
             SizedBox(height: 25,),
             Container(

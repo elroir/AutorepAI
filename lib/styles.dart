@@ -38,5 +38,11 @@ class Styles {
     fontWeight: FontWeight.w900,
   );
 
+  static final TextStyle bigTitle = TextStyle(
+    color: Colors.white,
+    fontSize: 22,
+    fontWeight: FontWeight.w900,
+  );
+
 }
 
