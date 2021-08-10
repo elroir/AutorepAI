@@ -4,8 +4,9 @@ class MainCard extends StatelessWidget {
 
   final List<Widget> children;
   final double width;
+  final double height;
 
-  const MainCard({Key key,this.children,this.width}) : super(key: key);
+  const MainCard({Key key,this.children,this.width=250,this.height=200}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,8 @@ class MainCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        width: (this.width!=null) ? this.width : 300,
+        width: this.width,
+        height: this.height,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
