@@ -22,7 +22,6 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    print('eeeyy');
     super.onInit();
     this.initPrefs();
     _firebaseUser.bindStream(_auth.onAuthStateChanged);
@@ -30,7 +29,6 @@ class AuthController extends GetxController {
 
   initPrefs() async {
     this._prefs = await SharedPreferences.getInstance();
-    print(this._prefs.getString('email'));
   }
 
   String getEmail()  {

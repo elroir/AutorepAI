@@ -19,14 +19,14 @@ class MLController extends GetxController{
   Future<void> pickImageFromGallery() async {
     PickedFile pickedFile = await this.imagePicker.getImage(source: ImageSource.gallery);
     image = File(pickedFile.path);
-      performImageLabeling();
+    this.performImageLabeling();
     update(['picker']);
   }
 
   Future<void> pickImageFromCamera() async {
     PickedFile pickedFile = await this.imagePicker.getImage(source: ImageSource.camera);
     image = File(pickedFile.path);
-    performImageLabeling();
+    this.performImageLabeling();
     update(['picker']);
   }
 
@@ -60,4 +60,27 @@ class MLController extends GetxController{
 
     update(['vision']);
   }
+
+//  void imageLabeling() async {
+//    final InputImage visionImage = InputImage.fromFile(image);
+//
+//    final imageLabeler = GoogleMlKit.vision.imageLabeler();
+//
+//    final List<ImageLabel> labels = await imageLabeler.processImage(visionImage);
+//
+//    for (ImageLabel label in labels) {
+//      final String text = label.label;
+//      final int index = label.index;
+//      final double confidence = label.confidence;
+//
+//      print(text);
+//      print(index);
+//      print(confidence);
+//
+//    }
+//
+//    update(['vision']);
+//  }
+
+
 }
