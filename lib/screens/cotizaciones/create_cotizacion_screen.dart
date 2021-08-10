@@ -631,7 +631,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
                   servicioss.add(servicio);
               } 
 
-              var sCoti = Get.put(CotizacionController());
+              var sCoti = Get.put(QuotesController());
 
 
               final sw = await sCoti.storeCotizacion(

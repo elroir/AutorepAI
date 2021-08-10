@@ -37,4 +37,12 @@ class Vehicle {
     "color": color,
     "id_usuario": idUsuario,
   };
+
+  @override
+  bool operator == (other) {
+    return this.idVehiculo == other;
+  }
+
+  @override
+  int get hashCode => idVehiculo.hashCode;
 }

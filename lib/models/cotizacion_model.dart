@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:ingemec/models/vehicle_model.dart';
+
 Cotizacion cotizacionFromJson(Map<String, dynamic> json) => Cotizacion.fromJson(json);
 String cotizacionToJson(Cotizacion data) => json.encode(data.toJson());
 
@@ -16,6 +18,7 @@ class Cotizacion {
       this.estado,
       this.idUsuario,
       this.idVehiculo,
+      this.vehiculo
     });
 
     int idCotizacion;
@@ -26,6 +29,7 @@ class Cotizacion {
     bool estado;
     String idUsuario; //lol cambiar a int ash
     int idVehiculo;
+    Vehicle vehiculo;
 
     factory Cotizacion.fromJson(Map<String, dynamic> json) => Cotizacion(
         idCotizacion  : json["id_cotizacion"],

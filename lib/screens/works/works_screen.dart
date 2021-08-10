@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ingemec/controllers/follows_controller.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import 'package:ingemec/screens/works/widgets/Follows_list.dart';
 import 'package:ingemec/styles.dart';
 
 class WorksScreen extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
@@ -15,65 +15,41 @@ class WorksScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Seguimientos activos',style: Styles.bigTitle,),
+              _TitleWithRefreshButton(title: 'Seguimientos activos',onPressed: (){}),
               SizedBox(height: 10,),
-              GetBuilder<FollowController>(
-                init: FollowController(),
-                builder:(controller) {
-                  if(!controller.loading){
-                    return SizedBox(
-                      width: Get.width,
-                      child: Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            color: Colors.white70,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Image.asset(
-                                  'assets/empty.png',
-                                  width: Get.width*0.85,
-                                  height: Get.height*0.3,
-                                  fit: BoxFit.cover,
-                                ),
-                                Container(
-                                  width: Get.width*0.85,
-                                  height: Get.height*0.1,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                        Colors.black54,
-                                        Colors.transparent
-                                      ]
-                                    )
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: Text('No hay seguimientos activos',
-                                    style: TextStyle(
-                                      color: Color(0xFFffffff).withOpacity(0.8),
-                                      fontSize: 16,fontWeight: FontWeight.w700),),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }else
-                    return CircularProgressIndicator.adaptive();
-                }
-              
-              )
+              FollowsList(),
+              SizedBox(height: 8,),
+              _TitleWithRefreshButton(title: 'Cotizaciones', onPressed: (){},),
+
 
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TitleWithRefreshButton extends StatelessWidget {
+
+  final VoidCallback onPressed;
+  final String title;
+
+
+  const _TitleWithRefreshButton({
+    Key key,
+    @required this.onPressed,
+    this.title = ''
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(this.title,style: Styles.bigTitle,),
+        IconButton(icon: Icon(FeatherIcons.refreshCcw), onPressed: this.onPressed)
+      ],
     );
   }
 }
