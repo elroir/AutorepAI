@@ -69,7 +69,7 @@ class CotizacionScreen extends StatelessWidget {
       child: Dismissible(
         key : UniqueKey(),
         onDismissed: (direction) async {
-          print('Eliminando cotizacion...');
+          print('Eliminando cotizacion....');
         },
         background: Container(color: Colors.red),
         child: BotonItem(

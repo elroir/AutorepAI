@@ -31,23 +31,6 @@ class CotizacionController extends GetxController{
 
   Future<bool> storeCotizacion({String obs, String fecha, String tiempodias, int idvehiculo, List<Map<String, dynamic>> servicioss, double umbral}) async {
 
-
-    // List<Map<String, dynamic>> servicioss = [];
-
-    // for (var item in servicios) {
-
-    //     Map<String, dynamic> servicio = {
-    //       "id"           : item.idservicio,
-    //       "precio_venta" : item.precio, // * el umbral puede ser lol, aunque creo que eso lo hago en el back
-    //       "descripcion"  : 'Ninguna',
-    //       "umbral"       : umbral
-    //     };
-    //     print(servicio);
-    //     print('======');
-    //     servicioss.add(servicio);
-    // } 
-
-
     Map<String, dynamic> map ={
       "id_cotizacion"  : "${cotizaciones.length + 10}",
       "observacion"    : obs,
@@ -56,7 +39,6 @@ class CotizacionController extends GetxController{
       "id_personal"    : '1',
       "id_vehiculo"    : idvehiculo.toString(),
       "servicioss"     : json.encode(servicioss)
-      // "servicioss"     : servicioss
     };
 
     var res = await instance.storeCotizacion(map);

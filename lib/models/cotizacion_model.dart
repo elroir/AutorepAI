@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final cotizacionModel = cotizacionModelFromJson(jsonString);
+
 
 import 'dart:convert';
 
