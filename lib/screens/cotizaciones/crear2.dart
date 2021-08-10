@@ -29,7 +29,7 @@ class Crear2 extends StatelessWidget {
 
   _crear() async {
     
-     var sCoti = Get.put(CotizacionController());
+     var sCoti = Get.put(QuotesController());
 
 
       await sCoti.storeCotizacion(

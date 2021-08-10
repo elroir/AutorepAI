@@ -8,7 +8,6 @@ import 'package:ingemec/controllers/login_controller.dart';
 import 'package:ingemec/screens/login/widgets/info_header.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 import 'package:ingemec/widgets/header_background.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends GetWidget<AuthController> {

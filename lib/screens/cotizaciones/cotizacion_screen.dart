@@ -47,8 +47,8 @@ class CotizacionScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15),
       child:  Container(
         height: Get.height * 0.7,
-        child:  GetBuilder<CotizacionController>(
-        init: CotizacionController(),
+        child:  GetBuilder<QuotesController>(
+        init: QuotesController(),
         id: 'listacotizaciones',
         builder: (lcontroller) => ListView.builder(
           physics: BouncingScrollPhysics(),
