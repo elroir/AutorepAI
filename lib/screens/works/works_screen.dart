@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,12 @@ import 'package:ingemec/styles.dart';
 
 class WorksScreen extends StatelessWidget {
 
+
   @override
   Widget build(BuildContext context) {
+
+    final quote = Get.put(QuotesController());
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal:10.0,vertical: 5.0),
@@ -18,12 +23,12 @@ class WorksScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _TitleWithRefreshButton(title: 'Seguimientos activos',onPressed: (){}),
+            _TitleWithRefreshButton(title: 'Ordenes activas',onPressed: (){}),
             SizedBox(height: 10,),
-            FollowsList(),
+            WorksList(),
             SizedBox(height: 8,),
             _TitleWithRefreshButton(title: 'Cotizaciones',
-              onPressed: () => QuotesController().getActiveQuotesWithVehicle(),
+              onPressed: () => quote.getActiveQuotesWithVehicle(),
             ),
             GetBuilder<QuotesController>(
               init: QuotesController(),
@@ -34,7 +39,7 @@ class WorksScreen extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: controller.activeQuotes.length ,
                       itemBuilder: (_,i) =>
-                        QuotesCard(quote: controller.activeQuotes[i],),
+                        FadeIn(child: QuotesCard(quote: controller.activeQuotes[i])),
                       physics: BouncingScrollPhysics(),
                     ),
                   );

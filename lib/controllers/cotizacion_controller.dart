@@ -47,7 +47,8 @@ class QuotesController extends GetxController{
     this._loading = true;
     final List<Cotizacion> temporalQuotes = await instance.getCotizaciones();
     final List<Vehicle> vehicles = await VehicleService.instance.getVehicles();
-    this._activeQuotes = temporalQuotes.where((quote) => quote.aprobado).toList();
+    this._activeQuotes = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
+    print(this._activeQuotes.length);
     for(int i=0 ; i < this._activeQuotes.length ; i++) {
       vehicles.forEach((vehicle) {
         if (this._activeQuotes[i].idVehiculo == vehicle.idVehiculo)

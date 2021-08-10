@@ -1,8 +1,11 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ingemec/Env.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
+import 'package:ingemec/models/quote_detail_model.dart';
 
 
 class CotizacionService{
@@ -26,6 +29,28 @@ class CotizacionService{
     }
 
     return cotizaciones;
+  }
+
+  Future<List<QuoteDetail>> getQuoteDetails(int id) async {
+    try{
+      final uri = Uri.http( Env.url, '/api/getDetalleCotizacion',{
+        "id_cotizacion" : id
+        }
+      );
+
+      final resp = await http.get(uri);
+      final decodedData = json.decode(resp.body);
+      final List<QuoteDetail> details = [];
+
+      (decodedData['data'] as List).forEach((detail) {
+        details.add(QuoteDetail.fromJson(detail));
+      });
+      return details;
+
+    }catch(e){
+      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      return[];
+    }
   }
 
   Future<bool> storeCotizacion(Map<String, dynamic> data) async {

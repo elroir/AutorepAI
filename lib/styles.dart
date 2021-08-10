@@ -14,7 +14,10 @@ class Themes {
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Color(0xFFDC4D4E))
+        iconTheme: IconThemeData(color: Color(0xFFDC4D4E)),
+        textTheme: TextTheme(
+          headline6: TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: Color(0xFFDC4D4E))
+        )
       ),
       textTheme: TextTheme(
         bodyText2: TextStyle(color: Colors.white)
@@ -29,11 +32,17 @@ class Styles {
 
   static final TextStyle clientCard = TextStyle(
     fontWeight: FontWeight.w300,
-    fontSize: 16
+    fontSize: 16,
+  );
+
+  static final TextStyle vehicleRedText = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+      color: Color(0xFFDC4D4E),
   );
 
   static final TextStyle titleCard = TextStyle(
-    color:  Color(0xFFDC4D4E),
+    color: Color(0xFFDC4D4E),
     fontSize: 22,
     fontWeight: FontWeight.w900,
   );

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ingemec/controllers/follows_controller.dart';
+import 'package:ingemec/controllers/works_controller.dart';
 
-class FollowsList extends StatelessWidget {
+class WorksList extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<FollowController>(
-        init: FollowController(),
-        id: 'follows',
+    return GetBuilder<WorksController>(
+        init: WorksController(),
+        id: 'works',
         builder:(controller) {
           if(!controller.loading){
-            return SizedBox(
+            return (controller.orders.isEmpty) ? SizedBox(
               width: Get.width,
               child: Center(
                 child: ClipRRect(
@@ -42,7 +43,7 @@ class FollowsList extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 10),
-                          child: Text('No hay seguimientos activos',
+                          child: Text('No hay ordenes activas',
                             style: TextStyle(
                                 color: Color(0xFFffffff).withOpacity(0.8),
                                 fontSize: 16,fontWeight: FontWeight.w700),),
@@ -52,9 +53,10 @@ class FollowsList extends StatelessWidget {
                   ),
                 ),
               ),
-            );
+            )
+            : Container();
           }else
-            return CircularProgressIndicator.adaptive();
+            return Center(child: CircularProgressIndicator.adaptive());
         }
 
     );
