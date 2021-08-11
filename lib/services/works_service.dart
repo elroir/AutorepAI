@@ -11,6 +11,19 @@ class WorksService {
   static WorksService _instance = WorksService();
   static WorksService get instance => _instance;
 
+  Future<void> newWorkOrder(WorkOrder order) async {
+
+    print(order.toJson());
+
+      final uri = Uri.http( Env.url, '/api/storeOrden', {
+        "id_cotizacion" : order.idCotizacion.toString(),
+        "id_personal"   : order.idPersonal
+      } );
+      await http.post(uri,body: order.toJson());
+
+
+  }
+
   Future<List<WorkOrder>> getWorks() async {
     try{
       final uri = Uri.http( Env.url, '/api/getOrdenes' );

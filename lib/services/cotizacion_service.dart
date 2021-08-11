@@ -1,11 +1,9 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ingemec/Env.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/models/cotizacionc_model.dart';
 import 'package:ingemec/models/quote_detail_model.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/services/servicio_service.dart';
@@ -34,16 +32,16 @@ class CotizacionService{
     return cotizaciones;
   }
 
-  Future<List<CotizacionC>> getAllCotizaciones( ) async {
+  Future<List<Cotizacion>> getAllCotizaciones( ) async {
     final urifinal = Uri.http( _dbUrl, '/api/getAllCotizaciones' );
     final resp = await http.get(urifinal);
     final decodedData = json.decode(resp.body); 
    
     print('$decodedData dataS');
     List<dynamic> items = decodedData;
-    List<CotizacionC> cotizaciones = [];
+    List<Cotizacion> cotizaciones = [];
     for (var item in items) {
-      CotizacionC cotizacion = cotizacionCFromJson(item);
+      Cotizacion cotizacion = cotizacionFromJson(item);
       List<QuoteDetail> detalles = listaCDetalles(item["detalles"]);
       List<Service> servicios = ServicioService.instance.listaServicios(item["servicios"]);
       List<Service> noservicios = ServicioService.instance.listaServicios(item["noservicios"]);
@@ -68,12 +66,14 @@ class CotizacionService{
       final List<QuoteDetail> details = [];
 
       (decodedData['data'] as List).forEach((detail) {
+        print('eyy');
         details.add(QuoteDetail.fromJson(detail));
       });
+      print('eyy');
       return details;
 
     }catch(e){
-      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+     // Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
       return[];
     }
   }

@@ -51,6 +51,7 @@ class Styles {
     color: Colors.white,
     fontSize: 22,
     fontWeight: FontWeight.w900,
+    letterSpacing: 1.2
   );
 
 }

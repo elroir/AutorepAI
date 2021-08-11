@@ -1,13 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ingemec/models/cotizacionc_model.dart';
+import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/main_card.dart';
 
 class CotizacionItem extends StatelessWidget {
 
-  final CotizacionC cotizacion;
+  final Cotizacion cotizacion;
   final Function onPressed;
 
   const CotizacionItem({Key key, this.cotizacion, this.onPressed}) : super(key: key);

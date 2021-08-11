@@ -22,7 +22,7 @@ class QuotesCard extends StatelessWidget {
         Flexible(
           child: InkWell(
             borderRadius:BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
-            onTap: () => Get.to(WorksForm(quote: this.quote)),
+            onTap: () => Get.to(() => WorksForm(quote: this.quote)),
             child: Padding(
               padding: EdgeInsets.only(left: 10,top: 8,bottom: 10),
               child: Column(

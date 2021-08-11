@@ -3,7 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
-import 'package:ingemec/models/cotizacionc_model.dart';
+import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
@@ -52,7 +52,7 @@ class CotizacionScreen extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           itemCount: lcontroller.cotizaciones.length ,
           itemBuilder:(_, index) {
-            CotizacionC item = lcontroller.cotizaciones[index];
+            Cotizacion item = lcontroller.cotizaciones[index];
             return _cotizacionItem(item);
           },
         )
@@ -61,7 +61,7 @@ class CotizacionScreen extends StatelessWidget {
     );
   }
 
-  FadeInLeft _cotizacionItem(CotizacionC item) {
+  FadeInLeft _cotizacionItem(Cotizacion item) {
     return FadeInLeft(
       duration: Duration( milliseconds: 250 ),
       child: Dismissible(

@@ -8,6 +8,7 @@ import 'package:ingemec/models/user_model.dart';
 import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/screens/vehicles/vehicle_card.dart';
 import 'package:ingemec/screens/vehicles/vehicle_form.dart';
+import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/custom_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 
@@ -32,7 +33,7 @@ class VehicleScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 12,bottom: 12),
               child: Text('Vehiculos:',
-                style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,letterSpacing: 1.2),
+                style:  Styles.bigTitle,
               ),
             ),
             GetBuilder<VehicleController>(
@@ -57,7 +58,7 @@ class VehicleScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12),
               child: Text('Datos del usuario:',
-                style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,letterSpacing: 1.2),
+                style: Styles.bigTitle,
               ),
             ),
             CustomTextField(

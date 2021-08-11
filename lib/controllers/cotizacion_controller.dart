@@ -5,7 +5,6 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/models/cotizacionc_model.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/services/cotizacion_service.dart';
@@ -15,13 +14,13 @@ class QuotesController extends GetxController{
 
   CotizacionService instance = CotizacionService.instance;
 
-  List<CotizacionC> _cotizaciones = [];
-  CotizacionC _cotizacion;
+  List<Cotizacion> _cotizaciones = [];
+  Cotizacion _cotizacion;
 
   List<Cotizacion> _activeQuotes;
 
-  List<CotizacionC> get cotizaciones => _cotizaciones;
-  CotizacionC get cotizacion => _cotizacion;
+  List<Cotizacion> get cotizaciones => _cotizaciones;
+  Cotizacion get cotizacion => _cotizacion;
 
   List<Cotizacion> get activeQuotes => this._activeQuotes;
   
@@ -50,17 +49,8 @@ class QuotesController extends GetxController{
 
   void getActiveQuotesWithVehicle() async {
     this._loading = true;
-    final List<Cotizacion> temporalQuotes = await instance.getCotizaciones();
-    final List<Vehicle> vehicles = await VehicleService.instance.getVehicles();
+    final List<Cotizacion> temporalQuotes = await instance.getAllCotizaciones();
     this._activeQuotes = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
-    print(this._activeQuotes.length);
-    for(int i=0 ; i < this._activeQuotes.length ; i++) {
-      vehicles.forEach((vehicle) {
-        if (this._activeQuotes[i].idVehiculo == vehicle.idVehiculo)
-          this._activeQuotes[i].vehiculo = Vehicle();
-          this._activeQuotes[i].vehiculo = vehicle;
-      });
-    }
     this._loading = false;
     update(['activeQuotes']);
   }
@@ -86,8 +76,7 @@ class QuotesController extends GetxController{
   void getAllCotizaciones() async {
     
     this._cotizaciones = await instance.getAllCotizaciones();
-    print(this._cotizaciones.length);
-  
+
     update(['listacotizaciones']);
   }
 

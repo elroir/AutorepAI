@@ -40,6 +40,7 @@ class VehicleService {
 
     }catch(e){
       Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      return [];
     }
   }
 

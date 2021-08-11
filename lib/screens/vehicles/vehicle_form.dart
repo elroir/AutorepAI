@@ -104,7 +104,14 @@ class VehicleForm extends StatelessWidget {
                         labelText: 'Placa',
                         onSaved: (value) {
                           this._vehicle.idVehiculo = int.parse(value.substring(0,3));
-                          this._vehicle.nroPlaca = value;
+                          this._vehicle.nroPlaca = value.toUpperCase();
+                        },
+                        validator: (value) {
+                          Pattern pattern = r'^(\d{3,4}[a-zA-Z]{3})$';
+                          RegExp plate = RegExp(pattern);
+                          if (plate.hasMatch(value))
+                            return null;
+                          return 'Formato de placa incorrecto';
                         },
                       ),
                     ],

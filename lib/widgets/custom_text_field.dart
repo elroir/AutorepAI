@@ -62,6 +62,9 @@ class CustomTextField extends StatelessWidget {
             obscureText: (isPassword!=null) ? isPassword : false,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(top: 5.0),
+              errorStyle: TextStyle(
+                color: Theme.of(context).errorColor,
+              ),
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),

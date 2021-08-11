@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
-import 'package:ingemec/models/cotizacionc_model.dart';
+import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
@@ -11,7 +11,7 @@ import 'package:ingemec/widgets/custom_text_field.dart';
 // ignore: must_be_immutable
 class EditCotizacionScreen extends StatefulWidget {
 
-  CotizacionC cotizacion;
+  Cotizacion cotizacion;
 
   EditCotizacionScreen(this.cotizacion);
 
@@ -92,7 +92,7 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
     }
   }
 
-  Widget _cotizacionFormPage(CotizacionC cotizacion) {
+  Widget _cotizacionFormPage(Cotizacion cotizacion) {
     return Padding(
       padding: EdgeInsets.symmetric( horizontal: 17 ),
       child: Form(
