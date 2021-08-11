@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ingemec/Env.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
+import 'package:ingemec/models/cotizacionc_model.dart';
 import 'package:ingemec/models/quote_detail_model.dart';
+import 'package:ingemec/models/service_model.dart';
+import 'package:ingemec/services/servicio_service.dart';
 
 
 class CotizacionService{
@@ -26,6 +29,28 @@ class CotizacionService{
     for (var item in items) {
       Cotizacion service = cotizacionFromJson(item);
       cotizaciones.add(service);
+    }
+
+    return cotizaciones;
+  }
+
+  Future<List<CotizacionC>> getAllCotizaciones( ) async {
+    final urifinal = Uri.http( _dbUrl, '/api/getAllCotizaciones' );
+    final resp = await http.get(urifinal);
+    final decodedData = json.decode(resp.body); 
+   
+    print('$decodedData dataS');
+    List<dynamic> items = decodedData;
+    List<CotizacionC> cotizaciones = [];
+    for (var item in items) {
+      CotizacionC cotizacion = cotizacionCFromJson(item);
+      List<QuoteDetail> detalles = listaCDetalles(item["detalles"]);
+      List<Service> servicios = ServicioService.instance.listaServicios(item["servicios"]);
+      List<Service> noservicios = ServicioService.instance.listaServicios(item["noservicios"]);
+      cotizacion.detalles = detalles;
+      cotizacion.servicios = servicios;
+      cotizacion.noservicios = noservicios;
+      cotizaciones.add(cotizacion);
     }
 
     return cotizaciones;
@@ -65,4 +90,15 @@ class CotizacionService{
      return (decodedData["ok"]);
   }
 
+
+  List<QuoteDetail> listaCDetalles( List<dynamic> items ) {
+
+    List<QuoteDetail> detalles = [];
+    for (var item in items) {
+      QuoteDetail detalle = QuoteDetail.fromJson(item);
+      detalles.add(detalle);
+    }
+
+    return detalles;
+  }
 }

@@ -6,6 +6,8 @@ import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
+import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
+import 'package:ingemec/screens/works/widgets/quotes_card.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/subcajita.dart';
 
@@ -17,8 +19,8 @@ class CotizacionScreen extends StatelessWidget {
         child: Column(
           children: [
             SubcajitaWidget(
-              title: 'Cotizaciones', 
-              subtitle: 'Cotizaciones Registradas', 
+              title: 'General', 
+              subtitle: 'COTIZACIONES', 
               colorCajitaP: Color(0xFFE85F5F),
               color: Color(0xff728AC1)),
             // _bodyCotizacion(),
@@ -52,10 +54,37 @@ class CotizacionScreen extends StatelessWidget {
         id: 'listacotizaciones',
         builder: (lcontroller) => ListView.builder(
           physics: BouncingScrollPhysics(),
+          // itemCount: lcontroller.quotes.length ,
           itemCount: lcontroller.cotizaciones.length ,
           itemBuilder:(_, index) {
-            Cotizacion item = lcontroller.cotizaciones[index];
-            return  _cotizacionItemC(item);
+            // Cotizacion item = lcontroller.cotizaciones[index];
+            Cotizacion item = lcontroller.quotes[index];
+            //  return  _cotizacionItemC( lcontroller.cotizaciones[index]);
+            return FadeInLeft(
+              duration: Duration( milliseconds: 250 ),
+              child: Dismissible(
+                key : UniqueKey(),
+                onDismissed: (direction) async {
+                  print('Eliminando cotizacion....');
+                },
+                background: Container(color: Colors.red,),
+                child: Container(
+                  width: Get.width,
+                  child: CotizacionItem(
+                    quote:item,
+                    onPressed: () {
+                    
+                     final cot = Get.put(QuotesController());
+                     cot.selected = item.idCotizacion;
+                     cot.getServiciosCotizacion(item.idCotizacion);
+                     Get.to(() => EditCotizacionScreen( item ));
+
+                    }
+                      
+                  ),
+                ),
+              ),
+            );
           },
         )
         ),

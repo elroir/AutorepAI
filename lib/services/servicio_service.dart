@@ -39,4 +39,15 @@ class ServicioService{
     return (decodedData["ok"]);
   }
 
+  List<Service> listaServicios( List<dynamic> items ) {
+
+    List<Service> services = [];
+    for (var item in items) {
+      Service service = serviceFromJson(item);
+      services.add(service);
+    }
+
+    return services;
+  }
+
 }
