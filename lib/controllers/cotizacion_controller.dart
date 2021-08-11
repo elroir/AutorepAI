@@ -5,7 +5,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/models/quote_detail_model.dart';
+import 'package:ingemec/models/cotizacionc_model.dart';
+import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/services/cotizacion_service.dart';
 import 'package:ingemec/services/vehicle_service.dart';
@@ -14,34 +15,23 @@ class QuotesController extends GetxController{
 
   CotizacionService instance = CotizacionService.instance;
 
-  List<Cotizacion> _cotizaciones = [];
-  Cotizacion _cotizacion;
+  List<CotizacionC> _cotizaciones = [];
+  CotizacionC _cotizacion;
 
   List<Cotizacion> _activeQuotes;
 
-  List<Cotizacion> get cotizaciones => _cotizaciones;
-  Cotizacion get cotizacion => _cotizacion;
+  List<CotizacionC> get cotizaciones => _cotizaciones;
+  CotizacionC get cotizacion => _cotizacion;
 
   List<Cotizacion> get activeQuotes => this._activeQuotes;
-  List<Cotizacion> get quotes => this._cotizaciones;
-
-  int _selected = -1;
-
-  set selected(int id) => this._selected = id;
-
-   List<QuoteDetail> lista;
-
+  
   bool _loading = true;
   bool get loading  => this._loading;
 
   @override
   void onInit() {
     super.onInit();
-    //getQuotes();
-    this.getAllQuotesWithVehicle();
-    // if(_selected > 0){
-    //   this.getServiciosCotizacion(_selected);
-    // }
+    this.getAllCotizaciones();
   }
 
   @override
@@ -57,11 +47,6 @@ class QuotesController extends GetxController{
     super.onClose();
 
   }
-
-  // void getQuotes() async {
-  //   _cotizaciones = await instance.getCotizaciones();
-  //   update(["listacotizaciones"]);
-  // }
 
   void getActiveQuotesWithVehicle() async {
     this._loading = true;
@@ -94,33 +79,29 @@ class QuotesController extends GetxController{
 
     var res = await instance.storeCotizacion(map);
     // this.getQuotes();
-    this.getAllQuotesWithVehicle();
+    this.getAllCotizaciones();
     return res;
   }
 
-  void getAllQuotesWithVehicle() async {
+  void getAllCotizaciones() async {
     
-    final List<Cotizacion> temporalQuotes = await instance.getCotizaciones();
-    final List<Vehicle> vehicles = await VehicleService.instance.getVehicles();
-    this._cotizaciones = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
+    this._cotizaciones = await instance.getAllCotizaciones();
     print(this._cotizaciones.length);
-    for(int i=0 ; i < this._cotizaciones.length ; i++) {
-      vehicles.forEach((vehicle) {
-        if (this._cotizaciones[i].idVehiculo == vehicle.idVehiculo)
-          this._cotizaciones[i].vehiculo = Vehicle();
-          this._cotizaciones[i].vehiculo = vehicle;
-      });
-    }
+  
     update(['listacotizaciones']);
   }
 
-  void getServiciosCotizacion(int id) async {
-    this.lista =  await CotizacionService.instance.getQuoteDetails(id);
-    for (var item in lista) {
-      print(item.idServicio);
-    }
+  Future<void> actualizarCotizacion({int idCotizacion, int tiempo, String obs, List<Service> registrar, List<Service> eliminar}) async {
+    Map<String, dynamic> solicitud = {
+      "id_cotizacion" : idCotizacion,
+      "tiempo" : tiempo,
+      "observacion" : obs,
+      "registrar" : json.encode(registrar),
+      "eliminar" : json.encode(eliminar),
+    };
 
-    update(['listaserviciosupdate']);
+    print(json.encode(solicitud));
+
   }
 
 

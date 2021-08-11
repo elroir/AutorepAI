@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
-import 'package:ingemec/controllers/service_controller.dart';
-import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/cotizacionc_model.dart';
-import 'package:ingemec/models/quote_detail_model.dart';
 import 'package:ingemec/models/service_model.dart';
-import 'package:ingemec/screens/services/create_service_screen.dart';
-import 'package:ingemec/services/cotizacion_service.dart';
+import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 // import 'package:intl/intl.dart';
@@ -15,7 +11,7 @@ import 'package:ingemec/widgets/custom_text_field.dart';
 // ignore: must_be_immutable
 class EditCotizacionScreen extends StatefulWidget {
 
-  Cotizacion cotizacion;
+  CotizacionC cotizacion;
 
   EditCotizacionScreen(this.cotizacion);
 
@@ -27,10 +23,13 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
 
   TextStyle _titleStyle =  TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
-  TextEditingController observacionController = new TextEditingController();
-  TextEditingController tiempoTrabajoController = new TextEditingController();
-  TextEditingController fechaController = new TextEditingController();
+  String observacion = '', fecha = '';
+  int tiempoTrabajo = 0;
 
+  List<Service> registrar = [];
+  List<Service> eliminar = [];
+
+  int currentI = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
         elevation: 0,
       ),
       body: _actualizarForm(),
-
+      bottomNavigationBar: _bottomNavBar(),
     );
   }
 
@@ -56,26 +55,7 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
           Expanded(
              child: SingleChildScrollView(
                child: Column(
-                 children: [
-                   _cotizacionFormPage(widget.cotizacion),
-                   SizedBox(height: 10),
-                   
-                   _serviciosPage(),
-
-                  SizedBox(height: 10),
-                  
-                   SizedBox(height: 10),
-                   BotonSubmit(
-                     color: Colors.pinkAccent, 
-                     texto: "Actualizar", 
-                     onPress: ()async {
-                       //List<QuoteDetail> la = await CotizacionService.instance.getQuoteDetails(15);
-                       List<CotizacionC> la = await CotizacionService.instance.getAllCotizaciones();
-                       print('length ${la.length}');
-                     }
-                   )
-
-                 ],
+                 children: [ _escogerWidget()],
                ),
              ),
            )
@@ -84,7 +64,35 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
     );
   }
 
-  Widget _cotizacionFormPage(Cotizacion cotizacion) {
+
+  Widget _bottomNavBar() {
+    return BottomNavigationBar(
+      selectedItemColor: Colors.white,
+      currentIndex: currentI,
+      // backgroundColor: Color(0xff1e6793),
+      backgroundColor: Color(0xff392F8B),
+      onTap: (value) => setState(() => currentI = value),
+      items: <BottomNavigationBarItem> [
+       
+        BottomNavigationBarItem( icon: Icon(Icons.car_rental), label: 'Cotizacion' ),
+        BottomNavigationBarItem( icon: Icon(Icons.dangerous), label: 'Mis Servicios' ),
+        BottomNavigationBarItem( icon: Icon(Icons.addchart), label: 'Más Servicios' ),
+      ],
+    );
+  }
+
+  // ignore: missing_return
+  Widget _escogerWidget(){
+    
+    switch (currentI) {
+      case 0 : return _cotizacionFormPage(widget.cotizacion);
+      case 1 : return _misServiciosPage(widget.cotizacion.servicios);
+      case 2 : return _noServiciosList(widget.cotizacion.noservicios);
+       
+    }
+  }
+
+  Widget _cotizacionFormPage(CotizacionC cotizacion) {
     return Padding(
       padding: EdgeInsets.symmetric( horizontal: 17 ),
       child: Form(
@@ -97,20 +105,16 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
               CustomTextField(
                 labelText: 'Observacion',
                 initialValue: cotizacion.observacion,
-                onSaved: (valor){
-
-                },
+                onSaved: (valor) => setState(() => observacion = valor),
                 icon: Icon(Icons.lock_clock),
-                inputType: TextInputType.number,
+                // inputType: TextInputType.number,
               ),
               SizedBox(height: 8),
 
               CustomTextField(
                 labelText: 'Tiempo de trabajo',
                 initialValue: cotizacion.tiempoTrabajo.toString(),
-                onSaved: (valor){
-
-                },
+                onSaved: (valor) => setState(() => tiempoTrabajo = int.tryParse(valor) ?? 10),
                 icon: Icon(Icons.lock_clock),
                 inputType: TextInputType.number,
               ),
@@ -119,59 +123,87 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
               CustomTextField(
                 labelText: 'Fecha',
                 initialValue: "${cotizacion.fecha.year}-${cotizacion.fecha.month}-${cotizacion.fecha.day}",
-                onSaved: (valor){
-
-                },
+                onSaved: (valor) => setState(() => fecha = valor),
                 inputType: TextInputType.datetime,
                 icon: Icon(Icons.date_range),
               ),
-              SizedBox(height: 12),
-              Text('Servicios', style: _titleStyle),
-              SizedBox(height: 15),
-              // Container(
-              //   height: 80,
-              //   child: FutureBuilder<List<QuoteDetail>>(
-              //     future: CotizacionService.instance.getQuoteDetails(widget.cotizacion.idCotizacion),
-              //     builder: (_, snapshot){
-              //       if(snapshot.hasData){
-              //         List<QuoteDetail> lista = snapshot.data;
-              //         print('length = ${lista.length}');
-              //         return Text('omg');
-              //       }else{
-              //         return CircularProgressIndicator();
-              //       }
-              //     }
-                  
-              //   ),
-              // ),
-            
-
+              SizedBox(height: 12)
             ],
           )
         ),
       );
     }
 
-    Widget _serviciosPage() {
+  Widget _misServiciosPage(List<Service> servicios) {
     return   Column(
       children: [
-        Text('Seleccionar los servicios que requiera:' , style: _titleStyle,),
+        Text('Seleccionar los servicios que requiera eliminar:' , style: _titleStyle,),
         SizedBox( height: 20),
         Container(
-          height: Get.height * 0.3,
-          child:  GetBuilder<QuotesController>(
-          init: QuotesController(),
-          id: 'listaserviciosupdate',
-          builder: (lcontroller) => ListView.builder(
-                  physics: BouncingScrollPhysics(),
-            itemCount: lcontroller.lista.length ,
-            itemBuilder:(_, index) {
-              QuoteDetail item = lcontroller.lista[index];
-              return Text(item.idServicio.toString());
-            },
+          height: Get.height * 0.6,
+          child:  ListView.builder(
+            itemCount: servicios.length,
+            itemBuilder: (_, index){
+              return BotonItem(
+                color1: Colors.blue[400],
+                color2: Colors.blue,
+                onPress: (){
+                  setState(() {
+                    eliminar.add(servicios[index]);
+                    print('length eliminar = ${eliminar.length}');
+                  });
+                },
+                texto: servicios[index].nombre,
+              );
+            }
           )
-          ),
+        )
+      ],
+    );
+  }
+  Widget _noServiciosList(List<Service> servicios) {
+    return   Column(
+      children: [
+        Text('Seleccionar los servicios que requiera añadir:' , style: _titleStyle,),
+        SizedBox( height: 20),
+        Container(
+          height: Get.height * 0.6,
+          child:  ListView.builder(
+            itemCount: servicios.length,
+            itemBuilder: (_, index){
+              return BotonItem(
+                color1: Color(0xff535f9b),
+                color2: Color(0xff535f9b),
+                onPress: (){
+                  setState(() {
+                    registrar.add(servicios[index]);
+                    print('length registrar = ${registrar.length}');
+                  });
+                },
+                texto: servicios[index].nombre,
+              );
+            }
+          )
         ),
+        SizedBox(height: 10),
+        BotonSubmit(
+          color: Colors.pinkAccent, 
+          texto: "Actualizar", 
+          onPress: () async {
+            var sCoti = Get.put(QuotesController());
+
+
+            await sCoti.actualizarCotizacion(
+            
+              idCotizacion : widget.cotizacion.idCotizacion,
+              tiempo : tiempoTrabajo,
+              obs: observacion,
+              registrar: registrar,
+              eliminar: eliminar
+            );
+            print('deberia actualizar');
+          }
+        )
       ],
     );
   }

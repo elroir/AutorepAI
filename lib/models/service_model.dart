@@ -22,7 +22,7 @@ class Service {
       idservicio : json["id_servicio"],
       nombre     : json["nombre"],
       precio     : double.parse( json["precio"] ?? 0.5),
-      ntipo     : json["id_tipo"]
+      ntipo     : json["ntipo"]
     );
 
     Map<String, dynamic> toJson() => {

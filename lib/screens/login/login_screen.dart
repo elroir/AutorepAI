@@ -14,8 +14,6 @@ class LoginScreen extends GetWidget<AuthController> {
 
   final _keyForm = new GlobalKey<FormState>();
 
-
-
   TextEditingController _emailController  = new TextEditingController();
   TextEditingController _passwdController = new TextEditingController();
   double data = 30;

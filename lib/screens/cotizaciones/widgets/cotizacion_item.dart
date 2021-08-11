@@ -1,16 +1,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ingemec/models/cotizacion_model.dart';
+import 'package:ingemec/models/cotizacionc_model.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/main_card.dart';
 
 class CotizacionItem extends StatelessWidget {
 
-  final Cotizacion quote;
+  final CotizacionC cotizacion;
   final Function onPressed;
 
-  const CotizacionItem({Key key, this.quote, this.onPressed}) : super(key: key);
+  const CotizacionItem({Key key, this.cotizacion, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CotizacionItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Fecha: ${this.quote.fecha.day}/${this.quote.fecha.month}/${this.quote.fecha.year}",style: Styles.titleCard,overflow: TextOverflow.clip,),
+                  Text("Fecha: ${this.cotizacion.fecha.day}/${this.cotizacion.fecha.month}/${this.cotizacion.fecha.year}",style: Styles.titleCard,overflow: TextOverflow.clip,),
                   Expanded(
                     child: SizedBox(
                       width: size.width,
@@ -38,9 +38,9 @@ class CotizacionItem extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(this.quote.vehiculo.marca ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip),
+                            Text(this.cotizacion.vehiculo.marca ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip),
                             Icon(Icons.directions_car_outlined,size: 64,),
-                            Text(this.quote.vehiculo.modelo ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip,),
+                            Text(this.cotizacion.vehiculo.modelo ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip,),
                           ],
                         ),
                       ),
@@ -49,7 +49,7 @@ class CotizacionItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Dias de trabajo estimados: " + this.quote.tiempoTrabajo.toString() ?? '-',style: Styles.clientCard,),
+                      Text("Dias de trabajo estimados: " + this.cotizacion.tiempoTrabajo.toString() ?? '-',style: Styles.clientCard,),
                       Padding(
                         padding: EdgeInsets.only(right: 10),
                         child: Icon(CupertinoIcons.arrow_right_circle),
