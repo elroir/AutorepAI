@@ -54,5 +54,7 @@ class Styles {
     letterSpacing: 1.2
   );
 
+  static final TextStyle cardData = TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Color(0xFFDC4D4E));
+
 }
 

@@ -54,29 +54,7 @@ class CotizacionService{
     return cotizaciones;
   }
 
-  Future<List<QuoteDetail>> getQuoteDetails(int id) async {
-    try{
-      final uri = Uri.http( Env.url, '/api/getDetalleCotizacion',{
-        "id_cotizacion" : id
-        }
-      );
 
-      final resp = await http.get(uri);
-      final decodedData = json.decode(resp.body);
-      final List<QuoteDetail> details = [];
-
-      (decodedData['data'] as List).forEach((detail) {
-        print('eyy');
-        details.add(QuoteDetail.fromJson(detail));
-      });
-      print('eyy');
-      return details;
-
-    }catch(e){
-     // Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
-      return[];
-    }
-  }
 
   Future<bool> storeCotizacion(Map<String, dynamic> data) async {
 

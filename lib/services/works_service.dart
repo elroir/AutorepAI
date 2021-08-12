@@ -25,18 +25,16 @@ class WorksService {
       print(e);
     }
 
-
-
   }
 
   Future<List<WorkOrder>> getWorks() async {
     try{
-      final uri = Uri.http( Env.url, '/api/getOrdenes' );
+      final uri = Uri.http( Env.url, '/api/getAllOrdenes' );
       final resp = await http.get(uri);
       final decodedData = json.decode(resp.body);
       final List<WorkOrder> orders = [];
 
-      (decodedData['data'] as List).forEach((order) {
+      (decodedData as List).forEach((order) {
         orders.add(WorkOrder.fromJson(order));
       });
       return orders;
@@ -45,5 +43,24 @@ class WorksService {
       Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
       return [];
     }
+  }
+
+
+  Future<void> updateOrkOrder(int id, String date,bool state) async {
+
+    try{
+      final uri = Uri.http( Env.url, '/api/actualizarOrden',{
+        "id_orden"      : id.toString(),
+        "fecha_entrega" : date,
+        "estado"        : state.toString()
+      } );
+      final resp = await http.get(uri);
+//      final decodedData = json.decode(resp.body);
+//      print(decodedData);
+    }catch(e){
+      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      print(e);
+    }
+
   }
 }
