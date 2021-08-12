@@ -13,6 +13,7 @@ class AuthController extends GetxController {
   Rx<FirebaseUser> _firebaseUser = Rxn<FirebaseUser>();
 
   SharedPreferences _prefs;
+  SharedPreferences get prefs => this._prefs;
 
   User _user = new User();
 
@@ -47,6 +48,8 @@ class AuthController extends GetxController {
       this._prefs.setString('password', password);
       final user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       print('USUARIO ID = ${user.user.uid}');
+      this._prefs.setString('uid', user.user.uid);
+
       _user = await UserService.instance.storeUsuario({
         "id_usuario" : user.user.uid,
         "email"      : email,
@@ -64,9 +67,11 @@ class AuthController extends GetxController {
     try {
       this._prefs.setString('email', email);
       this._prefs.setString('password', password);
-      final usuario = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      print('USUARIO ID = ${usuario.user.uid}');
-      _user = await UserService.instance.getUser(usuario.user.uid);
+      final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      this._prefs.setString('uid', user.user.uid);
+
+      print('USUARIO ID = ${user.user.uid}');
+      _user = await UserService.instance.getUser(user.user.uid);
       print(email);
 
       // _uid = usuario.user.uid;

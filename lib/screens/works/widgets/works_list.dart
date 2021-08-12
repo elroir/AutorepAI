@@ -84,18 +84,21 @@ class _WorkOrdersList extends StatelessWidget {
       items: this.orders.map((order) =>
           ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: Container(
-            height: 200,
-            width: 220,
-            decoration: BoxDecoration(
-              color: Get.theme.cardColor
-            ),
-            child: Column(
-              children: [
-                Text('Orden nro: ${order.idOrden}',style: TextStyle(fontWeight: FontWeight.w300),),
-                Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Get.theme.primaryColor),)
-              ],
+          child: GestureDetector(
+            onTap: (){},
+            child: Container(
+              height: 200,
+              width: 220,
+              decoration: BoxDecoration(
+                color: Get.theme.cardColor
+              ),
+              child: Column(
+                children: [
+                  Text('Orden nro: ${order.idOrden}',style: TextStyle(fontWeight: FontWeight.w300),),
+                  Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Get.theme.primaryColor),)
+                ],
 
+              ),
             ),
           ) ,
         )

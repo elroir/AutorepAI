@@ -22,7 +22,6 @@ class Themes {
       textTheme: TextTheme(
         bodyText2: TextStyle(color: Colors.white)
       ),
-      fontFamily: 'Roboto'
 
     );
   }
@@ -50,7 +49,8 @@ class Styles {
   static final TextStyle bigTitle = TextStyle(
     color: Colors.white,
     fontSize: 22,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Ubuntu',
     letterSpacing: 1.2
   );
 
