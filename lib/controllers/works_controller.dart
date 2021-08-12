@@ -19,6 +19,8 @@ class WorksController extends GetxController{
     }
 
     Future<void> loadWorks() async {
+      this._loading = true;
+      update(['works']);
       this._orders = await WorksService.instance.getWorks();
       this._loading = false;
       update(['works']);

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
+import 'package:ingemec/controllers/works_controller.dart';
 
-import 'package:ingemec/screens/works/widgets/Follows_list.dart';
+import 'package:ingemec/screens/works/widgets/works_list.dart';
 import 'package:ingemec/screens/works/widgets/quotes_card.dart';
 import 'package:ingemec/styles.dart';
 
@@ -15,6 +16,7 @@ class WorksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final quote = Get.put(QuotesController());
+    final works = Get.put(WorksController());
 
     return Scaffold(
       body: Padding(
@@ -23,7 +25,7 @@ class WorksScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            TitleWithRefreshButton(title: 'Ordenes activas',onPressed: (){}),
+            TitleWithRefreshButton(title: 'Ordenes activas',onPressed: () => works.loadWorks()),
             SizedBox(height: 10,),
             WorksList(),
             SizedBox(height: 8,),

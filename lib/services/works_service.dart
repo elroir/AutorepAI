@@ -13,13 +13,18 @@ class WorksService {
 
   Future<void> newWorkOrder(WorkOrder order) async {
 
-    print(order.toJson());
+    print(workOrderToJson(order));
 
-      final uri = Uri.http( Env.url, '/api/storeOrden', {
-        "id_cotizacion" : order.idCotizacion.toString(),
-        "id_personal"   : order.idPersonal
-      } );
-      await http.post(uri,body: order.toJson());
+    try{
+      final uri = Uri.http( Env.url, '/api/storeOrden', );
+      final resp = await http.post(uri,body: order.toJson());
+//      final decodedData = json.decode(resp.body);
+//      print(decodedData);
+    }catch(e){
+      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      print(e);
+    }
+
 
 
   }

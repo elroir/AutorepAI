@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/user_controller.dart';
+import 'package:ingemec/controllers/works_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/work_order_model.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
@@ -49,12 +50,17 @@ class WorksForm extends StatelessWidget {
               CustomTextField(
                 labelText: 'Fehca de ingreso',
                 initialValue: startDateString,
+                onSaved: (value) {
+                  final format = DateFormat('dd/MM/yyyy');
+                  this._order.fechaIngreso = format.parse(value);
+                  print(this._order.fechaIngreso);
+                },
               ),
               CustomTextField(
                 labelText: 'Fecha de salida',
                 initialValue: endDateString,
                 onSaved: (value) {
-                  final format = DateFormat('dd/mm/yyyy');
+                  final format = DateFormat('dd/MM/yyyy');
                   this._order.fechaEntrega = format.parse(value);
                 },
               ),
@@ -196,13 +202,14 @@ class WorksForm extends StatelessWidget {
     if (!form.validate()) return;
     form.save();
 
-    //Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
-
+//    Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
+    final orderController = Get.put(WorksController());
+    final quotesController = Get.put(QuotesController());
     this._order.idCotizacion = this.quote.idCotizacion;
-    this._order.idOrden = 12;
-
+    this._order.idOrden = orderController.orders.length;
 
     await WorksService.instance.newWorkOrder(this._order);
+    quotesController.changeQuoteState(this.quote);
     Get.back();
 
   }

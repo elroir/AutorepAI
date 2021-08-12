@@ -48,9 +48,15 @@ class QuotesController extends GetxController{
 
   void getActiveQuotesWithVehicle() async {
     this._loading = true;
+    update(['activeQuotes']);
     final List<Cotizacion> temporalQuotes = await instance.getAllCotizaciones();
     this._activeQuotes = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
     this._loading = false;
+    update(['activeQuotes']);
+  }
+
+  void changeQuoteState(Cotizacion quote){
+    this._activeQuotes.removeWhere((q) => q.idCotizacion==quote.idCotizacion);
     update(['activeQuotes']);
   }
 
