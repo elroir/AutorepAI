@@ -21,6 +21,8 @@ class WorkOrder {
   DateTime fechaEntrega;
   List<Servicio> servicios;
 
+  String toRawJson() => json.encode(toJson());
+
   factory WorkOrder.fromJson(Map<String, dynamic> json) => WorkOrder(
     idOrden: json["id_orden"] == null ? null : json["id_orden"],
     idCotizacion: json["id_cotizacion"] == null ? null : json["id_cotizacion"],
@@ -31,11 +33,12 @@ class WorkOrder {
   );
 
   Map<String, dynamic> toJson() => {
-    "id_orden": idOrden == null ? null : idOrden,
-    "id_cotizacion": idCotizacion == null ? null : idCotizacion,
-    "id_personal": idPersonal == null ? null : idPersonal,
-
-    "servicios": servicios == null ? null : List<dynamic>.from(servicios.map((x) => x.toJson())),
+    "id_orden": idOrden == null ? null : idOrden.toString(),
+    "id_cotizacion": idCotizacion == null ? null : idCotizacion.toString(),
+    "fecha_ingreso" : fechaIngreso == null ? null : "${fechaIngreso.year.toString().padLeft(4, '0')}-${fechaIngreso.month.toString().padLeft(2, '0')}-${fechaIngreso.day.toString().padLeft(2, '0')}",
+    "fecha_entrega" : fechaEntrega == null ? null : "${fechaEntrega.year.toString().padLeft(4, '0')}-${fechaEntrega.month.toString().padLeft(2, '0')}-${fechaEntrega.day.toString().padLeft(2, '0')}",
+    "id_personal": idPersonal == null ? null : idPersonal.toString(),
+    "servicios": servicios == null ? null : json.encode(servicios),
   };
 }
 
