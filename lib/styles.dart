@@ -56,5 +56,13 @@ class Styles {
 
   static final TextStyle cardData = TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Color(0xFFDC4D4E));
 
+  static final TextStyle ubuntuTitle = TextStyle(
+    color: Color(0xFFDC4D4E),
+    fontFamily: 'Ubuntu',
+    fontSize: 22,
+    fontWeight: FontWeight.w700
+  );
+
+  static final TextStyle whiteSubtitle = TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.5));
 }
 

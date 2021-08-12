@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/nueva_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
 import 'package:ingemec/screens/works/works_screen.dart';
-import 'package:ingemec/widgets/subcajita.dart';
 
 class CotizacionScreen extends StatelessWidget {
 

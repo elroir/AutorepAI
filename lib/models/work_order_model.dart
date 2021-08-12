@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/models/user_model.dart';
+import 'package:ingemec/models/vehicle_model.dart';
 
 WorkOrder workOrderFromJson(String str) => WorkOrder.fromJson(json.decode(str));
 
@@ -15,7 +17,9 @@ class WorkOrder {
     this.fechaEntrega,
     this.servicios,
     this.personal,
-    this.detalles
+    this.detalles,
+    this.detalleServicios,
+    this.vehiculo
   });
 
   int idOrden;
@@ -23,8 +27,10 @@ class WorkOrder {
   String idPersonal;
   DateTime fechaIngreso;
   DateTime fechaEntrega;
-  List<Servicio> servicios;
+  Vehicle vehiculo;
   User personal;
+  List<Servicio> servicios;
+  List<Service>  detalleServicios;
   List<OrderDetail> detalles;
 
   String toRawJson() => json.encode(toJson());
@@ -35,8 +41,9 @@ class WorkOrder {
     idPersonal: json["id_personal"] == null ? null : json["id_personal"],
     fechaIngreso : DateTime.parse(json["fecha_ingreso"]),
     fechaEntrega : DateTime.parse(json["fecha_entrega"]),
+    vehiculo: json["vehiculo"] == null ? null : Vehicle.fromJson(json["vehiculo"]),
     personal: json["personal"] == null ? null : User.fromJson(json["personal"]),
-    servicios: json["servicios"] == null ? null : List<Servicio>.from(json["servicios"].map((x) => Servicio.fromJson(x))),
+    detalleServicios: json["servicios"] == null ? null : List<Service>.from(json["servicios"].map((x) => Service.fromJson(x))),
     detalles: json["detalles"] == null ? null : List<OrderDetail>.from(json["detalles"].map((x) => OrderDetail.fromJson(x))),
   );
 
