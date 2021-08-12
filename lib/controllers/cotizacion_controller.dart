@@ -14,12 +14,14 @@ class QuotesController extends GetxController{
   CotizacionService instance = CotizacionService.instance;
 
   List<Cotizacion> _cotizaciones = [];
-  Cotizacion _cotizacion;
+  Cotizacion _cotizacion = new Cotizacion();
 
   List<Cotizacion> _activeQuotes;
 
   List<Cotizacion> get cotizaciones => _cotizaciones;
   Cotizacion get cotizacion => _cotizacion;
+
+  set setCotizacion(Cotizacion c) => _cotizacion = c;
 
   List<Cotizacion> get activeQuotes => this._activeQuotes;
   
@@ -63,13 +65,14 @@ class QuotesController extends GetxController{
   Future<bool> storeCotizacion({String obs, String fecha, String tiempodias, int idvehiculo, List<Map<String, dynamic>> servicioss, double umbral}) async {
 
     var auth = Get.put(AuthController());
+    print(auth.userId);
 
     Map<String, dynamic> map ={
       "id_cotizacion"  : "${cotizaciones.length + 10}",
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,
-      "id_personal"    : auth.user.idusuario,
+      "id_personal"    : auth.userId,
       "id_vehiculo"    : idvehiculo.toString(),
       "servicioss"     : json.encode(servicioss)
     };
@@ -90,18 +93,23 @@ class QuotesController extends GetxController{
     update(['listacotizaciones']);
   }
 
-  Future<void> actualizarCotizacion({int idCotizacion, int tiempo, String obs, List<Service> registrar, List<Service> eliminar}) async {
-    Map<String, dynamic> solicitud = {
-      "id_cotizacion" : idCotizacion,
-      "tiempo" : tiempo,
+  Future<bool> actualizarCotizacion({int idCotizacion, int tiempo, String obs, String fecha, List<Map<String, dynamic>> registrar, List<Service> eliminar}) async {
+    Map<String, dynamic> ncotizacion = {
+      "id_cotizacion" : idCotizacion.toString(),
+      "tiempo_trabajo" : tiempo.toString(),
       "observacion" : obs,
+      "fecha" : fecha,
       "registrar" : json.encode(registrar),
       "eliminar" : json.encode(eliminar),
     };
 
-    print(json.encode(solicitud));
+    print(json.encode(ncotizacion));
 
+    var sw = await this.instance.actualizarCotizacion(ncotizacion);
+
+    this.getAllCotizaciones();
+    return sw;
+    // return false;
   }
-
 
 }

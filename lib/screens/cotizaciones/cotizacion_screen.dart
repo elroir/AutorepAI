@@ -75,6 +75,15 @@ class CotizacionScreen extends StatelessWidget {
         key : UniqueKey(),
         onDismissed: (direction) async {
           print('Eliminando cotizacion....');
+          final cot = Get.put(QuotesController());
+          var res = await cot.instance.deleteCotizacion({
+            "id_cotizacion":item.idCotizacion.toString()
+          });
+          if(res){
+            Get.back();
+          }else{
+            Get.snackbar("Ups! Algo salió mal!", "No se pudo eliminar la cotizacion");
+          }
         },
         background: Container(color: Colors.red,),
         child: Container(
