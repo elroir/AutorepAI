@@ -8,12 +8,13 @@ class BotonSubmit extends StatelessWidget {
   final Function onPress;
   final double width;
   final double borde;
+  final double height;
 
   BotonSubmit({
     @required this.color,
     @required this.texto,
     this.size = 15.0,
-    @required this.onPress, this.width = 180, this.borde = 100
+    @required this.onPress, this.width = 180, this.borde = 100, this.height = 50
   });
 
   @override
@@ -25,7 +26,7 @@ class BotonSubmit extends StatelessWidget {
         onPressed: this.onPress,
         child: Container(
           width: this.width,
-          height: 50,
+          height: this.height,
           child: Center(
             child: Text( this.texto, 
               style: TextStyle(

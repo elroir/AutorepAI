@@ -6,7 +6,6 @@ import 'package:ingemec/models/service_model.dart';
 import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
-// import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class EditCotizacionScreen extends StatefulWidget {
@@ -69,7 +68,6 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
     return BottomNavigationBar(
       selectedItemColor: Colors.white,
       currentIndex: currentI,
-      // backgroundColor: Color(0xff1e6793),
       backgroundColor: Color(0xff392F8B),
       onTap: (value) => setState(() => currentI = value),
       items: <BottomNavigationBarItem> [
@@ -107,7 +105,6 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
                 initialValue: cotizacion.observacion,
                 onSaved: (valor) => setState(() => observacion = valor),
                 icon: Icon(Icons.lock_clock),
-                // inputType: TextInputType.number,
               ),
               SizedBox(height: 8),
 
@@ -191,7 +188,6 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
           texto: "Actualizar", 
           onPress: () async {
             var sCoti = Get.put(QuotesController());
-
 
             await sCoti.actualizarCotizacion(
             
