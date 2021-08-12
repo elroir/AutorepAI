@@ -8,6 +8,7 @@ import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/nueva_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
+import 'package:ingemec/screens/works/works_screen.dart';
 import 'package:ingemec/widgets/subcajita.dart';
 
 class CotizacionScreen extends StatelessWidget {
@@ -18,12 +19,16 @@ class CotizacionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    var quote = Get.put(QuotesController());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-
-            Text('COTIZACIONES REGISTRADAS', style: _style),
+            TitleWithRefreshButton(title: 'Cotizaciones',
+              onPressed: () => quote.getAllCotizaciones(),
+            ),
+            // Text('COTIZACIONES REGISTRADAS', style: _style),
             SizedBox(height : 15),
             _bodyCotizacionC()
             

@@ -10,6 +10,7 @@ class CotizacionForm extends StatelessWidget {
   final TextEditingController observacionController;
   final TextEditingController tiempoTrabajoController;
   final TextEditingController fechaController;
+  final Widget child;
 
   //Grado
   final GradoDanio gradoDanio;
@@ -18,8 +19,9 @@ class CotizacionForm extends StatelessWidget {
      @required this.observacionController, 
      @required this.tiempoTrabajoController, 
      @required this.fechaController, 
-     @required this.gradoDanio, 
-     @required this.textStyle
+     this.gradoDanio, 
+     @required this.textStyle, 
+     this.child
   });
 
   @override
@@ -59,12 +61,13 @@ class CotizacionForm extends StatelessWidget {
               ),
             
               SizedBox(height: 8),
-              CustomTextField(
-                initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
-                validator: (value) => value.isEmpty ? 'Grado!' : null,
-                labelText: 'Grado de Daño - Porcentaje',
-                icon: Icon(Icons.person, color: Colors.white),
-              ),
+              this.child
+              // CustomTextField(
+              //   initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
+              //   validator: (value) => value.isEmpty ? 'Grado!' : null,
+              //   labelText: 'Grado de Daño - Porcentaje',
+              //   icon: Icon(Icons.person, color: Colors.white),
+              // ),
             ],
           )
         ),

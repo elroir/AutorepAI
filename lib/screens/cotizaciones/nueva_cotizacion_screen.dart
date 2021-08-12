@@ -36,6 +36,8 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
   //Precio total
   double precioTotal = 0;
 
+  int idVehiculo = 0;
+
 
   @override
   void initState() {
@@ -90,8 +92,9 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
                               itemCount: controller.vehicles.length,
                               itemBuilder: (_,i) => ListTile(
                                 onTap: () {
-                                  vehiculoController.text = controller.vehicles[i].idVehiculo.toString();
-                                  // vehiculoController.text = controller.vehicles[i].nroPlaca;
+                                  // vehiculoController.text = controller.vehicles[i].idVehiculo.toString();
+                                  idVehiculo = controller.vehicles[i].idVehiculo;
+                                  vehiculoController.text = controller.vehicles[i].nroPlaca;
                                   Get.back();
                                 },
                                 title: Text(controller.vehicles[i].nroPlaca,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
@@ -372,8 +375,14 @@ Widget _mostrarFoto() {
       observacionController: observacionController,
       tiempoTrabajoController:tiempoTrabajoController,
       fechaController: fechaController,
-      gradoDanio: gradoDanio,
-      textStyle: style
+      // gradoDanio: gradoDanio,
+      textStyle: style,
+      child: CustomTextField(
+        initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
+        validator: (value) => value.isEmpty ? 'Grado!' : null,
+        labelText: 'Grado de Daño - Porcentaje',
+        icon: Icon(Icons.person, color: Colors.white),
+      ),
     );
   }
 
@@ -424,7 +433,7 @@ Widget _mostrarFoto() {
           Center( child: Text( '¿Confirma todos los datos registrados?', style: style ) ), 
           SizedBox(height: 15),
           CustomButton(
-            onPressed: () {},
+            onPressed:_calcularPrecio,
             width: Get.width*0.5,
             child: Text( 'Total:   Bs. $precioTotal',)
           ),        
@@ -442,7 +451,7 @@ Widget _mostrarFoto() {
                     "id"           : item.idservicio,
                     "precio_venta" : item.precio, // * el umbral puede ser lol, aunque creo que eso lo hago en el back
                     "descripcion"  : 'Ninguna',
-                    "umbral"       : 0.1
+                    "umbral"       : double.tryParse( gradoDanio.nombre)
                   };
                   print(servicio);
                   print('======');
@@ -456,8 +465,9 @@ Widget _mostrarFoto() {
                 obs: observacionController.value.text,
                 fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
                 tiempodias: tiempoTrabajoController.value.text,
-                idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
-                umbral: int.tryParse( gradoDanio.nombre) ?? 0.1, //idk
+                idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
+                // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
+                umbral: double.tryParse( gradoDanio.nombre), //idk
                 servicioss: servicioss
               );
                 // servicios: serviciosI
@@ -472,4 +482,12 @@ Widget _mostrarFoto() {
       ),
     );
   }
+  void _calcularPrecio(){
+    this.precioTotal = 0;
+    for (var item in serviciosI) {
+      this.precioTotal += item.precio;
+    }
+    setState(() {});
+  }
+
 }
