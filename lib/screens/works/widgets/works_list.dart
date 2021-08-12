@@ -92,7 +92,8 @@ class _WorkOrdersList extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: Styles.titleCard,)
+                Text('Orden nro: ${order.idOrden}',style: TextStyle(fontWeight: FontWeight.w300),),
+                Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Get.theme.primaryColor),)
               ],
 
             ),
