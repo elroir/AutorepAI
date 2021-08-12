@@ -15,6 +15,8 @@ class AuthController extends GetxController {
   SharedPreferences _prefs;
   SharedPreferences get prefs => this._prefs;
 
+  String get userId => this._prefs.getString('uid') ?? '';
+
   User _user = new User();
 
   String get firebaseUser => _firebaseUser.value?.email;
