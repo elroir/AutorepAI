@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ingemec/models/user_model.dart';
+
 WorkOrder workOrderFromJson(String str) => WorkOrder.fromJson(json.decode(str));
 
 String workOrderToJson(WorkOrder data) => json.encode(data.toJson());
@@ -12,6 +14,8 @@ class WorkOrder {
     this.fechaIngreso,
     this.fechaEntrega,
     this.servicios,
+    this.personal,
+    this.detalles
   });
 
   int idOrden;
@@ -20,6 +24,8 @@ class WorkOrder {
   DateTime fechaIngreso;
   DateTime fechaEntrega;
   List<Servicio> servicios;
+  User personal;
+  List<OrderDetail> detalles;
 
   String toRawJson() => json.encode(toJson());
 
@@ -29,7 +35,9 @@ class WorkOrder {
     idPersonal: json["id_personal"] == null ? null : json["id_personal"],
     fechaIngreso : DateTime.parse(json["fecha_ingreso"]),
     fechaEntrega : DateTime.parse(json["fecha_entrega"]),
+    personal: json["personal"] == null ? null : User.fromJson(json["personal"]),
     servicios: json["servicios"] == null ? null : List<Servicio>.from(json["servicios"].map((x) => Servicio.fromJson(x))),
+    detalles: json["detalles"] == null ? null : List<OrderDetail>.from(json["detalles"].map((x) => OrderDetail.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +67,41 @@ class Servicio {
   Map<String, dynamic> toJson() => {
     "id_servicio": idServicio == null ? null : idServicio,
     "descripcion": descripcion == null ? null : descripcion,
+  };
+}
+
+class OrderDetail {
+  OrderDetail({
+    this.idDetalleo,
+    this.observacion,
+    this.idServicio,
+    this.idGradod,
+    this.idOrden,
+  });
+
+  int idDetalleo;
+  String observacion;
+  int idServicio;
+  int idGradod;
+  int idOrden;
+
+  factory OrderDetail.fromRawJson(String str) => OrderDetail.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory OrderDetail.fromJson(Map<String, dynamic> json) => OrderDetail(
+    idDetalleo: json["id_detalleo"] == null ? null : json["id_detalleo"],
+    observacion: json["observacion"] == null ? null : json["observacion"],
+    idServicio: json["id_servicio"] == null ? null : json["id_servicio"],
+    idGradod: json["id_gradod"] == null ? null : json["id_gradod"],
+    idOrden: json["id_orden"] == null ? null : json["id_orden"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id_detalleo": idDetalleo == null ? null : idDetalleo,
+    "observacion": observacion == null ? null : observacion,
+    "id_servicio": idServicio == null ? null : idServicio,
+    "id_gradod": idGradod == null ? null : idGradod,
+    "id_orden": idOrden == null ? null : idOrden,
   };
 }

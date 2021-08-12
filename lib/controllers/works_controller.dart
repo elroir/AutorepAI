@@ -26,6 +26,11 @@ class WorksController extends GetxController{
       update(['works']);
     }
 
+    void changeWorkState(WorkOrder work){
+      this._orders.removeWhere((w) => w.idOrden==work.idOrden);
+      update(['works']);
+    }
+
 
 
 

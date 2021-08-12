@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/works_controller.dart';
 import 'package:ingemec/models/work_order_model.dart';
+import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
+import 'package:ingemec/screens/works/work_detail_screen.dart';
 import 'package:ingemec/styles.dart';
 
 class WorksList extends StatelessWidget {
@@ -85,17 +87,22 @@ class _WorkOrdersList extends StatelessWidget {
           ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: GestureDetector(
-            onTap: (){},
+            onTap: () => Get.to(() => WorksDetail(order: order)),
             child: Container(
               height: 200,
               width: 220,
+              padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
               decoration: BoxDecoration(
                 color: Get.theme.cardColor
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Text('Orden nro: ${order.idOrden}',style: TextStyle(fontWeight: FontWeight.w300),),
-                  Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700,color: Get.theme.primaryColor),)
+                  Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: Styles.cardData,),
+                  Expanded(child: Icon(FeatherIcons.user,size: 64,)),
+                  Text('Encargado: ${order.personal.nombre}',maxLines: 2,overflow: TextOverflow.ellipsis,style: Styles.cardData,textAlign: TextAlign.center,),
                 ],
 
               ),
