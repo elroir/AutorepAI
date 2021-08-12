@@ -25,11 +25,11 @@ class WorksScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _TitleWithRefreshButton(title: 'Ordenes activas',onPressed: () => works.loadWorks()),
+            TitleWithRefreshButton(title: 'Ordenes activas',onPressed: () => works.loadWorks()),
             SizedBox(height: 10,),
             WorksList(),
             SizedBox(height: 8,),
-            _TitleWithRefreshButton(title: 'Cotizaciones',
+            TitleWithRefreshButton(title: 'Cotizaciones',
               onPressed: () => quote.getActiveQuotesWithVehicle(),
             ),
             GetBuilder<QuotesController>(
@@ -59,13 +59,13 @@ class WorksScreen extends StatelessWidget {
   }
 }
 
-class _TitleWithRefreshButton extends StatelessWidget {
+class TitleWithRefreshButton extends StatelessWidget {
 
   final VoidCallback onPressed;
   final String title;
 
 
-  const _TitleWithRefreshButton({
+  const TitleWithRefreshButton({
     Key key,
     @required this.onPressed,
     this.title = ''

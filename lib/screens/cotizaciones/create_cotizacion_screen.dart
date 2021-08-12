@@ -410,7 +410,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
       tiempoTrabajoController:tiempoTrabajoController,
       fechaController: fechaController,
       gradoDanio: gradoDanio,
-      textStyle: _titleStyle
+      textStyle: _titleStyle,
     );
   }
 
