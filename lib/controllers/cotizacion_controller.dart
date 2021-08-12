@@ -6,9 +6,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/service_model.dart';
-import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/services/cotizacion_service.dart';
-import 'package:ingemec/services/vehicle_service.dart';
 
 class QuotesController extends GetxController{
 

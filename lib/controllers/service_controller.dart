@@ -16,6 +16,11 @@ class ServiceController extends GetxController{
   List<Service> get servicios => _servicios;
   Service get servicio => _servicio;
 
+  bool _loading = false;
+
+  bool get loading => this._loading;
+  
+
   @override
   void onInit() {
     super.onInit();

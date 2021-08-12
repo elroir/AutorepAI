@@ -6,24 +6,25 @@ import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/screens/cotizaciones/create_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
+import 'package:ingemec/screens/cotizaciones/nueva_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
 import 'package:ingemec/widgets/subcajita.dart';
 
 class CotizacionScreen extends StatelessWidget {
+
+
+  final _style = TextStyle( color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
 
-            SubcajitaWidget(
-              title: 'General', 
-              subtitle: 'COTIZACIONES', 
-              colorCajitaP: Color(0xFFE85F5F),
-              color: Color(0xff728AC1)
-            ),
-
+            Text('COTIZACIONES REGISTRADAS', style: _style),
+            SizedBox(height : 15),
             _bodyCotizacionC()
             
           ],
@@ -36,7 +37,8 @@ class CotizacionScreen extends StatelessWidget {
   Widget _floatingButton(){
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () => Get.to(() => CreateCotizacionScreen())
+      // onPressed: () => Get.to(() => CreateCotizacionScreen())
+      onPressed: () => Get.to(() => NuevaCotizacionScreen())
     );
   }
 
@@ -44,7 +46,7 @@ class CotizacionScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child:  Container(
-        height: Get.height * 0.7,
+        height: Get.height * 0.85,
         child:  GetBuilder<QuotesController>(
         init: QuotesController(),
         id: 'listacotizaciones',
