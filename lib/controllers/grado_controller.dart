@@ -1,7 +1,6 @@
 
 
 import 'package:get/get.dart';
-import 'package:ingemec/models/service_model.dart';
 
     // ignore: unnecessary_statements
 class GradoController extends GetxController{

@@ -8,10 +8,9 @@ import 'package:ingemec/widgets/bottom_item.dart';
 import 'package:ingemec/widgets/bottom_submit.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 
-// ignore: must_be_immutable
 class EditCotizacionScreen extends StatefulWidget {
 
-  Cotizacion cotizacion;
+  final Cotizacion cotizacion;
 
   EditCotizacionScreen(this.cotizacion);
 

@@ -7,6 +7,7 @@ import 'package:ingemec/models/work_order_model.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/services/works_service.dart';
 import 'package:ingemec/styles.dart';
+import 'package:ingemec/utils/date_utils.dart';
 import 'package:ingemec/widgets/custom_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 import 'package:ingemec/widgets/main_card.dart';
@@ -53,8 +54,8 @@ class WorksForm extends StatelessWidget {
                 onSaved: (value) {
                   final format = DateFormat('dd/MM/yyyy');
                   this._order.fechaIngreso = format.parse(value);
-                  print(this._order.fechaIngreso);
                 },
+                validator: (value) => validateDate(value),
               ),
               CustomTextField(
                 labelText: 'Fecha de salida',
@@ -63,6 +64,7 @@ class WorksForm extends StatelessWidget {
                   final format = DateFormat('dd/MM/yyyy');
                   this._order.fechaEntrega = format.parse(value);
                 },
+                validator: (value) => validateDate(value),
               ),
               GestureDetector(
                 onTap: () => showModalBottomSheet(
@@ -112,67 +114,7 @@ class WorksForm extends StatelessWidget {
                 ),
               ...this.quote.servicios.map((service) {
                 int i = this.quote.servicios.indexOf(service);
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
-                  child: GestureDetector(
-                    onTap: () => showModalBottomSheet(
-                        backgroundColor: Theme.of(context).cardColor,
-                        context: context,
-                        builder: (_) {
-                          final TextEditingController textController = TextEditingController(text: this._order.servicios[i].descripcion) ;
-                          return SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            child: Column(
-                              children: [
-                                CustomTextField(
-                                  labelText: 'Descripción',
-                                  controller: textController,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 25),
-                                  child: CustomButton(
-                                    child: Text('Guardar',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 20
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      this._order.servicios[i] = Servicio(
-                                          idServicio: service.idservicio,
-                                          descripcion: textController.text
-                                      );
-                                      Get.back();
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        } ) ,
-                    child: MainCard(
-                      height: 50,
-                      width: Get.width,
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(service.nombre,style: TextStyle(color: Colors.white,),),
-                                  Icon(FeatherIcons.plusCircle,color: Get.theme.primaryColor,),
-
-                                ],
-                              ),
-                            )
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                return ServiceItem(order: _order, i: i,service: service,);
               }
 
               ).toList(),
@@ -214,4 +156,85 @@ class WorksForm extends StatelessWidget {
 
   }
 
+}
+
+class ServiceItem extends StatelessWidget {
+
+  final WorkOrder _order;
+  final int i;
+  final Service service;
+
+  const ServiceItem({
+    Key key,
+    @required WorkOrder order,
+    @required this.i,
+     this.service
+  }) : _order = order, super(key: key);
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+      child: GestureDetector(
+        onTap: () => showModalBottomSheet(
+            backgroundColor: Theme.of(context).cardColor,
+            context: context,
+            builder: (_) {
+              final TextEditingController textController = TextEditingController(text: this._order.servicios[i].descripcion) ;
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      labelText: 'Descripción',
+                      controller: textController,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 25),
+                      child: CustomButton(
+                        child: Text('Guardar',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20
+                          ),
+                        ),
+                        onPressed: () {
+                          this._order.servicios[i] = Servicio(
+                              idServicio: service.idservicio,
+                              descripcion: textController.text
+                          );
+                          Get.back();
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              );
+            } ) ,
+        child: MainCard(
+          height: 50,
+          width: Get.width,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(service.nombre,style: TextStyle(color: Colors.white,),),
+                      Icon(FeatherIcons.plusCircle,color: Get.theme.primaryColor,),
+
+                    ],
+                  ),
+                )
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

@@ -178,7 +178,7 @@ Widget _mostrarFoto() {
   _procesarImagen(ImageSource origen) async {
   
     final _picker = ImagePicker();
-    final pickedFile = await _picker.getImage(source: origen);
+    final pickedFile = await _picker.pickImage(source: origen);
 
     if(pickedFile != null){
 
