@@ -9,7 +9,7 @@ import 'package:ingemec/widgets/custom_text_field.dart';
 
 class VehicleForm extends StatelessWidget {
 
-  final User user;
+  final UserModel user;
 
   VehicleForm({this.user});
 

@@ -9,13 +9,13 @@ import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/screens/vehicles/vehicle_form.dart';
 import 'package:ingemec/screens/vehicles/widgets/vehicle_card.dart';
 import 'package:ingemec/styles.dart';
-import 'package:ingemec/widgets/custom_button.dart';
+import 'package:ingemec/widgets/card_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 
 
 class VehicleScreen extends StatelessWidget {
 
-  final User user;
+  final UserModel user;
 
   const VehicleScreen({Key key, this.user}) : super(key: key);
 
@@ -84,12 +84,12 @@ class VehicleScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _CustomButton(
+                  CardButton(
                     icon: FeatherIcons.edit3,
                     text: 'Editar datos',
                     onPressed: (){},
                   ),
-                  _CustomButton(
+                  CardButton(
                     icon: Icons.directions_car_outlined,
                     text: 'Añadir vehiculo',
                     onPressed: () {
@@ -108,31 +108,4 @@ class VehicleScreen extends StatelessWidget {
   }
 }
 
-class _CustomButton extends StatelessWidget {
-
-  final Function onPressed;
-  final IconData icon;
-  final String text;
-
-  const _CustomButton({Key key, this.onPressed, this.icon, this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.width*0.42 ,
-      child: CustomButton(
-        width: MediaQuery.of(context).size.width*0.42,
-        onPressed: this.onPressed,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(this.icon,color: Theme.of(context).primaryColor,size: 40,),
-            SizedBox(height: 10,),
-            Text(this.text,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 20),)
-          ],
-        ),
-      ),
-    );
-  }
-}
 

@@ -1,10 +1,8 @@
 
-
-
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:ingemec/services/storage_service.dart';
 
 class ImageAnalysisService{
 
@@ -13,18 +11,19 @@ class ImageAnalysisService{
   
   final String _dbUrl = "34.132.85.203";
 
-  final FirebaseStorage _storage = FirebaseStorage(storageBucket: 'gs://tallermec-9f2b3.appspot.com');
 
   
-  Future<String> subirImagen( File imagen ) async {
-    
-    StorageReference _storageRef = _storage.ref().child('images/${DateTime.now()}.jpg');
-    
-    StorageUploadTask uploadTask = _storageRef.putFile(imagen); 
-    await uploadTask.onComplete;    
-    print('File Uploaded');    
-    String linksito = await _storageRef.getDownloadURL();
-    return linksito;
+  Future<String> subirImagen( File file ) async {
+    if (file == null) return '';
+
+    final task = StorageService.uploadFile('images/${DateTime.now()}.jpg', file);
+
+    if (task==null) return '';
+
+    final snapshot = await task.whenComplete(() => null);
+    final url = await snapshot.ref.getDownloadURL();
+
+    return url;
   }
 
   Future<String> analizarDanio(Map<String, dynamic> data) async {

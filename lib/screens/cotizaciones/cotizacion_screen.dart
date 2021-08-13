@@ -12,8 +12,6 @@ import 'package:ingemec/screens/works/works_screen.dart';
 class CotizacionScreen extends StatelessWidget {
 
 
-  final _style = TextStyle( color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
-
   @override
   Widget build(BuildContext context) {
 

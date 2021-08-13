@@ -7,7 +7,7 @@ import 'package:ingemec/styles.dart';
 
 class ClientCard extends StatelessWidget {
   
-  final User user;
+  final UserModel user;
 
   const ClientCard({Key key, this.user}) : super(key: key);
   

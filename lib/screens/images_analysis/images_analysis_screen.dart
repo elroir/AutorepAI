@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -202,7 +201,7 @@ class _ImageAnalysisState extends State<ImageAnalysis> {
 
       setState(() => _isloading = !_isloading);
       
-      String image64 = base64Encode(foto.readAsBytesSync());
+//      String image64 = base64Encode(foto.readAsBytesSync());
 
       final resp = await imageAnalysis.subirImagen(images[0]);
 

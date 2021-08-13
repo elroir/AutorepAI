@@ -12,13 +12,13 @@ class UserService{
 
   final _dbUrl = '34.132.85.203';
 
-  Future<List<User>> getUsers( ) async {
+  Future<List<UserModel>> getUsers( ) async {
     final uriFinal = Uri.http( _dbUrl, '/api/getUsuarios' );
     final resp = await http.get(uriFinal);
-    final List<User> users = [];
+    final List<UserModel> users = [];
     final decodedData = json.decode(resp.body);
     (decodedData['data'] as List).forEach((user) {
-      users.add(User.fromJson(user));
+      users.add(UserModel.fromJson(user));
     });
 
 
@@ -26,7 +26,7 @@ class UserService{
         
   }
 
-  Future<User> getUser( String usuarioid ) async {
+  Future<UserModel> getUser( String usuarioid ) async {
     final data = {"id_usuario" : usuarioid};
     final uriFinal = Uri.http( _dbUrl, '/api/getUsuarioId', data );
     final resp = await http.get(uriFinal);
@@ -34,16 +34,16 @@ class UserService{
    
     print('$decodedData dataS');
 
-    if( decodedData == null ) return new User();
+    if( decodedData == null ) return new UserModel();
 
-    User user = usuarioFromJson1(decodedData['data'][0]);
+    UserModel user = usuarioFromJson1(decodedData['data'][0]);
     // User user = usuarioFromJson(resp.body);
     print(user.nombre);
     return user;
     
   }
 
-  Future<User> storeUsuario(Map<String, String> data) async {
+  Future<UserModel> storeUsuario(Map<String, String> data) async {
     
     final urifinal = Uri.http( _dbUrl, '/api/storeUsuario', data );
     final resp = await http.post(urifinal);
@@ -52,10 +52,10 @@ class UserService{
     print(decodedData["ok"]);
     print(decodedData["data"][0]);
     print(decodedData["data"][0]["id_usuario"]);
-    User us = usuarioFromJson1(decodedData["data"][0]);
+    UserModel us = usuarioFromJson1(decodedData["data"][0]);
     return (decodedData["ok"]) 
     ? us
-    : new User();
+    : new UserModel();
    
   }
 

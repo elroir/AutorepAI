@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:ingemec/controllers/follows_controller.dart';
 
 import 'package:ingemec/controllers/works_controller.dart';
+import 'package:ingemec/follows/widgets/follows_bottom_sheet.dart';
 import 'package:ingemec/models/work_order_model.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/screens/vehicles/widgets/vehicle_card.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/utils/alerts.dart';
 import 'package:ingemec/utils/date_utils.dart';
+import 'package:ingemec/widgets/card_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 import 'package:ingemec/widgets/main_card.dart';
 
@@ -126,6 +128,19 @@ class WorksDetail extends StatelessWidget {
                       child: Center(child: CircularProgressIndicator.adaptive(),)
                     );
                   },
+                ),
+              ),
+              Center(
+                child: CardButton(
+                  icon: FeatherIcons.edit3,
+                  width: Get.width*0.9,
+                  text: 'Nuevo seguimiento',
+                  onPressed: () => showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Get.theme.cardColor,
+                    builder: (_) => FollowsBottomSheet(idOrder: this.order.idOrden,)
+
+                  ) ,
                 ),
               ),
 

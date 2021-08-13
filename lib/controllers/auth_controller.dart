@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ingemec/models/user_model.dart';
 import 'package:ingemec/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,24 +10,24 @@ class AuthController extends GetxController {
   
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Rx<FirebaseUser> _firebaseUser = Rxn<FirebaseUser>();
+  Rx<User> _firebaseUser = Rxn<User>();
 
   SharedPreferences _prefs;
   SharedPreferences get prefs => this._prefs;
 
   String get userId => this._prefs.getString('uid') ?? '';
 
-  User _user = new User();
+  UserModel _user = new UserModel();
 
   String get firebaseUser => _firebaseUser.value?.email;
-  User get user => _user;
+  UserModel get user => _user;
 
 
   @override
   void onInit() {
     super.onInit();
     this.initPrefs();
-    _firebaseUser.bindStream(_auth.onAuthStateChanged);
+    _firebaseUser.bindStream(_auth.authStateChanges());
   }
 
   initPrefs() async {

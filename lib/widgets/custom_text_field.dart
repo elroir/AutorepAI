@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final int maxLines;
   final bool enabled;
+  final Color color;
 
   CustomTextField({
     this.icon,
@@ -27,7 +28,8 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.maxLines = 1,
     this.textCapitalization,
-    this.enabled = true
+    this.enabled = true,
+    this.color
   });
 
   @override
@@ -36,6 +38,7 @@ class CustomTextField extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Card(
+      color: this.color ?? Theme.of(context).cardColor,
       elevation: 0,
       margin: EdgeInsets.symmetric(horizontal: 12.0,vertical: 5.0),
       shape: RoundedRectangleBorder(
@@ -68,6 +71,7 @@ class CustomTextField extends StatelessWidget {
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
+
               icon: (icon!=null) ? icon :  null,
               labelText: (labelText!=null) ? labelText : '',
               alignLabelWithHint: true,
@@ -76,7 +80,6 @@ class CustomTextField extends StatelessWidget {
 
 
             ),
-            cursorColor: Colors.green,
             onSaved: onSaved,
             validator: (validator!=null) ? validator : null,
           ),

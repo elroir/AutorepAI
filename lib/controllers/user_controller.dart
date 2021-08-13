@@ -4,8 +4,8 @@ import 'package:ingemec/services/user_service.dart';
 
 class UserController extends GetxController{
 
-  List<User> _users;
-  List<User> get users => this._users;
+  List<UserModel> _users;
+  List<UserModel> get users => this._users;
   bool _loading = true;
   bool get loading  => this._loading;
 

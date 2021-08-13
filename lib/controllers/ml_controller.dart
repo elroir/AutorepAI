@@ -2,43 +2,40 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:ingemec/services/images_service.dart';
 
 class MLController extends GetxController{
   File image;
-  ImagePicker imagePicker;
   String result;
 
   @override
   void onInit() {
-    this.imagePicker = ImagePicker();
-    result = '';
+    this.result = '';
     super.onInit();
   }
 
   Future<void> pickImageFromGallery() async {
-    XFile pickedFile = await this.imagePicker.pickImage(source: ImageSource.gallery);
-    image = File(pickedFile.path);
+    this.image = await ImagesService.pickImageFromGallery();
     this.performImageLabeling();
     update(['picker']);
   }
 
   Future<void> pickImageFromCamera() async {
-    XFile pickedFile = await this.imagePicker.pickImage(source: ImageSource.camera);
-    image = File(pickedFile.path);
+    this.image = await ImagesService.pickImageFromCamera();
     this.performImageLabeling();
     update(['picker']);
   }
 
 
   void performImageLabeling() async {
-    final InputImage visionImage = InputImage.fromFile(image);
+    if(this.image==null) return;
+    final InputImage visionImage = InputImage.fromFile(this.image);
 
     final TextDetector recognizer = GoogleMlKit.vision.textDetector();
 
     RecognisedText visionText = await recognizer.processImage(visionImage);
 
-    result = "";
+    this.result = "";
     Pattern pattern = r'^(\d{3,4}[a-zA-Z]{3})$';
     RegExp plate = RegExp(pattern);
 
@@ -46,13 +43,13 @@ class MLController extends GetxController{
       for (TextLine line in block.lines) {
         for (TextElement element in line.elements) {
           if( plate.hasMatch(element.text))
-            result = element.text ;
+            this.result = element.text ;
         }
       }
 //      result += "\n\n";
     }
 
-    if(result==""){
+    if(this.result==""){
       Get.snackbar('Sin datos validos', 'No se encontro una matricula valida');
     }
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ingemec/controllers/auth_controller.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/widgets/appBarLogo.dart';
 import 'package:ingemec/widgets/seguimiento_scroll.dart';
@@ -19,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
     
     final size = MediaQuery.of(context).size;
 
-    final userController = Get.put(AuthController());
     return Scaffold(
       
       body: Column(
@@ -59,9 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
               heightBody: 150,
             ),
           ),
-          Center(
-            child: Text(userController.userId)
-          ),
+
         ],
       ),
     );

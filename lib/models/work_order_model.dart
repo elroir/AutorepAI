@@ -28,7 +28,7 @@ class WorkOrder {
   DateTime fechaIngreso;
   DateTime fechaEntrega;
   Vehicle vehiculo;
-  User personal;
+  UserModel personal;
   List<Servicio> servicios;
   List<Service>  detalleServicios;
   List<OrderDetail> detalles;
@@ -42,7 +42,7 @@ class WorkOrder {
     fechaIngreso : DateTime.parse(json["fecha_ingreso"]),
     fechaEntrega : DateTime.parse(json["fecha_entrega"]),
     vehiculo: json["vehiculo"] == null ? null : Vehicle.fromJson(json["vehiculo"]),
-    personal: json["personal"] == null ? null : User.fromJson(json["personal"]),
+    personal: json["personal"] == null ? null : UserModel.fromJson(json["personal"]),
     detalleServicios: json["servicios"] == null ? null : List<Service>.from(json["servicios"].map((x) => Service.fromJson(x))),
     detalles: json["detalles"] == null ? null : List<OrderDetail>.from(json["detalles"].map((x) => OrderDetail.fromJson(x))),
   );
