@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ingemec/controllers/follows_controller.dart';
 
 import 'package:ingemec/controllers/works_controller.dart';
 import 'package:ingemec/models/work_order_model.dart';
@@ -90,7 +91,7 @@ class WorksDetail extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(service.nombre,style:Styles.whiteSubtitle),
-                                Text(detail.observacion*2,style: TextStyle(color: Colors.white),maxLines: 2,overflow: TextOverflow.ellipsis,),
+                                Text(detail.observacion,style: TextStyle(color: Colors.white),maxLines: 2,overflow: TextOverflow.ellipsis,),
                               ],
                             )
                         ),
@@ -99,6 +100,35 @@ class WorksDetail extends StatelessWidget {
                   ),
                 );
               }),
+              Padding(
+                  padding: EdgeInsets.only(left: 10,top: 10,bottom: 5),
+                  child: Text('Seguimiento del vehiculo:',style: Styles.whiteSubtitle,)
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: GetBuilder<FollowController>(
+                  init: FollowController(id: this.order.idOrden),
+                  id: 'follows',
+                  builder: (controller) {
+                    if(!controller.loading){
+                      return Row(
+                        children: controller.follows.map((follow) => MainCard(
+                          children: [
+                            Text(dateToFormat(follow.date)),
+                            Text(follow.description)
+                          ]
+                        )).toList()
+                      );
+                    }
+                    return SizedBox(
+                      height: 200,
+                      width: Get.width,
+                      child: Center(child: CircularProgressIndicator.adaptive(),)
+                    );
+                  },
+                ),
+              ),
+
               SizedBox(height: 25,),
               Center(
                 child: CustomButton(
@@ -119,7 +149,8 @@ class WorksDetail extends StatelessWidget {
                       Navigator.popUntil(context, (route) => route.isFirst);
                     })
                 ),
-              )
+              ),
+
 
 
             ],
