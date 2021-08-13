@@ -13,9 +13,8 @@ class FollowsBottomSheet extends StatelessWidget {
 
   final int idOrder;
 
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _description = TextEditingController();
-  final TextEditingController _date        = TextEditingController();
+
+  final Follow follow = Follow();
 
   FollowsBottomSheet({Key key, this.idOrder}) : super(key: key);
 
@@ -30,100 +29,94 @@ class FollowsBottomSheet extends StatelessWidget {
       builder: (controller) {
         return SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: Form(
-            key: this._formKey,
-            child: Column(
-              children: [
-                SizedBox(height: 25),
-                controller.currentImage!=null
-                ?  Image.file(controller.currentImage,width: 250,height: 200,fit: BoxFit.contain,)
-                : SizedBox(
-                  width: 250,
-                  height: 180,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(FeatherIcons.image,size: 80,color: Colors.grey,),
-                      Text('Elegir desde',style: TextStyle(fontSize: 20),)
-                    ],
-                  ),
+          child: Column(
+            children: [
+              SizedBox(height: 25),
+              controller.currentImage!=null
+              ?  Image.file(controller.currentImage,width: 250,height: 200,fit: BoxFit.contain,)
+              : SizedBox(
+                width: 250,
+                height: 180,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(FeatherIcons.image,size: 80,color: Colors.grey,),
+                    Text('Elegir desde',style: TextStyle(fontSize: 20),)
+                  ],
                 ),
+              ),
 
-                SizedBox(height: 15),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(
-                        onPressed: () async {
-                          await controller.pickFromGallery();
-                        },
-                        width: size.width*0.42,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Galeria'),
-                            SizedBox(width: 10,),
-                            Icon(FeatherIcons.image)
-                          ],
-                        ),
+              SizedBox(height: 15),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomButton(
+                      onPressed: () async {
+                        await controller.pickFromGallery();
+                      },
+                      width: size.width*0.42,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Galeria'),
+                          SizedBox(width: 10,),
+                          Icon(FeatherIcons.image)
+                        ],
                       ),
-                      CustomButton(
-                        onPressed: () async {
-                          await controller.pickFromCamera();
-                        },
-                        width: size.width*0.42,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Camara'),
-                            SizedBox(width: 10,),
-                            Icon(FeatherIcons.camera)
-                          ],
-                        ),
+                    ),
+                    CustomButton(
+                      onPressed: () async {
+                        await controller.pickFromCamera();
+                      },
+                      width: size.width*0.42,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Camara'),
+                          SizedBox(width: 10,),
+                          Icon(FeatherIcons.camera)
+                        ],
                       ),
+                    ),
 
-                    ],
-                  ),
+                  ],
                 ),
-                CustomTextField(
-                  color: Theme.of(context).primaryColorDark,
-                  controller: _description,
-                  labelText: 'Detalle',
-                ),
-                CustomTextField(
-                  color: Theme.of(context).primaryColorDark,
-                  inputType: TextInputType.datetime,
-                  controller: _date,
-                  labelText: 'Fecha',
-                ),
-                SizedBox(height: 25),
-                CustomButton(
-                  child: Text('Enviar Seguimiento'),
-                  onPressed:() async {
-                    final FormState form = _formKey.currentState;
-                    if (!form.validate()) return;
-                    form.save();
-                    Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
-                    final format = DateFormat('dd/MM/yyyy');
-                    final DateTime date = format.parse(this._date.text);
-                    await controller.uploadPhoto();
-                    Follow follow = Follow(
-                      idOrder: this.idOrder,
-                      description: this._description.text,
-                      date: date,
-                      imageUrl: 'adasdsad'
-                    );
-                    await FollowsService.instance.newFollow(follow);
-                    Get.back();
-                  },
-                ),
-                SizedBox(height: 20),
+              ),
+              CustomTextField(
+                color: Theme.of(context).primaryColorDark,
+                controller: controller.description,
+                labelText: 'Detalle',
+              ),
+              CustomTextField(
+                color: Theme.of(context).primaryColorDark,
+                controller:  controller.date,
+                labelText: 'Fecha',
+              ),
+              SizedBox(height: 25),
+              CustomButton(
+                child: Text('Enviar Seguimiento'),
+                onPressed:() async {
+
+                  Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
+                  final format = DateFormat('dd/MM/yyyy');
+                  final DateTime date = format.parse(controller.date.text);
+                  this.follow.date=date;
+                  this.follow.idOrder=this.idOrder;
+                  this.follow.description = controller.description.text;
+                  await controller.uploadPhoto();
+                  this.follow.imageUrl = controller.url;
+                  await FollowsService.instance.newFollow(follow);
+                  Get.back();
+                  Get.back();
+
+                },
+              ),
+              SizedBox(height: 20),
 
 
-              ],
-            ),
+            ],
           ),
         );
       },

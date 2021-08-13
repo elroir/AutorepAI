@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/services/images_service.dart';
@@ -10,6 +11,9 @@ class ImageController extends GetxController{
 
   String _currentUrl;
   String get url => this._currentUrl;
+
+  final TextEditingController description = TextEditingController();
+  final TextEditingController date        = TextEditingController();
 
   @override
   void onInit() {

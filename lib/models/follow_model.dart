@@ -25,7 +25,7 @@ class Follow {
   );
 
   Map<String, dynamic> toJson() => {
-    "id_orden": idOrder == null ? null : idOrder,
+    "id_orden": idOrder == null ? null : idOrder.toString(),
     "descripcion": description == null ? null : description,
     "url_imagen": imageUrl == null ? null : imageUrl,
     "fecha": date == null ? null : "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",

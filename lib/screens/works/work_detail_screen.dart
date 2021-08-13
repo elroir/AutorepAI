@@ -138,7 +138,7 @@ class WorksDetail extends StatelessWidget {
                   onPressed: () => showModalBottomSheet(
                     context: context,
                     backgroundColor: Get.theme.cardColor,
-                    builder: (_) => FollowsBottomSheet(idOrder: this.order.idOrden,)
+                    builder: (_) => FollowsBottomSheet(idOrder: this.order.idOrden)
 
                   ) ,
                 ),
