@@ -56,7 +56,7 @@ class AuthController extends GetxController {
         "id_usuario" : user.user.uid,
         "email"      : email,
         "password"   : password,
-        "tipo_usuario" : "C"
+        "tipo_usuario" : "P"
       });
 
       // _uid = usuario.user.uid;

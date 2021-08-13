@@ -12,6 +12,7 @@ class _FormWidgetState extends State<FormWidget> {
 
   double data = 30;
 
+  String nombre;
   String email;
   String password;
 
@@ -32,6 +33,23 @@ class _FormWidgetState extends State<FormWidget> {
       child: Column(
         children: <Widget>[
           SizedBox( height: 30.0 ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: TextFormField(
+              // initialValue: authController.getEmail(),
+              validator: (value) => value.isEmpty ? 'Nombre' : null,
+              onChanged: (value) => setState(() => nombre = value),
+              cursorColor: Colors.white,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                labelText: 'Nombre',
+                prefixIcon: Icon( Icons.person, color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox( height: 10.0 ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: TextFormField(
@@ -78,22 +96,39 @@ class _FormWidgetState extends State<FormWidget> {
             ),
           ),
           SizedBox(height: 30),
-          BotonSubmit(
-            size: 17,
-            texto: (_sw) ? 'Editar Perfil' : 'Guardar',
-            color: Colors.blue,
-            onPress: () {}
-          ),
-          SizedBox(height: 10),
+          Container(
+            height: 50,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  BotonSubmit(
+                    width: 100,
+                    size: 17,
+                    texto: (_sw) ? 'Editar Perfil' : 'Guardar',
+                    color: Colors.blue,
+                    onPress: () async {
+                      
 
-          BotonSubmit(
-            size: 17,
-            texto: 'Cerrar sesion',
-            color: Colors.red[300],
-            onPress: () {
-              Get.put(AuthController()).signOut();
-            }
+                    }
+                  ),
+                  SizedBox(height: 10),
+
+                  BotonSubmit(
+                     width: 120,
+                    size: 17,
+                    texto: 'Cerrar sesion',
+                    color: Colors.red[300],
+                    onPress: () {
+                      Get.put(AuthController()).signOut();
+                    }
+                  ),
+                ],
+              ),
+            ),
           ),
+          
           Text('$_error'),
           SizedBox(height: 10),
         ],

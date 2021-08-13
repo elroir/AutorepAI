@@ -136,8 +136,10 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
             itemCount: servicios.length,
             itemBuilder: (_, index){
               return BotonItem(
-                color1: Colors.blue[400],
-                color2: Colors.blue,
+                color1: Color(0xff486090),
+                color2: Color(0xff486090),
+                // color1: Colors.blue[400],
+                // color2: Colors.blue,
                 onPress: (){
                   setState(() {
                     eliminar.add(servicios[index]);

@@ -312,7 +312,7 @@ Widget _mostrarFoto() {
 
       print('URL DE IMAGEN = $resp');
 
-      final resp2 = await imageAnalysis.analizarDanio({
+      final resp2 = await imageAnalysis.analizarDanioN({
         "url_imagen" : resp
       });
       
@@ -398,7 +398,7 @@ Widget _mostrarFoto() {
               children: [
                 Icon(Icons.person, color: Colors.white),
                 SizedBox(width: 12),
-                Text('Grado de daño (Porcentaje) : ${gradoValor * 100} %'),
+                Text('Grado de daño (Porcentaje) : ${gradoValor * (-100)} %'),
               ],
             ),
           ),
@@ -490,20 +490,21 @@ Widget _mostrarFoto() {
 
               var sCoti = Get.put(QuotesController());
 
-              final sw = false;
-              // final sw = await sCoti.storeCotizacion(
-              //   obs: observacionController.value.text,
-              //   fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
-              //   tiempodias: tiempoTrabajoController.value.text,
-              //   idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
-              //   // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
-              //   // umbral: double.tryParse( gradoDanio.nombre), //idk
-              //   servicioss: servicioss
-              // );
+              // final sw = false;
+              final sw = await sCoti.storeCotizacion(
+                obs: observacionController.value.text,
+                fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                tiempodias: tiempoTrabajoController.value.text,
+                idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
+                // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
+                // umbral: double.tryParse( gradoDanio.nombre), //idk
+                servicioss: servicioss
+              );
                 // servicios: serviciosI
               if (sw) {
                 Get.back();
               }else{
+                Get.snackbar("Ups!", "Complete todos los campos de la cotizacion!");
                 print('rayos no se pudo');
               }
             }

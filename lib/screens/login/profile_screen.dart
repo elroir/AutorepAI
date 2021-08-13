@@ -17,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             SubcajitaWidget(
+              colorCajitaP: Theme.of(context).primaryColor,
               title: 'Configuración',
               subtitle: 'Mi Perfil',
               body: _infoUsuario(),

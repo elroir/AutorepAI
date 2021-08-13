@@ -39,4 +39,16 @@ class ImageAnalysisService{
 
   }
 
+   Future<String> analizarDanioN(Map<String, dynamic> data) async {
+
+    final urifinal = Uri.http( _dbUrl, '/api/analyzeImageApi', data );
+    final resp = await http.get(urifinal);
+    final decodedData = json.decode(resp.body); //trasforma en un mapa
+   
+    print('$decodedData dataS');
+
+    return decodedData["data"]["score"].toString();
+
+  }
+
 }
