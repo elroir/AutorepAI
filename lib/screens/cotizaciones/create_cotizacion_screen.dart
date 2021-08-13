@@ -30,6 +30,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
 
   //Grado
   GradoDanio gradoDanio = new GradoDanio();
+  int gradoValor = 0;
 
   //Precio total
   double precioTotal = 0;
@@ -358,6 +359,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
 
       Get.snackbar("OK", resp2);
       gradoDanio.nombre = resp2;
+      gradoValor =  int.tryParse(resp2) ;
 
     }else{
       print('falta lad descripcion');
@@ -496,7 +498,7 @@ class _CreateCotizacionScreenState extends State<CreateCotizacionScreen> {
                 fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
                 tiempodias: tiempoTrabajoController.value.text,
                 idvehiculo: vehiculoId,
-                umbral: 0.1,
+                // umbral: 0.1,
                 servicioss: servicioss
               );
                 // servicios: serviciosI

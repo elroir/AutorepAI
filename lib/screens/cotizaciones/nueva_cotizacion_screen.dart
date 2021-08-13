@@ -32,6 +32,7 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
 
   //Grado
   GradoDanio gradoDanio = new GradoDanio();
+  double gradoValor = -1;
 
   //Precio total
   double precioTotal = 0;
@@ -118,13 +119,13 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
                     },
                   ),
                 ),
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               _daniosPage(),
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               _cotizacionFormPage(),
-              SizedBox(height: 15,),
+              SizedBox(height: 25),
               _serviciosPage(),
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               _confirmPage(),
               SizedBox(height: 20),
             ],
@@ -321,7 +322,12 @@ Widget _mostrarFoto() {
       setState(() => _isloading = !_isloading);
 
       Get.snackbar("OK", resp2);
-      gradoDanio.nombre = resp2;
+
+      setState(() {
+        gradoDanio.nombre = resp2;
+        gradoValor =  double.tryParse(resp2);
+      });
+
 
     }else{
       print('falta lad descripcion');
@@ -377,12 +383,35 @@ Widget _mostrarFoto() {
       fechaController: fechaController,
       // gradoDanio: gradoDanio,
       textStyle: style,
-      child: CustomTextField(
-        initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
-        validator: (value) => value.isEmpty ? 'Grado!' : null,
-        labelText: 'Grado de Daño - Porcentaje',
-        icon: Icon(Icons.person, color: Colors.white),
+      child: Padding(
+        padding: EdgeInsets.symmetric( horizontal : 10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Theme.of(context).primaryColorDark
+          ),
+          height: 50,
+          child: Padding(
+            padding:  EdgeInsets.symmetric( horizontal : 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.person, color: Colors.white),
+                SizedBox(width: 12),
+                Text('Grado de daño (Porcentaje) : ${gradoValor * 100} %'),
+              ],
+            ),
+          ),
+        ),
       ),
+      // child: CustomTextField(
+      //   // initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
+      //   // initialValue: (gradoValor >= 0) ? '${gradoValor * 100} %' : '-',
+      //   initialValue: (gradoValor > -1) ? '$gradoValor' : '-',
+      //   validator: (value) => value.isEmpty ? 'Grado!' : null,
+      //   labelText: 'Grado de Daño - Porcentaje',
+      //   icon: Icon(Icons.person, color: Colors.white),
+      // ),
     );
   }
 
@@ -451,7 +480,8 @@ Widget _mostrarFoto() {
                     "id"           : item.idservicio,
                     "precio_venta" : item.precio, // * el umbral puede ser lol, aunque creo que eso lo hago en el back
                     "descripcion"  : 'Ninguna',
-                    "umbral"       : double.tryParse( gradoDanio.nombre)
+                    // "umbral"       : double.tryParse( gradoDanio.nombre)
+                    "umbral"       : gradoValor
                   };
                   print(servicio);
                   print('======');
@@ -460,16 +490,16 @@ Widget _mostrarFoto() {
 
               var sCoti = Get.put(QuotesController());
 
-
-              final sw = await sCoti.storeCotizacion(
-                obs: observacionController.value.text,
-                fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                tiempodias: tiempoTrabajoController.value.text,
-                idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
-                // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
-                umbral: double.tryParse( gradoDanio.nombre), //idk
-                servicioss: servicioss
-              );
+              final sw = false;
+              // final sw = await sCoti.storeCotizacion(
+              //   obs: observacionController.value.text,
+              //   fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
+              //   tiempodias: tiempoTrabajoController.value.text,
+              //   idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
+              //   // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
+              //   // umbral: double.tryParse( gradoDanio.nombre), //idk
+              //   servicioss: servicioss
+              // );
                 // servicios: serviciosI
               if (sw) {
                 Get.back();
