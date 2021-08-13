@@ -21,8 +21,10 @@ class BotonSubmit extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(this.borde),
-      child: FlatButton(
-        color: this.color ,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: this.color
+        ),
         onPressed: this.onPress,
         child: Container(
           width: this.width,

@@ -17,7 +17,7 @@ class WorksService {
 
     try{
       final uri = Uri.http( Env.url, '/api/storeOrden', );
-      final resp = await http.post(uri,body: order.toJson());
+      await http.post(uri,body: order.toJson());
 //      final decodedData = json.decode(resp.body);
 //      print(decodedData);
     }catch(e){
@@ -47,14 +47,14 @@ class WorksService {
 
 
   Future<void> updateOrkOrder(int id, String date,bool state) async {
-
+    print(date);
     try{
       final uri = Uri.http( Env.url, '/api/actualizarOrden',{
         "id_orden"      : id.toString(),
         "fecha_entrega" : date,
         "estado"        : state.toString()
       } );
-      final resp = await http.get(uri);
+      await http.get(uri);
 //      final decodedData = json.decode(resp.body);
 //      print(decodedData);
     }catch(e){

@@ -101,8 +101,18 @@ class _WorkOrdersList extends StatelessWidget {
                 children: [
                   Text('Orden nro: ${order.idOrden}',style: TextStyle(fontWeight: FontWeight.w300),),
                   Text('Ingreso: ${order.fechaIngreso.day}/${order.fechaIngreso.month}/${order.fechaIngreso.year}' ?? '-',style: Styles.cardData,),
-                  Expanded(child: Icon(FeatherIcons.user,size: 64,)),
-                  Text('Encargado: ${order.personal.nombre}',maxLines: 2,overflow: TextOverflow.ellipsis,style: Styles.cardData,textAlign: TextAlign.center,),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.directions_car_outlined,size: 64,),
+                        Text(order.vehiculo.nroPlaca,style: Styles.cardData,),
+                        Text('${order.vehiculo.marca} ${order.vehiculo.modelo}',maxLines: 2,overflow: TextOverflow.ellipsis,style: Styles.cardData,textAlign: TextAlign.center,),
+                      ],
+                    ),
+                  ),
+
+                  Text('Encargado: ${order.personal.nombre}', style: TextStyle(fontWeight: FontWeight.w300)),
                 ],
 
               ),

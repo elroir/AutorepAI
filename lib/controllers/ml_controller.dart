@@ -17,14 +17,14 @@ class MLController extends GetxController{
   }
 
   Future<void> pickImageFromGallery() async {
-    PickedFile pickedFile = await this.imagePicker.getImage(source: ImageSource.gallery);
+    XFile pickedFile = await this.imagePicker.pickImage(source: ImageSource.gallery);
     image = File(pickedFile.path);
     this.performImageLabeling();
     update(['picker']);
   }
 
   Future<void> pickImageFromCamera() async {
-    PickedFile pickedFile = await this.imagePicker.getImage(source: ImageSource.camera);
+    XFile pickedFile = await this.imagePicker.pickImage(source: ImageSource.camera);
     image = File(pickedFile.path);
     this.performImageLabeling();
     update(['picker']);

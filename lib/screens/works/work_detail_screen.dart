@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:ingemec/controllers/works_controller.dart';
 import 'package:ingemec/models/work_order_model.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/screens/vehicles/widgets/vehicle_card.dart';
 import 'package:ingemec/styles.dart';
+import 'package:ingemec/utils/alerts.dart';
 import 'package:ingemec/utils/date_utils.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 import 'package:ingemec/widgets/main_card.dart';
@@ -43,7 +47,7 @@ class WorksDetail extends StatelessWidget {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(left: 10,bottom: 5),
+                  padding: EdgeInsets.only(left: 10,bottom: 5,top: 10),
                   child: Text('Vehiculo:',style: Styles.whiteSubtitle,)
               ),
               Center(child: VehicleCard(vehicle: this.order.vehiculo,)),
@@ -87,7 +91,6 @@ class WorksDetail extends StatelessWidget {
                               children: [
                                 Text(service.nombre,style:Styles.whiteSubtitle),
                                 Text(detail.observacion*2,style: TextStyle(color: Colors.white),maxLines: 2,overflow: TextOverflow.ellipsis,),
-
                               ],
                             )
                         ),
@@ -95,9 +98,28 @@ class WorksDetail extends StatelessWidget {
                     ],
                   ),
                 );
-              })
+              }),
+              SizedBox(height: 25,),
+              Center(
+                child: CustomButton(
+                  child: Text('Finalizar orden'),
+                  onPressed: () => optionsAlert(context,
+                  'Finalizar orden',
+                  '¿Está seguro que desea finalizar la OT?',
+                   () {
+                     final FormState form = _formKey.currentState;
+                     if (!form.validate()){
+                       Navigator.pop(context);
+                       return ;
+                     }
+                     form.save();
+                     final workController = Get.put(WorksController());
+                     workController.changeOrdersState(this.order);
 
-
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    })
+                ),
+              )
 
 
             ],
