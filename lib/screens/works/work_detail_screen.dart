@@ -108,6 +108,7 @@ class WorksDetail extends StatelessWidget {
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.only(left: 10),
                 physics: BouncingScrollPhysics(),
                 child: GetBuilder<FollowController>(
                   init: FollowController(id: this.order.idOrden),
@@ -123,9 +124,16 @@ class WorksDetail extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text('Fecha: ${dateToSpanishFormat(follow.date)}',style: Styles.titleCard,),
-                                      Image.network(follow.imageUrl,height: 100,width: 120,fit: BoxFit.cover,),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(vertical: 5),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: Image.network(follow.imageUrl,height: 100,width: 120,fit: BoxFit.cover,)
+                                        ),
+                                      ),
                                       Text(follow.description)
                                     ],
                                   ),

@@ -11,6 +11,7 @@ class Vehicle {
     this.marca,
     this.modelo,
     this.color,
+    this.urlImagen,
     this.idUsuario,
   });
 
@@ -19,6 +20,7 @@ class Vehicle {
   String marca;
   String modelo;
   String color;
+  String urlImagen;
   String idUsuario;
 
   factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
@@ -27,6 +29,7 @@ class Vehicle {
     marca: json["marca"],
     modelo: json["modelo"],
     color: json["color"],
+    urlImagen: json["url_imagen"] == null ? null : json["url_imagen"],
     idUsuario: json["id_usuario"],
   );
 
@@ -35,6 +38,7 @@ class Vehicle {
     "marca": marca,
     "modelo": modelo,
     "color": color,
+    "url_imagen" : urlImagen,
     "id_usuario": idUsuario,
   };
 

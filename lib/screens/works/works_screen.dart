@@ -7,7 +7,9 @@ import 'package:ingemec/controllers/works_controller.dart';
 
 import 'package:ingemec/screens/works/widgets/works_list.dart';
 import 'package:ingemec/screens/works/widgets/quotes_card.dart';
+import 'package:ingemec/screens/works/works_history.dart';
 import 'package:ingemec/styles.dart';
+import 'package:ingemec/widgets/card_button.dart';
 
 class WorksScreen extends StatelessWidget {
 
@@ -51,6 +53,15 @@ class WorksScreen extends StatelessWidget {
                   );
               }
             ),
+            Center(
+              child: CardButton(
+                width: Get.width*0.9,
+                icon: FeatherIcons.bookOpen,
+                text: 'Historial de ordenes',
+                onPressed: () => Get.to(()=> WorksHistory()),
+              ),
+            ),
+            SizedBox(height: 25,)
 
           ],
         ),

@@ -27,10 +27,13 @@ class VehicleCard extends StatelessWidget {
             children: [
               Text("${vehicle.marca} ${vehicle.nroPlaca}",style: Styles.titleCard,overflow: TextOverflow.clip,),
               Text("Año " + vehicle.modelo ?? "-",style: Styles.clientCard,overflow: TextOverflow.clip),
-              Center(
-                child: Container(
-                  width: size.width*0.5,
-                  child: Icon(Icons.directions_car_outlined,size: 96,),
+              Container(
+                width: size.width*0.5,
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: (vehicle.urlImagen!=null) ? Image.network(vehicle.urlImagen,height: 100,fit: BoxFit.cover,) : Icon(Icons.directions_car_outlined,size: 64,),
+                  ),
                 ),
               ),
               Expanded(

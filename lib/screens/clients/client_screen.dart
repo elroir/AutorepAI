@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/user_controller.dart';
 import 'package:ingemec/screens/clients/client_card.dart';
+import 'package:ingemec/screens/works/works_screen.dart';
 
 class ClientsScreen extends StatelessWidget {
   @override
@@ -14,21 +15,33 @@ class ClientsScreen extends StatelessWidget {
         init: UserController(),
         id: 'user',
         builder: (controller) {
+          print(controller.loading);
           if (!controller.loading){
             final List users = controller.users.where((user) => user.tipoUsuario=='C').toList();
-            return (Get.width>600)
-                ? this._largeScreens(controller)
-                : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  SizedBox(width: double.infinity,),
-                  ...users.map((user) =>
-                  FadeInLeft(child: ClientCard(user: user))).toList()
-                ]
-              )
-            );
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:12),
+                  child: TitleWithRefreshButton(
+                    title: 'Clientes',
+                    onPressed: controller.reload,
+                  ),
+                ),
+                (Get.width>600)
+                    ? this._largeScreens(controller)
+                    : SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Wrap(
+                        alignment: WrapAlignment.center,
+                        children: [
+                          SizedBox(width: double.infinity,),
+                          ...users.map((user) =>
+                              FadeInRight(duration: Duration(milliseconds: 700),child: ClientCard(user: user))).toList()
+                        ]
+                    )
+                )
+              ] ,
+            ) ;
                 }
           return Center(child: CircularProgressIndicator());
         },
