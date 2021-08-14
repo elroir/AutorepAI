@@ -28,15 +28,10 @@ class QuotesController extends GetxController{
   bool _loading = true;
   bool get loading  => this._loading;
 
-  @override
-  void onInit() {
-    super.onInit();
-    this.getAllCotizaciones();
-  }
 
   @override
   void onReady() {
-   
+    this.getAllCotizaciones();
     this.getActiveQuotesWithVehicle();
     super.onReady();
   }
@@ -47,10 +42,21 @@ class QuotesController extends GetxController{
 
   }
 
+  Future<List<Cotizacion>> _getQuotes() async {
+    final AuthController auth = Get.find();
+    List<Cotizacion> temporalQuotes = [];
+    if (auth.userType=='A')
+      temporalQuotes = await instance.getAllCotizaciones();
+    else
+      temporalQuotes = await instance.getAllPersonalCotizaciones(auth.userId);
+
+    return temporalQuotes;
+  }
+
   void getActiveQuotesWithVehicle() async {
     this._loading = true;
     update(['activeQuotes']);
-    final List<Cotizacion> temporalQuotes = await instance.getAllCotizaciones();
+    List<Cotizacion> temporalQuotes = await this._getQuotes();
     this._activeQuotes = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
     this._loading = false;
     update(['activeQuotes']);
@@ -86,8 +92,8 @@ class QuotesController extends GetxController{
   }
 
   void getAllCotizaciones() async {
-    
-    this._cotizaciones = await instance.getAllCotizaciones();
+
+    this._cotizaciones = await this._getQuotes();
 
     update(['listacotizaciones']);
   }
@@ -109,6 +115,13 @@ class QuotesController extends GetxController{
     this.getAllCotizaciones();
     return sw;
     // return false;
+  }
+
+  void destroy() {
+    this._loading = true;
+    this._activeQuotes.clear();
+    this._cotizaciones.clear();
+    update();
   }
 
 }

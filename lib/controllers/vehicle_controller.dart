@@ -44,5 +44,13 @@ class VehicleController extends GetxController{
     await this.loadVehicles();
   }
 
+  void destroy() {
+    this._loading = true;
+    this._vehicle = Vehicle();
+    this._vehicles.clear();
+    update();
+
+  }
+
 
 }

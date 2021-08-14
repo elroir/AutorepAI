@@ -39,5 +39,12 @@ class UserController extends GetxController{
     await this.loadUsers();
   }
 
+  void destroy() {
+    this._loading = true;
+    this._users.clear();
+    this._workers.clear();
+    update();
+  }
+
 
 }

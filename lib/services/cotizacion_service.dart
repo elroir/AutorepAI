@@ -31,11 +31,35 @@ class CotizacionService{
     return cotizaciones;
   }
 
+  Future<List<Cotizacion>> getAllPersonalCotizaciones(String id ) async {
+    final urifinal = Uri.http( _dbUrl, '/api/getAllCotizacionesP',{
+      "id_personal" :  id
+    } );
+    final resp = await http.get(urifinal);
+    final decodedData = json.decode(resp.body);
+
+    print('$decodedData dataS');
+    List<dynamic> items = decodedData;
+    List<Cotizacion> cotizaciones = [];
+    for (var item in items) {
+      Cotizacion cotizacion = cotizacionFromJson(item);
+      List<QuoteDetail> detalles = listaCDetalles(item["detalles"]);
+      List<Service> servicios = ServicioService.instance.listaServicios(item["servicios"]);
+      List<Service> noservicios = ServicioService.instance.listaServicios(item["noservicios"]);
+      cotizacion.detalles = detalles;
+      cotizacion.servicios = servicios;
+      cotizacion.noservicios = noservicios;
+      cotizaciones.add(cotizacion);
+    }
+
+    return cotizaciones;
+  }
+
   Future<List<Cotizacion>> getAllCotizaciones( ) async {
     final urifinal = Uri.http( _dbUrl, '/api/getAllCotizaciones' );
     final resp = await http.get(urifinal);
-    final decodedData = json.decode(resp.body); 
-   
+    final decodedData = json.decode(resp.body);
+
     print('$decodedData dataS');
     List<dynamic> items = decodedData;
     List<Cotizacion> cotizaciones = [];
