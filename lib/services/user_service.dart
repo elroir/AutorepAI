@@ -23,7 +23,21 @@ class UserService{
 
 
     return users;
-        
+
+  }
+
+  Future<List<UserModel>> getWorkers( ) async {
+    final uriFinal = Uri.http( _dbUrl, '/api/getPersonal' );
+    final resp = await http.get(uriFinal);
+    final List<UserModel> users = [];
+    final decodedData = json.decode(resp.body);
+    (decodedData['data'] as List).forEach((user) {
+      users.add(UserModel.fromJson(user));
+    });
+
+
+    return users;
+
   }
 
   Future<UserModel> getUser( String usuarioid ) async {

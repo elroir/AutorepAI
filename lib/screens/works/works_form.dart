@@ -78,14 +78,14 @@ class WorksForm extends StatelessWidget {
                         if(!controller.loading){
                           return ListView.builder(
                             physics: BouncingScrollPhysics(),
-                            itemCount: controller.users.length,
+                            itemCount: controller.workers.length,
                             itemBuilder: (_,i) => ListTile(
                               onTap: () {
-                                this._userController.text = controller.users[i].nombre;
-                                this._order.idPersonal = controller.users[i].idusuario;
+                                this._userController.text = controller.workers[i].nombre;
+                                this._order.idPersonal = controller.workers[i].idusuario;
                                 Get.back();
                               },
-                              title: Text(controller.users[i].nombre,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
+                              title: Text(controller.workers[i].nombre,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
                             )
 
                           );

@@ -30,6 +30,13 @@ class FollowController extends GetxController {
   }
 
 
+  void addFollow(Follow follow) {
+    this._follows.add(follow);
+     update(['follows']);
+
+  }
+
+
   Future<void> newFollow () async {
     await FollowsService.instance.newFollow(this.currentFollow);
   }
