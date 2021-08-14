@@ -12,3 +12,8 @@ String dateToFormat(DateTime date) {
   final String formatted = "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   return formatted;
 }
+
+String dateToSpanishFormat(DateTime date) {
+  final String formatted = "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year.toString().padLeft(4, '0')}";
+  return formatted;
+}

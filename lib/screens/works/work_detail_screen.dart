@@ -108,18 +108,32 @@ class WorksDetail extends StatelessWidget {
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
                 child: GetBuilder<FollowController>(
                   init: FollowController(id: this.order.idOrden),
                   id: 'follows',
                   builder: (controller) {
                     if(!controller.loading){
-                      return Row(
-                        children: controller.follows.map((follow) => MainCard(
-                          children: [
-                            Text(dateToFormat(follow.date)),
-                            Text(follow.description)
-                          ]
-                        )).toList()
+                      return Padding(
+                        padding: EdgeInsets.only(top: 3,bottom: 15),
+                        child: Row(
+                          children: controller.follows.map((follow) => MainCard(
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    children: [
+                                      Text('Fecha: ${dateToSpanishFormat(follow.date)}',style: Styles.titleCard,),
+                                      Image.network(follow.imageUrl,height: 100,width: 120,fit: BoxFit.cover,),
+                                      Text(follow.description)
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ]
+                          )).toList()
+                        ),
                       );
                     }
                     return SizedBox(
@@ -165,9 +179,6 @@ class WorksDetail extends StatelessWidget {
                     })
                 ),
               ),
-
-
-
             ],
           ),
         ),
