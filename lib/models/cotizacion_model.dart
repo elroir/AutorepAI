@@ -30,7 +30,7 @@ class Cotizacion {
   int tiempoTrabajo;
   bool aprobado;
   bool estado;
-  String idUsuario; //lol cambiar a int 
+  String idUsuario; //lol cambissar a int 
   int idVehiculo;
   Vehicle vehiculo;
   List<QuoteDetail> detalles;
