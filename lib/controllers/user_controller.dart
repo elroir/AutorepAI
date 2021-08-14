@@ -34,8 +34,8 @@ class UserController extends GetxController{
 
   Future<void> reload() async{
     this._loading = true;
-    await Future.delayed(Duration(milliseconds: 200));
     this._users.clear();
+    update(['user']);
     await this.loadUsers();
   }
 

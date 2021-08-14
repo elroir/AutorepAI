@@ -6,8 +6,7 @@ import 'package:ingemec/services/storage_service.dart';
 
 class ImageController extends GetxController{
 
-  File _currentImage;
-  File get currentImage => this._currentImage;
+  File currentImage;
 
   String _currentUrl;
   String get url => this._currentUrl;
@@ -21,17 +20,19 @@ class ImageController extends GetxController{
   }
 
   Future<void> pickFromGallery() async {
-    this._currentImage = await ImagesService.pickImageFromGallery();
+    this.currentImage = await ImagesService.pickImageFromGallery();
     update(['images']);
   }
 
   Future<void> pickFromCamera() async {
-    this._currentImage = await ImagesService.pickImageFromCamera();
+    this.currentImage = await ImagesService.pickImageFromCamera();
     update(['images']);
   }
 
   Future<void> uploadPhoto() async {
     if (this.currentImage == null) return;
+
+    print(this.currentImage.path);
 
     final task = StorageService.uploadFile('images/${DateTime.now()}.jpg', this.currentImage);
 

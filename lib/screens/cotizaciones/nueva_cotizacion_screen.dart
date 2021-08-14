@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
-import 'package:ingemec/widgets/generalAppBar.dart';
 
 class NuevaCotizacionScreen extends StatefulWidget {
 
@@ -49,7 +48,7 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarG(),
+      appBar: AppBar(),
       body: Column(
         children: [
           Text('REGISTRAR COTIZACION', 

@@ -20,5 +20,4 @@ export 'package:ingemec/services/image_analysis_service.dart';
 export 'package:ingemec/widgets/bottom_item.dart';
 export 'package:ingemec/widgets/bottom_submit.dart';
 export 'package:ingemec/widgets/custom_button.dart';
-export 'package:ingemec/widgets/generalAppBar.dart';
 export 'package:ingemec/widgets/modal_progress_indicator.dart';

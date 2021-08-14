@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
+import 'package:ingemec/controllers/images_controller.dart';
 import 'package:ingemec/controllers/ml_controller.dart';
 import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/widgets/custom_button.dart';
@@ -51,7 +52,11 @@ class PlatePicker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomButton(
-                        onPressed: controller.pickImageFromGallery,
+                        onPressed:() async  {
+                          final ImageController imageController = Get.put(ImageController());
+                          await controller.pickImageFromGallery();
+                          imageController.currentImage = controller.image;
+                          },
                         width: Get.width*0.42,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +68,11 @@ class PlatePicker extends StatelessWidget {
                         ),
                       ),
                       CustomButton(
-                        onPressed: controller.pickImageFromCamera,
+                        onPressed: () async {
+                          final ImageController imageController = Get.put(ImageController());
+                          await controller.pickImageFromCamera();
+                          imageController.currentImage = controller.image;
+                        },
                         width: Get.width*0.42,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ingemec/controllers/images_controller.dart';
+import 'package:ingemec/controllers/vehicle_controller.dart';
 import 'package:ingemec/models/user_model.dart';
-import 'package:ingemec/models/vehicle_model.dart';
 import 'package:ingemec/screens/vehicles/widgets/plate_picker.dart';
-import 'package:ingemec/services/vehicle_service.dart';
 import 'package:ingemec/widgets/custom_button.dart';
 import 'package:ingemec/widgets/custom_text_field.dart';
 
@@ -15,7 +15,7 @@ class VehicleForm extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final Vehicle _vehicle = new Vehicle();
+  final VehicleController _vehicleController = Get.put(VehicleController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class VehicleForm extends StatelessWidget {
                 labelText: 'Propietario',
                 initialValue: this.user.nombre ?? this.user.email,
               ),
-              PlatePicker(vehicle: _vehicle),
+              PlatePicker(vehicle: this._vehicleController.vehicle),
               CustomTextField(
                 labelText: 'Marca',
                 onSaved: (value) {
-                  this._vehicle.marca = value;
+                  this._vehicleController.vehicle.marca = value;
                 },
               ),
               Row(
@@ -52,7 +52,7 @@ class VehicleForm extends StatelessWidget {
                     width: Get.width*0.45,
                     labelText: 'Color',
                     onSaved: (value) {
-                      this._vehicle.color = value;
+                      this._vehicleController.vehicle.color = value;
                     },
                   ),
                   CustomTextField(
@@ -63,7 +63,7 @@ class VehicleForm extends StatelessWidget {
                         signed: false
                     ),
                     onSaved: (value) {
-                      this._vehicle.modelo = value;
+                      this._vehicleController.vehicle.modelo = value;
                     },
                   ),
                 ],
@@ -90,8 +90,14 @@ class VehicleForm extends StatelessWidget {
     final FormState form = _formKey.currentState;
     if (!form.validate()) return;
     form.save();
-    this._vehicle.idUsuario = this.user.idusuario;
-    await VehicleService.instance.newVehicle(this._vehicle);
+    Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
+    this._vehicleController.vehicle.idUsuario = this.user.idusuario;
+    final ImageController imageController = Get.put(ImageController());
+    await imageController.uploadPhoto();
+    this._vehicleController.vehicle.urlImagen = imageController.url;
+    await this._vehicleController.newVehicle();
+    Get.back();
+    Get.back();
 
 
   }

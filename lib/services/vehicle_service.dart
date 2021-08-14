@@ -10,19 +10,18 @@ class VehicleService {
   static VehicleService _instance = VehicleService();
   static VehicleService get instance => _instance;
 
-  Future<void> newVehicle(Vehicle vehicle) async {
+  Future<bool> newVehicle(Vehicle vehicle) async {
     try{
       final uri = Uri.http( Env.url, '/api/storeVehiculo', {
         "id_vehiculo" : vehicle.idVehiculo.toString()
       } );
       final resp = await http.post(uri,body: vehicle.toJson());
       final decodedData = json.decode(resp.body);
-      if(decodedData['ok'])
-        Get.snackbar('Registro existoso', 'Se ha registrado el vehiculo con exito');
-      else
-        Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      if(!decodedData['ok'])
+        return false;
+      return true;
     }catch(e){
-      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
+      return false;
     }
   }
 
