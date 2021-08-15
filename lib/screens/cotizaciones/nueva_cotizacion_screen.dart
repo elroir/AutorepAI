@@ -38,6 +38,8 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
 
   int idVehiculo = 0;
 
+  //imagen
+  String urlImagen = "";
 
   @override
   void initState() {
@@ -139,7 +141,7 @@ class _NuevaCotizacionScreenState extends State<NuevaCotizacionScreen> {
       width: Get.width,
       child: ModalProgressIndicator(
         body: anadirImagenWidget(),
-        texto: 'Analizando daños del vehículo...',
+        texto: 'Analizando daños...',
         color: Colors.blue[200],
         isloading: _isloading,
       )
@@ -160,7 +162,6 @@ Widget _mostrarFoto() {
             child: (foto != null) 
             ? Image.file(
               foto,
-              //fit: BoxFit.cover,
               height: 250.0,
             )
             : Image.asset('assets/no-image.png'),
@@ -187,7 +188,6 @@ Widget _mostrarFoto() {
         print('si es distinto de null la foto omg') ;
         images.add(foto);
         currentFoto = images.length-1;//creo
-        //recortarImagen();  
       }
 
       setState(() {});
@@ -305,11 +305,10 @@ Widget _mostrarFoto() {
 
       setState(() => _isloading = !_isloading);
       
-//      String image64 = base64Encode(foto.readAsBytesSync());
-
       final resp = await imageAnalysis.subirImagen(images[0]);
 
       print('URL DE IMAGEN = $resp');
+      setState(() => urlImagen = resp);
 
       final resp2 = await imageAnalysis.analizarDanioN({
         "url_imagen" : resp
@@ -403,14 +402,6 @@ Widget _mostrarFoto() {
           ),
         ),
       ),
-      // child: CustomTextField(
-      //   // initialValue: (gradoDanio.nombre != null) ? '${double.parse(gradoDanio.nombre) * 100} %' : 'lol',
-      //   // initialValue: (gradoValor >= 0) ? '${gradoValor * 100} %' : '-',
-      //   initialValue: (gradoValor > -1) ? '$gradoValor' : '-',
-      //   validator: (value) => value.isEmpty ? 'Grado!' : null,
-      //   labelText: 'Grado de Daño - Porcentaje',
-      //   icon: Icon(Icons.person, color: Colors.white),
-      // ),
     );
   }
 
@@ -435,7 +426,6 @@ Widget _mostrarFoto() {
                 Service item = lcontroller.servicios[index];
                 return ServicioPrecioItem(
                   item: item,
-                  // gradoDropdown: _gradoDropdown(),
                   onPress:() {
                     setState((){
                       serviciosI.add(item);
@@ -479,7 +469,6 @@ Widget _mostrarFoto() {
                     "id"           : item.idservicio,
                     "precio_venta" : item.precio, // * el umbral puede ser lol, aunque creo que eso lo hago en el back
                     "descripcion"  : 'Ninguna',
-                    // "umbral"       : double.tryParse( gradoDanio.nombre)
                     "umbral"       : gradoValor
                   };
                   print(servicio);
@@ -489,17 +478,14 @@ Widget _mostrarFoto() {
 
               var sCoti = Get.put(QuotesController());
 
-              // final sw = false;
               final sw = await sCoti.storeCotizacion(
                 obs: observacionController.value.text,
                 fecha: new DateFormat("yyyy-MM-dd").format(DateTime.now()),
                 tiempodias: tiempoTrabajoController.value.text,
                 idvehiculo: (idVehiculo > 0) ? idVehiculo : 20, //idk
-                // idvehiculo: int.tryParse( vehiculoController.value.text ) ?? 1, //idk
-                // umbral: double.tryParse( gradoDanio.nombre), //idk
-                servicioss: servicioss
+                servicioss: servicioss,
+                urlImagen: urlImagen
               );
-                // servicios: serviciosI
               if (sw) {
                 Get.back();
               }else{

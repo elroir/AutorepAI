@@ -87,7 +87,7 @@ class QuotesController extends GetxController{
     update(['activeQuotes']);
   }
 
-  Future<bool> storeCotizacion({String obs, String fecha, String tiempodias, int idvehiculo, List<Map<String, dynamic>> servicioss}) async {
+  Future<bool> storeCotizacion({String obs, String fecha, String tiempodias, int idvehiculo, List<Map<String, dynamic>> servicioss, String urlImagen}) async {
 
     var auth = Get.put(AuthController());
     print(auth.userId);
@@ -99,6 +99,7 @@ class QuotesController extends GetxController{
       "tiempo_trabajo" : tiempodias,
       "id_personal"    : auth.userId,
       "id_vehiculo"    : idvehiculo.toString(),
+      "url_imagen"     : urlImagen,
       "servicioss"     : json.encode(servicioss)
     };
 

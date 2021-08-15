@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class ModalProgressIndicator extends StatelessWidget {
@@ -24,15 +25,25 @@ class ModalProgressIndicator extends StatelessWidget {
           body,
 
           (isloading)?
+          // Container(
+          //   alignment: AlignmentDirectional.center,
+          //   decoration: BoxDecoration(
+          //     color: Colors.black,
+          //     // color: Colors.white70,
+          //   ),
+          //   child: _ProgressIndicator(
+          //     texto: this.texto,
+          //     color: this.color,
+          //   ) 
+          // )
+          // Get.snackbar("Analizando daños", "Espere un momento...")
           Container(
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: Colors.transparent,
             ),
-            child: _ProgressIndicator(
-              texto: this.texto,
-              color: this.color,
-            ) 
+            child: CircularProgressIndicator()
+
           )
           : Container()
           //:Text('Aqui estoy'),
@@ -64,9 +75,13 @@ class _ProgressIndicator extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: <Color>[
-            Colors.blueAccent,
-            Colors.lightBlueAccent[100],  
+            Colors.white,
+            Colors.white,  
           ]
+          // colors: <Color>[
+          //   Colors.blueAccent,
+          //   Colors.lightBlueAccent[100],  
+          // ]
         ),
         borderRadius: BorderRadius.circular(10.0)
       ),
