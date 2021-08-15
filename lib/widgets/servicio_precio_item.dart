@@ -35,6 +35,8 @@ class ServicioPrecioItem extends StatelessWidget {
           texto: '${item.nombre}',
           color1: Color(0xFF535f9b),
           color2: Color(0xFF535f9b),
+          // color1: Color(0xFF535f9b),
+          // color2: Color(0xFF535f9b),
           onPress: onPress,
         ),
       ),

@@ -93,7 +93,7 @@ class QuotesController extends GetxController{
     print(auth.userId);
 
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "${cotizaciones.length + 10}",
+      "id_cotizacion"  : "${cotizaciones.length + 1}",
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,

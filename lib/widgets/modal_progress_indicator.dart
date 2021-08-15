@@ -24,27 +24,27 @@ class ModalProgressIndicator extends StatelessWidget {
         children: <Widget>[
           body,
 
-          (isloading)?
-          // Container(
-          //   alignment: AlignmentDirectional.center,
-          //   decoration: BoxDecoration(
-          //     color: Colors.black,
-          //     // color: Colors.white70,
-          //   ),
-          //   child: _ProgressIndicator(
-          //     texto: this.texto,
-          //     color: this.color,
-          //   ) 
-          // )
-          // Get.snackbar("Analizando daños", "Espere un momento...")
+          (!isloading)?
           Container(
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
               color: Colors.transparent,
+              // color: Colors.white70,
             ),
-            child: CircularProgressIndicator()
-
+            child: _ProgressIndicator(
+              texto: this.texto,
+              color: this.color,
+            ) 
           )
+          // Get.snackbar("Analizando daños", "Espere un momento...")
+          // Container(
+          //   alignment: AlignmentDirectional.center,
+          //   decoration: BoxDecoration(
+          //     color: Colors.transparent,
+          //   ),
+          //   child: CircularProgressIndicator()
+
+          // )
           : Container()
           //:Text('Aqui estoy'),
         ],
@@ -53,6 +53,18 @@ class ModalProgressIndicator extends StatelessWidget {
 
   }
 
+
+  // Container(
+  //   alignment: AlignmentDirectional.center,
+  //   decoration: BoxDecoration(
+  //     color: Colors.black,
+  //     // color: Colors.white70,
+  //   ),
+  //   child: _ProgressIndicator(
+  //     texto: this.texto,
+  //     color: this.color,
+  //   ) 
+  // )
 }
 
 class _ProgressIndicator extends StatelessWidget {
@@ -75,13 +87,11 @@ class _ProgressIndicator extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: <Color>[
-            Colors.white,
-            Colors.white,  
+            Color(0xFF5173AF),
+            Color(0xFF5173AF),
+            // Color(0xFF3A5583),
+            // Colors.lightBlueAccent[100],  
           ]
-          // colors: <Color>[
-          //   Colors.blueAccent,
-          //   Colors.lightBlueAccent[100],  
-          // ]
         ),
         borderRadius: BorderRadius.circular(10.0)
       ),
