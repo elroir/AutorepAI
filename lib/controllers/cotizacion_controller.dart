@@ -16,6 +16,9 @@ class QuotesController extends GetxController{
   List<Cotizacion> _cotizaciones = [];
   Cotizacion _cotizacion = new Cotizacion();
 
+  List<Cotizacion> _history;
+  List<Cotizacion> get history => this._history;
+
   List<Cotizacion> _activeQuotes;
 
   List<Cotizacion> get cotizaciones => _cotizaciones;
@@ -28,11 +31,15 @@ class QuotesController extends GetxController{
   bool _loading = true;
   bool get loading  => this._loading;
 
+  bool _loadingHistory = true;
+  bool get loadingHistory  => this._loadingHistory;
+
 
   @override
   void onReady() {
     this.getAllCotizaciones();
     this.getActiveQuotesWithVehicle();
+    this.loadHistory();
     super.onReady();
   }
 
@@ -60,6 +67,19 @@ class QuotesController extends GetxController{
     this._activeQuotes = temporalQuotes.where((quote) => !quote.aprobado&&quote.estado).toList();
     this._loading = false;
     update(['activeQuotes']);
+  }
+
+  Future<void> loadHistory() async {
+    this._loadingHistory = true;
+    update(['history']);
+    final AuthController auth = Get.find();
+    if (auth.userType=='A')
+      this._history = await CotizacionService.instance.getCotizacionHistory();
+    else
+      this._history = await CotizacionService.instance.getCotizacionHistory(id: auth.userId);
+
+    this._loadingHistory = false;
+    update(['history']);
   }
 
   void changeQuoteState(Cotizacion quote){

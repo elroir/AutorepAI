@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ingemec/Env.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/quote_detail_model.dart';
 import 'package:ingemec/models/service_model.dart';
@@ -13,10 +14,8 @@ class CotizacionService{
   static CotizacionService _instance = CotizacionService();
   static CotizacionService get instance => _instance;
 
-  final _dbUrl = '34.132.85.203';
-
   Future<List<Cotizacion>> getCotizaciones( ) async {
-    final urifinal = Uri.http( _dbUrl, '/api/getCotizaciones' );
+    final urifinal = Uri.http( Env.url, '/api/getCotizaciones' );
     final resp = await http.get(urifinal);
     final decodedData = json.decode(resp.body); 
    
@@ -31,8 +30,29 @@ class CotizacionService{
     return cotizaciones;
   }
 
+  Future<List<Cotizacion>> getCotizacionHistory({String id}) async {
+    try{
+      final uri = (id!=null)
+          ?  Uri.http( Env.url, '/api/getAllCotizacionesPH',{
+        "id_personal" : id
+      } )
+          : Uri.http( Env.url, '/api/getAllCotizacionesH' );
+      final resp = await http.get(uri);
+      final decodedData = json.decode(resp.body);
+      final List<Cotizacion> orders = [];
+
+      (decodedData as List).forEach((order) {
+        orders.add(Cotizacion.fromJson(order));
+      });
+      return orders;
+
+    }catch(e){
+      return [];
+    }
+  }
+
   Future<List<Cotizacion>> getAllPersonalCotizaciones(String id ) async {
-    final urifinal = Uri.http( _dbUrl, '/api/getAllCotizacionesP',{
+    final urifinal = Uri.http( Env.url, '/api/getAllCotizacionesP',{
       "id_personal" :  id
     } );
     final resp = await http.get(urifinal);
@@ -56,7 +76,7 @@ class CotizacionService{
   }
 
   Future<List<Cotizacion>> getAllCotizaciones( ) async {
-    final urifinal = Uri.http( _dbUrl, '/api/getAllCotizaciones' );
+    final urifinal = Uri.http( Env.url, '/api/getAllCotizaciones' );
     final resp = await http.get(urifinal);
     final decodedData = json.decode(resp.body);
 
@@ -80,7 +100,7 @@ class CotizacionService{
 
   Future<bool> storeCotizacion(Map<String, dynamic> data) async {
 
-    final urifinal = Uri.http( _dbUrl, '/api/storeCotizacion', data );
+    final urifinal = Uri.http( Env.url, '/api/storeCotizacion', data );
     final resp = await http.post(urifinal, );
     final decodedData = json.decode(resp.body); 
     
@@ -102,7 +122,7 @@ class CotizacionService{
   }
 
   Future<bool> deleteCotizacion(Map<String, dynamic> data) async {
-    final urifinal = Uri.http( _dbUrl, '/api/deleteCotizacion', data );
+    final urifinal = Uri.http( Env.url, '/api/deleteCotizacion', data );
     final resp = await http.delete(urifinal );
     final decodedData = json.decode(resp.body); 
     print(decodedData["ok"]);
@@ -112,7 +132,7 @@ class CotizacionService{
   }
 
   Future<bool> actualizarCotizacion(Map<String, dynamic> data) async{
-    final urifinal = Uri.http( _dbUrl, '/api/actualizarCotizacion', data );
+    final urifinal = Uri.http( Env.url, '/api/actualizarCotizacion', data );
     final resp = await http.get(urifinal );
     final decodedData = json.decode(resp.body); 
     print(decodedData["ok"]);

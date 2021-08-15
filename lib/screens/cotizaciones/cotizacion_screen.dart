@@ -1,21 +1,25 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
+import 'package:ingemec/screens/cotizaciones/cotizacion_history.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/nueva_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
 import 'package:ingemec/screens/works/works_screen.dart';
+import 'package:ingemec/widgets/card_button.dart';
 
 class CotizacionScreen extends StatelessWidget {
+
+  final quote = Get.put(QuotesController());
 
 
   @override
   Widget build(BuildContext context) {
 
-    var quote = Get.put(QuotesController());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,8 +30,18 @@ class CotizacionScreen extends StatelessWidget {
             ),
             // Text('COTIZACIONES REGISTRADAS', style: _style),
             SizedBox(height : 15),
-            _bodyCotizacionC()
-            
+            _bodyCotizacionC(),
+            Center(
+              child: CardButton(
+                width: Get.width*0.9,
+                icon: FeatherIcons.bookOpen,
+                text: 'Historial de ordenes',
+                onPressed: () => Get.to(()=> QuotesHistory()),
+              ),
+            ),
+            SizedBox(height : 15),
+
+
           ],
         ),
       ),
@@ -71,8 +85,7 @@ class CotizacionScreen extends StatelessWidget {
         key : UniqueKey(),
         onDismissed: (direction) async {
           print('Eliminando cotizacion....');
-          final cot = Get.put(QuotesController());
-          var res = await cot.instance.deleteCotizacion({
+          var res = await quote.instance.deleteCotizacion({
             "id_cotizacion":item.idCotizacion.toString()
           });
           if(res){
