@@ -16,21 +16,20 @@ class QuotesHistory extends StatelessWidget {
           id: 'history',
           builder: (controller) {
             if (!controller.loadingHistory){
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    SafeArea(child: SizedBox()),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:12),
-                      child: TitleWithRefreshButton(
-                        title: 'Historial de Cotizaciones',
-                        onPressed: controller.loadHistory,
-                      ),
+              return Column(
+                children: [
+                  SafeArea(child: SizedBox()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:12),
+                    child: TitleWithRefreshButton(
+                      title: 'Historial de Cotizaciones',
+                      onPressed: controller.loadHistory,
                     ),
-                    (Get.width>600)
-                        ? this._largeScreens(controller)
-                        : SingleChildScrollView(
+                  ),
+                  (Get.width>600)
+                      ? this._largeScreens(controller)
+                      : Expanded(
+                        child: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         child: Column(
                             children: [
@@ -47,9 +46,9 @@ class QuotesHistory extends StatelessWidget {
                                   ))).toList()
                             ]
                         )
-                    )
-                  ] ,
-                ),
+                  ),
+                      )
+                ] ,
               ) ;
             }
             return Center(child: CircularProgressIndicator());
@@ -59,24 +58,26 @@ class QuotesHistory extends StatelessWidget {
   }
 
   Widget _largeScreens(QuotesController controller) {
-    return GridView.builder(
-      physics: BouncingScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 350,
-          crossAxisSpacing: 5,
-          mainAxisExtent: 250,
-          mainAxisSpacing: 5,
-          childAspectRatio: 0.1
+    return Expanded(
+      child: GridView.builder(
+        physics: BouncingScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 350,
+            crossAxisSpacing: 5,
+            mainAxisExtent: 250,
+            mainAxisSpacing: 5,
+            childAspectRatio: 0.1
 
+        ),
+        itemCount: controller.history.length,
+        itemBuilder: (_,i) {
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: QuotesCard(quote: controller.history[i]),
+          );
+
+        },
       ),
-      itemCount: controller.history.length,
-      itemBuilder: (_,i) {
-        return Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: QuotesCard(quote: controller.history[i]),
-        );
-
-      },
     );
   }
 }

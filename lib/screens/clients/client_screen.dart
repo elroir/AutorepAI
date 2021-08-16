@@ -18,29 +18,31 @@ class ClientsScreen extends StatelessWidget {
           print(controller.loading);
           if (!controller.loading){
             final List users = controller.users.where((user) => user.tipoUsuario=='C').toList();
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:12),
-                    child: TitleWithRefreshButton(
-                      title: 'Clientes',
-                      onPressed: controller.reload,
-                    ),
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:12),
+                  child: TitleWithRefreshButton(
+                    title: 'Clientes',
+                    onPressed: controller.reload,
                   ),
-                  (Get.width>600)
-                      ? this._largeScreens(controller)
-                      : Wrap(
-                          alignment: WrapAlignment.center,
+                ),
+                (Get.width>600)
+                    ? this._largeScreens(controller)
+                    : Expanded(
+                      child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(width: double.infinity,),
                             ...users.map((user) =>
                                 FadeInRight(duration: Duration(milliseconds: 700),child: ClientCard(user: user))).toList()
                           ]
                       )
-                ] ,
-              ),
+                ),
+                    )
+              ] ,
             ) ;
                 }
           return Center(child: CircularProgressIndicator());
@@ -50,21 +52,23 @@ class ClientsScreen extends StatelessWidget {
   }
 
 Widget _largeScreens(UserController controller) {
-  return GridView.builder(
-    physics: BouncingScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: 350,
-      crossAxisSpacing: 5,
-      mainAxisExtent: 250,
-      mainAxisSpacing: 5,
-      childAspectRatio: 0.1
+  return Expanded(
+    child: GridView.builder(
+      physics: BouncingScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 350,
+        crossAxisSpacing: 5,
+        mainAxisExtent: 250,
+        mainAxisSpacing: 5,
+        childAspectRatio: 0.1
 
+      ),
+      itemCount: controller.users.length,
+      itemBuilder: (_,i) {
+        return ClientCard(user: controller.users[i]);
+
+      },
     ),
-    itemCount: controller.users.length,
-    itemBuilder: (_,i) {
-      return ClientCard(user: controller.users[i]);
-
-    },
   );
 }
 }
