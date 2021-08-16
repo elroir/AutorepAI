@@ -82,6 +82,8 @@ class _CotizacionScreenState extends State<CotizacionScreen> {
           itemCount: lcontroller.cotizaciones.length ,
           itemBuilder:(_, index) {
             Cotizacion item = lcontroller.cotizaciones[index];
+            print(item.vehiculo.nroPlaca);
+            print(item.vehiculo.idUsuario);
             return _cotizacionItem(item);
           },
         )
