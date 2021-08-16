@@ -23,47 +23,54 @@ class WorksScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal:10.0,vertical: 5.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TitleWithRefreshButton(title: 'Ordenes activas',onPressed: () => works.loadWorks()),
-            SizedBox(height: 10,),
-            WorksList(),
-            SizedBox(height: 8,),
-            TitleWithRefreshButton(title: 'Cotizaciones',
-              onPressed: () => quote.getActiveQuotesWithVehicle(),
-            ),
-            GetBuilder<QuotesController>(
-              init: QuotesController(),
-              id: 'activeQuotes',
-              builder: (controller) {
-                if (!controller.loading) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: controller.activeQuotes.length ,
-                      itemBuilder: (_,i) =>
-                        FadeIn(child: QuotesCard(quote: controller.activeQuotes[i])),
-                      physics: BouncingScrollPhysics(),
-                    ),
-                  );
-                }else
-                  return Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-              }
-            ),
-            Center(
-              child: CardButton(
-                width: Get.width*0.9,
-                icon: FeatherIcons.bookOpen,
-                text: 'Historial de ordenes',
-                onPressed: () => Get.to(()=> WorksHistory()),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TitleWithRefreshButton(title: 'Ordenes activas',onPressed: () => works.loadWorks()),
+              SizedBox(height: 10,),
+              WorksList(),
+              SizedBox(height: 8,),
+              TitleWithRefreshButton(title: 'Cotizaciones',
+                onPressed: () => quote.getActiveQuotesWithVehicle(),
               ),
-            ),
-            SizedBox(height: 25,)
+              GetBuilder<QuotesController>(
+                init: QuotesController(),
+                id: 'activeQuotes',
+                builder: (controller) {
+                  if (!controller.loading) {
+                    return Center(
+                      child: Column(
+                        children: controller.activeQuotes.map((quote) =>
+                            FadeIn(child: Container(
+                              width: Get.width*0.9,
+                                child: QuotesCard(quote: quote))
+                            ),
+                        ).toList()
 
-          ],
+                      ),
+                    );
+                  }else
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                }
+              ),
+              SizedBox(height: 25,),
+              Center(
+                child: CardButton(
+                  width: Get.width*0.9,
+                  icon: FeatherIcons.bookOpen,
+                  text: 'Historial de ordenes',
+                  onPressed: () => Get.to(()=> WorksHistory()),
+                ),
+              ),
+              SizedBox(height: 25,)
+
+            ],
+          ),
         ),
       ),
     );

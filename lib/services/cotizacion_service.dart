@@ -75,6 +75,19 @@ class CotizacionService{
     return cotizaciones;
   }
 
+  Future<int> quoteLength() async {
+    try{
+      final uri = Uri.http( Env.url, '/api/clength' );
+      final resp = await http.get(uri);
+      final decodedData = json.decode(resp.body);
+      return (decodedData['data'] as int) + 1;
+    }catch(e){
+      print(e);
+      return -1;
+    }
+
+  }
+
   Future<List<Cotizacion>> getAllCotizaciones( ) async {
     final urifinal = Uri.http( Env.url, '/api/getAllCotizaciones' );
     final resp = await http.get(urifinal);

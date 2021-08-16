@@ -94,7 +94,7 @@ class QuotesController extends GetxController{
     int length = await CotizacionService.instance.quoteLength(); 
 
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "${length.toString()}",
+      "id_cotizacion"  : length.toString(),
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,
