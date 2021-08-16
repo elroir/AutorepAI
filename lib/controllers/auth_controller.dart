@@ -75,6 +75,13 @@ class AuthController extends GetxController {
     try {
       this._prefs.setString('email', email);
       this._prefs.setString('password', password);
+
+      final userAux =  await UserService.instance.getUserEmail( email ); 
+      if(userAux.tipoUsuario == 'C'){
+        Get.snackbar("Error al iniciar sesion", "Usted no es un personal", snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+
       final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
       this._prefs.setString('uid', user.user.uid);
 

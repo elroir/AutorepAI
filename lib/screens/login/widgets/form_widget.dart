@@ -36,7 +36,8 @@ class _FormWidgetState extends State<FormWidget> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: TextFormField(
-              // initialValue: authController.getEmail(),
+              initialValue: ( authController.user.nombre != null )
+                            ? authController.user.nombre : "Cliente1",
               validator: (value) => value.isEmpty ? 'Nombre' : null,
               onChanged: (value) => setState(() => nombre = value),
               cursorColor: Colors.white,

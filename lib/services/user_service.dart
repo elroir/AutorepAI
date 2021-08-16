@@ -57,6 +57,23 @@ class UserService{
     
   }
 
+  Future<UserModel> getUserEmail( String email ) async {
+    final data = {"email" : email};
+    final uriFinal = Uri.http( _dbUrl, '/api/getUsuarioEmail', data );
+    final resp = await http.get(uriFinal);
+    final decodedData = json.decode(resp.body); //trasforma en un mapa
+   
+    print('$decodedData dataS');
+
+    if( decodedData == null ) return new UserModel();
+
+    UserModel user = usuarioFromJson1(decodedData['data'][0]);
+    // User user = usuarioFromJson(resp.body);
+    print(user.nombre);
+    return user;
+    
+  }
+
   Future<UserModel> storeUsuario(Map<String, String> data) async {
     
     final urifinal = Uri.http( _dbUrl, '/api/storeUsuario', data );

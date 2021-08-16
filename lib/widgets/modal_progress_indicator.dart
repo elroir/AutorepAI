@@ -1,7 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 
 class ModalProgressIndicator extends StatelessWidget {
   
@@ -24,47 +22,23 @@ class ModalProgressIndicator extends StatelessWidget {
         children: <Widget>[
           body,
 
-          (!isloading)?
+          (isloading)?
           Container(
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
               color: Colors.transparent,
-              // color: Colors.white70,
             ),
             child: _ProgressIndicator(
               texto: this.texto,
               color: this.color,
             ) 
           )
-          // Get.snackbar("Analizando daños", "Espere un momento...")
-          // Container(
-          //   alignment: AlignmentDirectional.center,
-          //   decoration: BoxDecoration(
-          //     color: Colors.transparent,
-          //   ),
-          //   child: CircularProgressIndicator()
-
-          // )
           : Container()
-          //:Text('Aqui estoy'),
         ],
       ),
     );
 
   }
-
-
-  // Container(
-  //   alignment: AlignmentDirectional.center,
-  //   decoration: BoxDecoration(
-  //     color: Colors.black,
-  //     // color: Colors.white70,
-  //   ),
-  //   child: _ProgressIndicator(
-  //     texto: this.texto,
-  //     color: this.color,
-  //   ) 
-  // )
 }
 
 class _ProgressIndicator extends StatelessWidget {
@@ -76,21 +50,17 @@ class _ProgressIndicator extends StatelessWidget {
     this.texto , 
     this.color 
   });
-  //Colors.blue[200]
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //color: this.color,
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: <Color>[
             Color(0xFF5173AF),
             Color(0xFF5173AF),
-            // Color(0xFF3A5583),
-            // Colors.lightBlueAccent[100],  
           ]
         ),
         borderRadius: BorderRadius.circular(10.0)
@@ -105,9 +75,7 @@ class _ProgressIndicator extends StatelessWidget {
           Center(
             child: SizedBox( height: 50.0, width: 50.0,
               child: CircularProgressIndicator(
-                //backgroundColor: Colors.white,
-                value: null,
-                strokeWidth: 7.0,
+                value: null, strokeWidth: 7.0,
               ),
             ),
           ),

@@ -140,4 +140,18 @@ class CotizacionService{
     print(decodedData["data"]);
     return (decodedData["ok"]);
   }
+
+
+  Future<int> quoteLength() async {
+    try{
+      final uri = Uri.http( Env.url, '/api/clength' );
+      final resp = await http.get(uri);
+      final decodedData = json.decode(resp.body);
+      return (decodedData['data'] as int) + 1;
+    }catch(e){
+      print(e);
+      return -1;
+    }
+
+  }
 }
