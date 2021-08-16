@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ingemec/controllers/user_controller.dart';
+import 'package:ingemec/controllers/works_controller.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/models/work_order_model.dart';
 import 'package:ingemec/screens/cotizaciones/imports_cotizacion.dart';
@@ -145,11 +146,13 @@ class WorksForm extends StatelessWidget {
 
 //    Get.dialog(Center(child: CircularProgressIndicator.adaptive(),));
     final quotesController = Get.put(QuotesController());
+    final WorksController works = Get.find();
     this._order.idCotizacion = this.quote.idCotizacion;
     this._order.idOrden = await WorksService.instance.orderLength();
 
     await WorksService.instance.newWorkOrder(this._order);
     quotesController.changeQuoteState(this.quote);
+    await works.loadWorks();
     Get.back();
 
   }

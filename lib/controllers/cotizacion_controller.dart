@@ -92,8 +92,10 @@ class QuotesController extends GetxController{
     var auth = Get.put(AuthController());
     print(auth.userId);
 
+    final int length = await instance.quoteLength();
+
     Map<String, dynamic> map ={
-      "id_cotizacion"  : "${cotizaciones.length + 1}",
+      "id_cotizacion"  : length.toString(),
       "observacion"    : obs,
       "fecha"          : fecha,
       "tiempo_trabajo" : tiempodias,

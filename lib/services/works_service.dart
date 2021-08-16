@@ -32,7 +32,7 @@ class WorksService {
       final uri = Uri.http( Env.url, '/api/olength' );
       final resp = await http.get(uri);
       final decodedData = json.decode(resp.body);
-      return (decodedData['data'] as int);
+      return (decodedData['data'] as int) + 1;
     }catch(e){
       print(e);
       return -1;

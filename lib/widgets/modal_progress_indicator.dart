@@ -24,7 +24,7 @@ class ModalProgressIndicator extends StatelessWidget {
         children: <Widget>[
           body,
 
-          (!isloading)?
+          (isloading)?
           Container(
             alignment: AlignmentDirectional.center,
             decoration: BoxDecoration(
