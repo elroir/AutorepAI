@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ingemec/models/cotizacion_model.dart';
-import 'package:ingemec/screens/works/works_form.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/main_card.dart';
 
 class QuotesCard extends StatelessWidget {
 
   final Cotizacion quote;
+  final Function onPressed;
 
-  const QuotesCard({Key key, this.quote}) : super(key: key);
+  const QuotesCard({Key key, this.quote, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class QuotesCard extends StatelessWidget {
         Flexible(
           child: InkWell(
             borderRadius:BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
-            onTap: () => Get.to(() => WorksForm(quote: this.quote)),
+            onTap: (this.onPressed!=null) ? this.onPressed : (){},
             child: Padding(
               padding: EdgeInsets.only(left: 10,top: 8,bottom: 10),
               child: Column(
@@ -38,9 +37,9 @@ class QuotesCard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(this.quote.vehiculo.marca ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip),
+                            Text("${this.quote.vehiculo.marca} ${this.quote.vehiculo.modelo}" ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip),
                             Icon(Icons.directions_car_outlined,size: 64,),
-                            Text(this.quote.vehiculo.modelo ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip,),
+                            Text(this.quote.vehiculo.nroPlaca ?? "-",style: Styles.vehicleRedText,overflow: TextOverflow.clip,),
                           ],
                         ),
                       ),

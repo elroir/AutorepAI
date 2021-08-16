@@ -18,29 +18,29 @@ class ClientsScreen extends StatelessWidget {
           print(controller.loading);
           if (!controller.loading){
             final List users = controller.users.where((user) => user.tipoUsuario=='C').toList();
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:12),
-                  child: TitleWithRefreshButton(
-                    title: 'Clientes',
-                    onPressed: controller.reload,
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:12),
+                    child: TitleWithRefreshButton(
+                      title: 'Clientes',
+                      onPressed: controller.reload,
+                    ),
                   ),
-                ),
-                (Get.width>600)
-                    ? this._largeScreens(controller)
-                    : SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Wrap(
-                        alignment: WrapAlignment.center,
-                        children: [
-                          SizedBox(width: double.infinity,),
-                          ...users.map((user) =>
-                              FadeInRight(duration: Duration(milliseconds: 700),child: ClientCard(user: user))).toList()
-                        ]
-                    )
-                )
-              ] ,
+                  (Get.width>600)
+                      ? this._largeScreens(controller)
+                      : Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            SizedBox(width: double.infinity,),
+                            ...users.map((user) =>
+                                FadeInRight(duration: Duration(milliseconds: 700),child: ClientCard(user: user))).toList()
+                          ]
+                      )
+                ] ,
+              ),
             ) ;
                 }
           return Center(child: CircularProgressIndicator());

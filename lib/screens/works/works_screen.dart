@@ -7,6 +7,7 @@ import 'package:ingemec/controllers/works_controller.dart';
 
 import 'package:ingemec/screens/works/widgets/works_list.dart';
 import 'package:ingemec/screens/works/widgets/quotes_card.dart';
+import 'package:ingemec/screens/works/works_form.dart';
 import 'package:ingemec/screens/works/works_history.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/card_button.dart';
@@ -59,7 +60,7 @@ class _WorksScreenState extends State<WorksScreen> {
                         children: controller.activeQuotes.map((quote) =>
                             FadeIn(child: Container(
                               width: Get.width*0.9,
-                                child: QuotesCard(quote: quote))
+                                child: QuotesCard(quote: quote,onPressed: () => Get.to(() => WorksForm(quote: quote)),))
                             ),
                         ).toList()
 
