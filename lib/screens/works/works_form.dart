@@ -28,12 +28,14 @@ class WorksForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    UserController userController = Get.find();
+
     final String startDateString = '${this.quote.fecha.day}/${this.quote.fecha.month}/${this.quote.fecha.year}' ?? '-';
     final DateTime endDate = this.quote.fecha.add( Duration(days: this.quote.tiempoTrabajo) );
     final String endDateString = '${endDate.day}/${endDate.month}/${endDate.year}' ?? '-';
 
     this._order.servicios = List.filled(this.quote.servicios.length, Servicio(descripcion: ''));
-
+    userController.loadWorkers();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
