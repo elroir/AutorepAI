@@ -487,6 +487,7 @@ Widget _mostrarFoto() {
                 urlImagen: urlImagen
               );
               if (sw) {
+                sCoti.getActiveQuotesWithVehicle();
                 Get.back();
               }else{
                 Get.snackbar("Ups!", "Complete todos los campos de la cotizacion!");

@@ -8,7 +8,7 @@ import 'package:ingemec/models/cotizacion_model.dart';
 import 'package:ingemec/screens/cotizaciones/cotizacion_history.dart';
 import 'package:ingemec/screens/cotizaciones/edit_cotizacion_screen.dart';
 import 'package:ingemec/screens/cotizaciones/nueva_cotizacion_screen.dart';
-import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
+import 'package:ingemec/screens/works/widgets/quotes_card.dart';
 import 'package:ingemec/screens/works/works_screen.dart';
 import 'package:ingemec/widgets/card_button.dart';
 
@@ -109,8 +109,8 @@ class _CotizacionScreenState extends State<CotizacionScreen> {
         background: Container(color: Colors.red,),
         child: Container(
           width: Get.width,
-          child: CotizacionItem(
-            cotizacion : item,
+          child: QuotesCard(
+            quote : item,
             onPressed: () => Get.to(() => EditCotizacionScreen( item ))
           ),
         ),
