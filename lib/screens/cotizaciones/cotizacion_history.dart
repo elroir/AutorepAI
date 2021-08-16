@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ingemec/controllers/cotizacion_controller.dart';
 import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
 import 'package:ingemec/screens/works/works_screen.dart';
+import 'package:ingemec/services/user_service.dart';
 
 class QuotesHistory extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class QuotesHistory extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal:12),
                     child: TitleWithRefreshButton(
-                      title: 'Historial',
+                      title: 'Historial de Cotizaciones',
                       onPressed: controller.loadHistory,
                     ),
                   ),
@@ -37,7 +38,10 @@ class QuotesHistory extends StatelessWidget {
                                     child: Container(
                                       width: Get.width*0.9,
                                       padding: const EdgeInsets.all(10.0),
-                                      child: CotizacionItem(cotizacion: history,),
+                                      child: CotizacionItem(cotizacion: history, onPressed: () async{
+                                        var personal = await UserService.instance.getUser( history.idUsuario);
+                                        Get.snackbar("Encargado", personal.nombre);
+                                      },),
                                 ))).toList()
                           ]
                       )

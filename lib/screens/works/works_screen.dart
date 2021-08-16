@@ -11,15 +11,28 @@ import 'package:ingemec/screens/works/works_history.dart';
 import 'package:ingemec/styles.dart';
 import 'package:ingemec/widgets/card_button.dart';
 
-class WorksScreen extends StatelessWidget {
+class WorksScreen extends StatefulWidget {
 
+  @override
+  _WorksScreenState createState() => _WorksScreenState();
+}
+
+class _WorksScreenState extends State<WorksScreen> {
+  
+  @override
+  void initState() {
+    final work = Get.put(WorksController());
+    work.loadWorks();
+    work.loadHistory();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final quote = Get.put(QuotesController());
     final works = Get.put(WorksController());
-
+    
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal:10.0,vertical: 5.0),

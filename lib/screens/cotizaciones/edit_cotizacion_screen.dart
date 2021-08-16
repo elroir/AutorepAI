@@ -182,26 +182,7 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
         BotonSubmit(
           color: Colors.pinkAccent, 
           texto: "Actualizar", 
-          onPress: _guardar,
-          // onPress: () async {
-          //   var sCoti = Get.put(QuotesController());
-
-          //   print('Actualizando...');
-
-          //   var res = await sCoti.actualizarCotizacion(
-            
-          //     idCotizacion : widget.cotizacion.idCotizacion,
-          //     tiempo : (tiempoTrabajo > 0) ? tiempoTrabajo :widget.cotizacion.tiempoTrabajo,
-          //     obs: (observacion.length > 0 )? observacion : widget.cotizacion.observacion,
-          //     registrar: registrar ?? [],
-          //     eliminar: eliminar ?? []
-          //   );
-          //   if(res){
-          //     Get.back();
-          //   }else{
-          //     Get.snackbar("Ups! Algo salió mal!", "No se pudo actualizar la cotizacion");
-          //   }
-          // }
+          onPress: _guardar
         )
       ],
     );
@@ -250,4 +231,5 @@ class _EditCotizacionScreenState extends State<EditCotizacionScreen> {
         Get.snackbar("Ups! Algo salió mal!", "No se pudo actualizar la cotizacion");
       }
     }
+
 }

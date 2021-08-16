@@ -110,6 +110,31 @@ class CotizacionService{
     return cotizaciones;
   }
 
+  
+  Future<List<Cotizacion>> getAllCotizacionesP( String idpersonal ) async {
+    Map<String, dynamic> data = {"id_personal" : idpersonal};
+    final urifinal = Uri.http( Env.url, '/api/getAllCotizacionesP', data );
+    final resp = await http.get(urifinal);
+    final decodedData = json.decode(resp.body);
+
+    print('$decodedData dataS');
+    List<dynamic> items = decodedData;
+    List<Cotizacion> cotizaciones = [];
+    for (var item in items) {
+      Cotizacion cotizacion = cotizacionFromJson(item);
+      List<QuoteDetail> detalles = listaCDetalles(item["detalles"]);
+      List<Service> servicios = ServicioService.instance.listaServicios(item["servicios"]);
+      List<Service> noservicios = ServicioService.instance.listaServicios(item["noservicios"]);
+      cotizacion.detalles = detalles;
+      cotizacion.servicios = servicios;
+      cotizacion.noservicios = noservicios;
+      cotizaciones.add(cotizacion);
+    }
+
+    return cotizaciones;
+  }
+
+
 
   Future<bool> storeCotizacion(Map<String, dynamic> data) async {
 
@@ -153,18 +178,5 @@ class CotizacionService{
     print(decodedData["data"]);
     return (decodedData["ok"]);
   }
-
-
-  Future<int> quoteLength() async {
-    try{
-      final uri = Uri.http( Env.url, '/api/clength' );
-      final resp = await http.get(uri);
-      final decodedData = json.decode(resp.body);
-      return (decodedData['data'] as int) + 1;
-    }catch(e){
-      print(e);
-      return -1;
-    }
-
-  }
+  
 }

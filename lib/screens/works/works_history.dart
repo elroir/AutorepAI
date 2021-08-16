@@ -36,7 +36,9 @@ class WorksHistory extends StatelessWidget {
                             ...controller.history.map((history) =>
                                 FadeInRight(duration: Duration(milliseconds: 700),child: Padding(
                                   padding: const EdgeInsets.all(15.0),
-                                  child: WorkItem(order: history,onTap: (){},),
+                                  child: WorkItem(order: history,onTap: (){
+                                    Get.snackbar("Encargado", history.personal.nombre);
+                                  },),
                                 ))).toList()
                           ]
                       )

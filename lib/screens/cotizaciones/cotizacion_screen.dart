@@ -12,20 +12,32 @@ import 'package:ingemec/screens/cotizaciones/widgets/cotizacion_item.dart';
 import 'package:ingemec/screens/works/works_screen.dart';
 import 'package:ingemec/widgets/card_button.dart';
 
-class CotizacionScreen extends StatelessWidget {
+class CotizacionScreen extends StatefulWidget {
 
+  @override
+  _CotizacionScreenState createState() => _CotizacionScreenState();
+}
+
+class _CotizacionScreenState extends State<CotizacionScreen> {
+  
   final quote = Get.put(QuotesController());
 
+  @override
+  void initState() {
+    quote.getAllCotizaciones();
+    quote.getActiveQuotesWithVehicle();
+    super.initState();
+  }
+  
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TitleWithRefreshButton(title: 'Cotizaciones',
+            TitleWithRefreshButton(title: 'Mis Cotizaciones',
               onPressed: () => quote.getAllCotizaciones(),
             ),
             // Text('COTIZACIONES REGISTRADAS', style: _style),
@@ -35,7 +47,7 @@ class CotizacionScreen extends StatelessWidget {
               child: CardButton(
                 width: Get.width*0.9,
                 icon: FeatherIcons.bookOpen,
-                text: 'Historial de ordenes',
+                text: 'Historial de cotizaciones',
                 onPressed: () => Get.to(()=> QuotesHistory()),
               ),
             ),
@@ -61,7 +73,7 @@ class CotizacionScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child:  Container(
-        height: Get.height * 0.85,
+        height: Get.height * 0.52,
         child:  GetBuilder<QuotesController>(
         init: QuotesController(),
         id: 'listacotizaciones',
