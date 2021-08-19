@@ -95,9 +95,15 @@ class VehicleForm extends StatelessWidget {
     final ImageController imageController = Get.put(ImageController());
     await imageController.uploadPhoto();
     this._vehicleController.vehicle.urlImagen = imageController.url;
-    await this._vehicleController.newVehicle();
-    Get.back();
-    Get.back();
+    final Map<String,dynamic> resp = await this._vehicleController.newVehicle();
+    if(!resp["ok"]){
+      Get.back();
+      Get.snackbar('Ocurrio un error', resp["data"]);
+    }else{
+      Get.back();
+      Get.back();
+    }
+
 
 
   }

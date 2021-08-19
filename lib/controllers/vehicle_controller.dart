@@ -21,14 +21,14 @@ class VehicleController extends GetxController{
     super.onReady();
   }
 
-  Future<void> newVehicle() async {
-    final bool ok = await VehicleService.instance.newVehicle(this._vehicle);
-    if(!ok){
-      Get.snackbar('Ocurrio un error', 'Ha ocurrido un error, revise su conexión a internet');
-      return;
+  Future<Map<String,dynamic>> newVehicle() async {
+    final Map<String,dynamic> resp = await VehicleService.instance.newVehicle(this._vehicle);
+    if(!resp["ok"]) {
+      return resp;
     }
     this._vehicles.add(this._vehicle);
     update(['vehicle']);
+    return resp;
   }
 
   Future<void> loadVehicles() async {

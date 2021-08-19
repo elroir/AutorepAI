@@ -10,18 +10,21 @@ class VehicleService {
   static VehicleService _instance = VehicleService();
   static VehicleService get instance => _instance;
 
-  Future<bool> newVehicle(Vehicle vehicle) async {
+  Future<Map<String,dynamic>> newVehicle(Vehicle vehicle) async {
     try{
       final uri = Uri.http( Env.url, '/api/storeVehiculo', {
         "id_vehiculo" : vehicle.idVehiculo.toString()
       } );
       final resp = await http.post(uri,body: vehicle.toJson());
       final decodedData = json.decode(resp.body);
-      if(!decodedData['ok'])
-        return false;
-      return true;
+      print(decodedData);
+      return decodedData;
     }catch(e){
-      return false;
+      print(e);
+      return {
+        "ok" : false,
+        "data":"Ha ocurrido un error inesperado"
+      };
     }
   }
 
