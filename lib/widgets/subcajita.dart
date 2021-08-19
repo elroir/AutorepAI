@@ -36,7 +36,9 @@ class SubcajitaWidget extends StatelessWidget {
         children: [ 
           _contenidoTitulo(subtitle, size),
           Positioned(
-            left: 220, top: 10,
+            left: size.width*0.52, top: 10,
+            // left: size.width*0.6, top: 10,
+            // left: 220, top: 10,
             height: 45, width: 150,
             child: Container(
               height: 30,

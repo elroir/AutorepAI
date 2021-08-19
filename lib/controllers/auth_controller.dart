@@ -46,7 +46,7 @@ class AuthController extends GetxController {
     return this._prefs.getString('password') ?? '';
   }
 
-  void createUser(String email, String password) async {
+  void createUser(String email, String password, String nombre) async {
 
 
     try {
@@ -60,6 +60,7 @@ class AuthController extends GetxController {
 
       _user = await UserService.instance.storeUsuario({
         "id_usuario" : user.user.uid,
+        "nombre"     : nombre,
         "email"      : email,
         "password"   : password,
         "tipo_usuario" : "P"

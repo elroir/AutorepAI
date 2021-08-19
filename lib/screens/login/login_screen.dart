@@ -14,6 +14,7 @@ class LoginScreen extends GetWidget<AuthController> {
 
   final _keyForm = new GlobalKey<FormState>();
 
+  TextEditingController _nombreController  = new TextEditingController();
   TextEditingController _emailController  = new TextEditingController();
   TextEditingController _passwdController = new TextEditingController();
   double data = 30;
@@ -37,22 +38,29 @@ class LoginScreen extends GetWidget<AuthController> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 270),
-                    HeaderWidgetBackground(
-                      bottomLeft: data,  topright: data,
-                      bottomright: data, topLeft:  data,
-                      color1: Color(0xFF3a4999),
-                      color2: Color(0xFF3a4999),
-                      height: height , 
-                      width: width,
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox( height: 30 ),
-                          TituloSwitch(),
-                          formWidget(),
-                          SizedBox(height:  20),
-                        ],
+                    GetBuilder<LoginController>(
+                        init: LoginController(),
+                        id: 'id_sw',
+                        builder: (lcontroller) {
+                          return HeaderWidgetBackground(
+                            bottomLeft: data,  topright: data,
+                            bottomright: data, topLeft:  data,
+                            color1: Color(0xFF535f9b),
+                            color2: Color(0xFF535f9b),
+                            
+                            height: height + ((!lcontroller.sw) ? 0 : 80), 
+                            width: width,
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox( height: 30 ),
+                                TituloSwitch(),
+                                formWidget(),
+                                SizedBox(height:  20),
+                              ],
+                            ),
+                          );
+                        }
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -65,11 +73,46 @@ class LoginScreen extends GetWidget<AuthController> {
 
   Widget formWidget(){
     
+    final LoginController loginController = Get.put(LoginController());
+
     return Form(
       key: _keyForm,
       child: Column(
         children: <Widget>[
-          SizedBox( height: 20.0 ),
+         
+          SizedBox(height: 30),
+          GetBuilder<LoginController>(
+              init: LoginController(),
+              id: 'id_sw',
+              builder: (lcontroller) =>  Column(
+                children: [
+
+                  (!lcontroller.sw)
+                  ? inputsIniciar()
+                  : inputsRegistrar(),
+
+                  SizedBox(height: 10),
+                  BotonSubmit(
+                    size: 17,
+                    texto: !lcontroller.sw ? 'Iniciar sesion' : 'Registrar',
+                    color: Colors.pink,
+                    onPress: () => validarInfo(lcontroller)
+                  ),
+                ],
+              ),
+          ),
+         
+          Text(loginController.error),
+          SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+
+  Widget inputsIniciar(){
+    return Column(
+      children : [
+        SizedBox( height: 20.0 ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: TextFormField(
@@ -113,28 +156,77 @@ class LoginScreen extends GetWidget<AuthController> {
               ),
             ),
           ),
-          SizedBox(height: 30),
-          GetBuilder<LoginController>(
-              init: LoginController(),
-              id: 'id_sw',
-              builder: (lcontroller) =>  Column(
-                children: [
-                  BotonSubmit(
-                    size: 17,
-                    texto: !lcontroller.sw ? 'Iniciar sesion' : 'Registrar',
-                    color: Colors.pink,
-                    onPress: () => validarInfo(lcontroller)
-                  ),
-                  // SizedBox(height: 10),
-                  //TODO: Arreglar, no quiere actualizar el error en pantalla
-                  Text(lcontroller.error, style: TextStyle(color: Colors.red)),
-                ],
+
+      ]
+    );
+  }
+
+  Widget inputsRegistrar(){
+    return Column(
+      children : [
+        SizedBox( height: 20.0 ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: TextFormField(
+              controller: _nombreController,
+              validator: (value) => value.isEmpty ? 'Escribe tu nombre' : null,
+              cursorColor: Colors.white,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                labelText: 'Nombre',
+                prefixIcon: Icon( Icons.person, color: Colors.white,
+                ),
               ),
+            ),
           ),
-          // Text(loginController.error),
-          SizedBox(height: 10),
-        ],
-      ),
+        SizedBox( height: 20.0 ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: TextFormField(
+              controller: _emailController,
+              validator: (value) => value.isEmpty ? 'Escribe tu email' : null,
+              cursorColor: Colors.white,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                labelText: 'Email',
+                prefixIcon: Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
+                hintText: 'ale@gmail.com',
+              ),
+            ),
+          ),
+          SizedBox( height: 20.0 ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: TextFormField(
+              controller: _passwdController,
+              validator: (value) => (value.length < 6)
+                  ? 'La contraseña de 6 o más caracteres'
+                  : null,
+              obscureText: true,
+              cursorColor: Colors.white,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                labelText: 'Contraseña',
+                prefixIcon: Icon(
+                  Icons.security,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+
+      ]
     );
   }
 
@@ -152,9 +244,9 @@ class LoginScreen extends GetWidget<AuthController> {
 
     }else{
       
-      if (_emailController.text != '' && _passwdController.text != '') {
+      if (_emailController.text != '' && _passwdController.text != '' && _nombreController.text != '') {
       
-        controller.createUser(_emailController.text, _passwdController.text);
+        controller.createUser(_emailController.text, _passwdController.text, _nombreController.text);
       }else{
         print('Faltan datos2');
         lcontroller.setError('faltan datos omg2');
